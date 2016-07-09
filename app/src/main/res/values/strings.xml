@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">My Application</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_activity_eigengewicht">ActivityEigengewicht</string>
+    <string name="title_activity_activity_freie_gewichte">ActivityFreieGewichte</string>
+    <string name="title_activity_activity_maschine">ActivityMaschine</string>
+    <string name="title_activity_activity_funktionell">ActivityFunktionell</string>
+    <string name="title_activity_activity_uebungskatalog_gesamt">ActivityUebungskatalogGesamt
+    </string>
+</resources>
