@@ -114,7 +114,7 @@ public class FragmentFunktionell extends Fragment {
         View v= inflater.inflate(R.layout.fragment_fragment_funktionell, container, false);
         ViewPager vP= (ViewPager)v.findViewById(R.id.pagerFunktionell);
 
-        vP.setAdapter(new FragmentPager(this.getActivity().getSupportFragmentManager(),uebungsFragments,titles));
+        vP.setAdapter(new FragmentPager(getChildFragmentManager(),uebungsFragments,titles));
         return v;
     }
 

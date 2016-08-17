@@ -2,6 +2,8 @@ package com.example.jutom.myapplication;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,7 @@ public class UebungFragment extends Fragment {
     private ListAdapterObererRuecken listAdapterObererRuecken= null;
     private ListAdapterSchulter listAdapterSchulter= null;
     private ListAdapterRuecken listAdapterRuecken= null;
+    private String listName;
 
     private List<Uebung> uebungList;
 
@@ -108,23 +111,45 @@ public class UebungFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.uebung_fragment, container, false);
         ListView listView= (ListView)v.findViewById(R.id.uebungList);
-        if (uebungListAdapter!= null){        listView.setAdapter(uebungListAdapter);}
+        if (uebungListAdapter!= null){
+            listView.setAdapter(uebungListAdapter);
+            listName="UntererRuecken";}
        else if (listAdapterBrust!= null){
-            listView.setAdapter(listAdapterBrust);}
+            listView.setAdapter(listAdapterBrust);
+            listName="Brust";
+        }
        else if (listAdapterTricep!= null){
-           listView.setAdapter(listAdapterTricep);}
+           listView.setAdapter(listAdapterTricep);
+            listName="Tricep";}
        else if (listAdapterBeine!= null){
-            listView.setAdapter(listAdapterBeine);}
+            listView.setAdapter(listAdapterBeine);
+            listName="Beine";}
        else if (listAdapterBauch!= null){
-            listView.setAdapter(listAdapterBauch);}
+            listView.setAdapter(listAdapterBauch);
+            listName="Bauch";}
        else if (listAdapterObererRuecken!= null){
-            listView.setAdapter(listAdapterObererRuecken);}
+            listView.setAdapter(listAdapterObererRuecken);
+            listName="ObererRuecken";}
         else if (listAdapterSchulter!= null){
-            listView.setAdapter(listAdapterSchulter);}
+            listView.setAdapter(listAdapterSchulter);
+            listName="Schulter";}
        else if (listAdapterBicep!= null){
-            listView.setAdapter(listAdapterBicep);}
+            listView.setAdapter(listAdapterBicep);
+            listName="Bicep";}
       else if (listAdapterRuecken!= null){
-            listView.setAdapter(listAdapterRuecken);}
+            listView.setAdapter(listAdapterRuecken);
+            listName="Ruecken";}
+
+        //TODO hier muss noch ein Button bearbeitet werden hier muss auch die oben darrgestellte IF-Anweisung eingebracht werden um die neue Übung zu öffnen
+        //TODO um welche übung es sich handelt sollte über einen String übergeben werden in den Konstruktor
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
         return v;
     }
 

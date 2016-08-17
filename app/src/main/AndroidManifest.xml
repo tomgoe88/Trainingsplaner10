@@ -19,22 +19,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ActivityEigengewicht"
-            android:label="@string/title_activity_activity_eigengewicht"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ActivityFreieGewichte"
-            android:label="@string/title_activity_activity_freie_gewichte"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ActivityMaschine"
-            android:label="@string/title_activity_activity_maschine"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ActivityFunktionell"
-            android:label="@string/title_activity_activity_funktionell"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ActivityUebungskatalogGesamt"
             android:label="@string/title_activity_activity_uebungskatalog_gesamt"
             android:theme="@style/AppTheme.NoActionBar"></activity>

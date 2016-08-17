@@ -25,14 +25,7 @@ public class ActivityUebungskatalogGesamt extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
         ft.add(R.id.ueMainFram, new FragmentEigengewicht());
         ft.commit();
@@ -86,17 +79,25 @@ public class ActivityUebungskatalogGesamt extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.eigengewicht) {
-            Intent eigen= new Intent(this, ActivityEigengewicht.class);
-            this.startActivity(eigen);
+            FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.ueMainFram, new FragmentEigengewicht());
+            ft.commit();
+            getSupportActionBar().setTitle("Eigengewciht");
         } else if (id == R.id.maschine) {
-            Intent eigen= new Intent(this, ActivityMaschine.class);
-            this.startActivity(eigen);
+            FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.ueMainFram, new FragmentMaschine());
+            ft.commit();
+            getSupportActionBar().setTitle("Mschinenübungen");
         } else if (id == R.id.freie) {
-            Intent eigen= new Intent(this, ActivityFreieGewichte.class);
-            this.startActivity(eigen);
+            FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.ueMainFram, new FragmentFreieGewichte());
+            ft.commit();
+            getSupportActionBar().setTitle("Freie Übungen");
         } else if (id == R.id.funktionell) {
-            Intent eigen= new Intent(this, ActivityFunktionell.class);
-            this.startActivity(eigen);
+            FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.ueMainFram, new FragmentFunktionell());
+            ft.commit();
+            getSupportActionBar().setTitle("Funktionelle Übungen");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

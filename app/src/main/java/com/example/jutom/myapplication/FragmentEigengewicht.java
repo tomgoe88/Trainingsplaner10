@@ -118,7 +118,7 @@ uebungsFragments.add(rueckenFragment);
         View v= inflater.inflate(R.layout.fragment_fragment_eigengewicht, container, false);
         ViewPager vP= (ViewPager)v.findViewById(R.id.pagerEigengewicht);
 
-        vP.setAdapter(new FragmentPager(this.getActivity().getSupportFragmentManager(),uebungsFragments,titles));
+        vP.setAdapter(new FragmentPager(getChildFragmentManager(),uebungsFragments,titles));
         return v;
     }
 

@@ -114,7 +114,7 @@ public class FragmentMaschine extends Fragment {
         View v= inflater.inflate(R.layout.fragment_fragment_maschine, container, false);
         ViewPager vP= (ViewPager)v.findViewById(R.id.pagerMaschine);
 
-        vP.setAdapter(new FragmentPager(this.getActivity().getSupportFragmentManager(),uebungsFragments,titles));
+        vP.setAdapter(new FragmentPager(getChildFragmentManager(),uebungsFragments,titles));
         return v;
     }
 
