@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.jutom.myapplication.NeueRohUebung">
+    tools:context="com.example.jutom.myapplication.ActivityNeueUebung">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -14,7 +14,8 @@
         android:id="@+id/imageView2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="32dp"
+        android:src="@drawable/kurzhantel"/>
 
     <TextView
         android:layout_width="wrap_content"
