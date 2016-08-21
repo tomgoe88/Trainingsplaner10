@@ -1,10 +1,12 @@
 package com.example.jutom.myapplication;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,40 +45,40 @@ public class UebungFragment extends Fragment {
     public UebungFragment() {
         // Required empty public constructor
     }
-    public UebungFragment( UebungListAdapter uA){
-
+    public UebungFragment( UebungListAdapter uA, String list){
+        this.listName=list;
         this.uebungListAdapter=uA;
     }
-    public UebungFragment( ListAdapterBrust uA){
-
+    public UebungFragment( ListAdapterBrust uA, String list){
+        this.listName=list;
         this.listAdapterBrust=uA;
     }
-    public UebungFragment( ListAdapterRuecken uA){
-
+    public UebungFragment( ListAdapterRuecken uA, String list){
+        this.listName=list;
         this.listAdapterRuecken=uA;
     }
-    public UebungFragment( ListAdapterSchulter uA){
-
+    public UebungFragment( ListAdapterSchulter uA, String list){
+        this.listName=list;
         this.listAdapterSchulter=uA;
     }
-    public UebungFragment( ListAdapterObererRuecken uA){
-
+    public UebungFragment( ListAdapterObererRuecken uA, String list){
+        this.listName=list;
         this.listAdapterObererRuecken=uA;
     }
-    public UebungFragment( ListAdapterBauch uA){
-
+    public UebungFragment( ListAdapterBauch uA, String list){
+        this.listName=list;
         this.listAdapterBauch=uA;
     }
-    public UebungFragment( ListAdapterBeine uA){
-
+    public UebungFragment( ListAdapterBeine uA, String list){
+        this.listName=list;
         this.listAdapterBeine=uA;
     }
-    public UebungFragment( ListAdapterBicep uA){
-
+    public UebungFragment( ListAdapterBicep uA, String list){
+        this.listName=list;
         this.listAdapterBicep=uA;
     }
-    public UebungFragment( ListAdapterTricep uA){
-
+    public UebungFragment( ListAdapterTricep uA, String list){
+        this.listName=list;
         this.listAdapterTricep=uA;
     }
     /**
@@ -113,32 +115,32 @@ public class UebungFragment extends Fragment {
         ListView listView= (ListView)v.findViewById(R.id.uebungList);
         if (uebungListAdapter!= null){
             listView.setAdapter(uebungListAdapter);
-            listName="UntererRuecken";}
+            }
        else if (listAdapterBrust!= null){
             listView.setAdapter(listAdapterBrust);
-            listName="Brust";
+
         }
        else if (listAdapterTricep!= null){
            listView.setAdapter(listAdapterTricep);
-            listName="Tricep";}
+            }
        else if (listAdapterBeine!= null){
             listView.setAdapter(listAdapterBeine);
-            listName="Beine";}
+            }
        else if (listAdapterBauch!= null){
             listView.setAdapter(listAdapterBauch);
-            listName="Bauch";}
+            }
        else if (listAdapterObererRuecken!= null){
             listView.setAdapter(listAdapterObererRuecken);
-            listName="ObererRuecken";}
+            }
         else if (listAdapterSchulter!= null){
             listView.setAdapter(listAdapterSchulter);
-            listName="Schulter";}
+            }
        else if (listAdapterBicep!= null){
             listView.setAdapter(listAdapterBicep);
-            listName="Bicep";}
+            }
       else if (listAdapterRuecken!= null){
             listView.setAdapter(listAdapterRuecken);
-            listName="Ruecken";}
+            }
 
         //TODO hier muss noch ein Button bearbeitet werden hier muss auch die oben darrgestellte IF-Anweisung eingebracht werden um die neue Übung zu öffnen
         //TODO um welche übung es sich handelt sollte über einen String übergeben werden in den Konstruktor
@@ -146,8 +148,12 @@ public class UebungFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent neueUebung=new Intent (getActivity(), ActivityNeueUebung.class);
+                Bundle neu= new Bundle();
+                neu.putString("LIST", listName);
+                neueUebung.putExtra("LISTBUNDLE", neu);
+                startActivity(neueUebung);
+
             }
         });
         return v;
