@@ -1,12 +1,15 @@
 package com.example.jutom.myapplication;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -49,8 +52,31 @@ public class ListAdapterSchulter extends BaseAdapter {
             v = vi.inflate(R.layout.uebung_adapter_list_layout, null);
         }
         TextView nameUebung= (TextView) v.findViewById(R.id.uebungName);
+        ImageView ueBild= (ImageView)v.findViewById((R.id.uebungBild));
         if(nameUebung!=null){
             nameUebung.setText(uebung.get(position).getName());
+        }
+        if(ueBild!=null){
+            int targetW = ueBild.getWidth();
+            int targetH = ueBild.getHeight();
+
+            // Get the dimensions of the bitmap
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(uebung.get(position).getImg(), bmOptions);
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+
+            // Determine how much to scale down the image
+            int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+            // Decode the image file into a Bitmap sized to fill the View
+            bmOptions.inJustDecodeBounds = false;
+            bmOptions.inSampleSize = scaleFactor;
+            bmOptions.inPurgeable = true;
+
+            Bitmap bitmap = BitmapFactory.decodeFile(uebung.get(position).getImg(), bmOptions);
+            ueBild.setImageBitmap(bitmap);
         }
         return v;
     }
