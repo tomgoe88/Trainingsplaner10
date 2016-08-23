@@ -85,13 +85,16 @@ public class ActivityNeueUebung extends AppCompatActivity {
         String name= uename.getText().toString();
         String beschreibung= uebeschreibung.getText().toString();
         String bildpfad= mCurrentPhotoPath;
+        Log.v("Bildpfad", "Bildpfad = "+bildpfad);
         switch (listName){
             case("EigenUntererRuecken"):
                 untererRuecken=new UntererRuecken();
                 untererRuecken.setName(name);
                 untererRuecken.setBeschreibung(beschreibung);
                 untererRuecken.setImg(bildpfad);
+
                 SQLHelper.getEigengewichtuntererRueckens().add(untererRuecken);
+               Log.v("StringPfad", "String = "+ SQLHelper.getEigengewichtuntererRueckens().get(SQLHelper.getEigengewichtuntererRueckens().size()-1).getImg());
                 break;
             case("EigenBauch"):
                 bauch=new Bauch();

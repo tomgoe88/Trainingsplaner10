@@ -3,6 +3,7 @@ package com.example.jutom.myapplication;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,9 +57,10 @@ public class ListAdapterSchulter extends BaseAdapter {
         if(nameUebung!=null){
             nameUebung.setText(uebung.get(position).getName());
         }
-        if(ueBild!=null){
-            int targetW = ueBild.getWidth();
-            int targetH = ueBild.getHeight();
+        //Log.v("String",uebung.get(position).getImg() );
+        if(ueBild!=null&& uebung.get(position).getImg()!=null){
+            int targetW = 80;
+            int targetH = 80;
 
             // Get the dimensions of the bitmap
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();

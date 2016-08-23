@@ -56,9 +56,10 @@ public class ListAdapterBauch extends BaseAdapter {
         if(nameUebung!=null){
             nameUebung.setText(uebung.get(position).getName());
         }
-        if(ueBild!=null){
-            int targetW = ueBild.getWidth();
-            int targetH = ueBild.getHeight();
+
+        if(ueBild!=null&& uebung.get(position).getImg()!=null){//TODO an alle anderen Adapter übertragen
+            int targetW = 80;
+            int targetH = 80;
 
             // Get the dimensions of the bitmap
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
