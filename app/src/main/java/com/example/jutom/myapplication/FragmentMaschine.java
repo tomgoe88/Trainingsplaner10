@@ -68,24 +68,8 @@ public class FragmentMaschine extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        Ruecken r= new Ruecken(); r.setName("Test");
-        Bauch b= new Bauch();b.setName("Test");
-        Tricep t= new Tricep();t.setName("Test");
-        Bicep bb= new Bicep();bb.setName("Test");
-        Schulter sch= new Schulter();sch.setName("Test");
-        ObererRuecken oR= new ObererRuecken();oR.setName("Test");
-        UntererRuecken uR= new UntererRuecken();uR.setName("Test");
-        Beine bei= new Beine();bei.setName("Test");
-        Brust br= new Brust();br.setName("Test");
-        SQLHelper.getMaschineuntererRueckens().add(uR);
-        SQLHelper.getMaschinebauches().add(b);
-        SQLHelper.getMaschinetriceps().add(t);
-        SQLHelper.getMaschinebiceps().add(bb);
-        SQLHelper.getMaschineschulters().add(sch);
-        SQLHelper.getMaschineobererRueckens().add(oR);
-        SQLHelper.getMaschinerueckens().add(r);
-        SQLHelper.getMaschinebeines().add(bei);
-        SQLHelper.getMaschinebrusts().add(br);
+
+
         uebungsFragments= new ArrayList<Fragment>();
         untererRueckenFragment= new UebungFragment(new UebungListAdapter(this.getContext(),SQLHelper.getMaschineuntererRueckens()),"MaschineUntererRuecken");
         bauchFragment = new UebungFragment(new ListAdapterBauch(this.getContext(),SQLHelper.getMaschinebauches()),"MaschineBauch");

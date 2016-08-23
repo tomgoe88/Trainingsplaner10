@@ -66,6 +66,8 @@ public class ActivityNeueUebung extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveUebung();
+                Intent backTo= new Intent(ActivityNeueUebung.this, ActivityUebungskatalogGesamt.class);
+                startActivity(backTo);
             }
         });
 

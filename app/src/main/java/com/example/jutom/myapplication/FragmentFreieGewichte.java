@@ -69,24 +69,7 @@ public class FragmentFreieGewichte extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        Ruecken r= new Ruecken(); r.setName("Test");
-        Bauch b= new Bauch();b.setName("Test");
-        Tricep t= new Tricep();t.setName("Test");
-        Bicep bb= new Bicep();bb.setName("Test");
-        Schulter sch= new Schulter();sch.setName("Test");
-        ObererRuecken oR= new ObererRuecken();oR.setName("Test");
-        UntererRuecken uR= new UntererRuecken();uR.setName("Test");
-        Beine bei= new Beine();bei.setName("Test");
-        Brust br= new Brust();br.setName("Test");
-        SQLHelper.getFreieuntererRueckens().add(uR);
-        SQLHelper.getFreiebauches().add(b);
-        SQLHelper.getFreietriceps().add(t);
-        SQLHelper.getFreiebiceps().add(bb);
-        SQLHelper.getFreieschulters().add(sch);
-        SQLHelper.getFreieobererRueckens().add(oR);
-        SQLHelper.getFreierueckens().add(r);
-        SQLHelper.getFreiebeines().add(bei);
-        SQLHelper.getFreiebrusts().add(br);
+
         uebungsFragments= new ArrayList<Fragment>();
         untererRueckenFragment= new UebungFragment(new UebungListAdapter(this.getContext(),SQLHelper.getFreieuntererRueckens()),"FreieUntererRuecken");
         bauchFragment = new UebungFragment(new ListAdapterBauch(this.getContext(),SQLHelper.getFreiebauches()),"FreieBauch");
