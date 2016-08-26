@@ -3,6 +3,7 @@ package com.example.jutom.myapplication;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -377,24 +378,19 @@ public class ActivityNeueUebung extends AppCompatActivity {
         // Get the dimensions of the View
         int targetW = ueBild.getWidth();
         int targetH = ueBild.getHeight();
+        Log.v("Bildgröße", "Das Bild ist: "+targetH+ " x "+targetW+" groß");
 
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+        Matrix matrix = new Matrix();
 
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+        matrix.postRotate(90);
 
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,600,600,true);
 
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        ueBild.setImageBitmap(bitmap);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap .getWidth(), scaledBitmap .getHeight(), matrix, true);
+
+        //Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        ueBild.setImageBitmap(rotatedBitmap);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -3,6 +3,7 @@ package com.example.jutom.myapplication;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +60,7 @@ public class UebungListAdapter extends BaseAdapter {
         }
         Log.v("String","Bild im Adapter= "+uebung.get(position).getImg() );
         if(ueBild!=null&& uebung.get(position).getImg()!=null){
-            int targetW = 80;
+/*            int targetW = 80;
             int targetH = 80;
             Log.v("Bild", "Bildgröße = "+ targetH +" x "+ targetW);
             // Get the dimensions of the bitmap
@@ -78,8 +79,24 @@ public class UebungListAdapter extends BaseAdapter {
             bmOptions.inPurgeable = true;
 
             Bitmap bitmap = BitmapFactory.decodeFile(uebung.get(position).getImg(), bmOptions);
-            ueBild.setImageBitmap(bitmap);
-        }
+            ueBild.setImageBitmap(bitmap);*/
+
+                Log.v("Test", uebung.get(position).getImg().toString());
+                // Get the dimensions of the View
+
+                Bitmap bitmap = BitmapFactory.decodeFile(uebung.get(position).getImg());
+                Matrix matrix = new Matrix();
+
+                matrix.postRotate(90);
+
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,80,80,true);
+
+                Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap .getWidth(), scaledBitmap .getHeight(), matrix, true);
+
+                //Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+                ueBild.setImageBitmap(rotatedBitmap);
+            }
+
         return v;
     }
 }
