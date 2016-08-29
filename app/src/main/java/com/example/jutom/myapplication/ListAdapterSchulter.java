@@ -23,9 +23,11 @@ public class ListAdapterSchulter extends BaseAdapter {
 
     private List<Schulter> uebung;
     private Context context;
-    public ListAdapterSchulter(Context con, List<Schulter> ueb){
+    Trainingsplaner trainingsplaner;
+    public ListAdapterSchulter(Context con, List<Schulter> ueb,Trainingsplaner trainingsplaner){
         this.context= con;
         this.uebung=ueb;
+        this.trainingsplaner= trainingsplaner;
     }
 
     @Override

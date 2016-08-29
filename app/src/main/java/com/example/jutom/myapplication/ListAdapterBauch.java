@@ -1,30 +1,36 @@
 package com.example.jutom.myapplication;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.support.v4.app.Fragment;
 
 import java.util.List;
 
 /**
  * Created by Jutom on 28.06.2016.
  */
-public class ListAdapterBauch extends BaseAdapter {
+public class ListAdapterBauch extends BaseAdapter implements AdapterView.OnItemClickListener {
 
     private List<Bauch> uebung;
-    private Context context;
-    public ListAdapterBauch(Context con, List<Bauch> ueb){
+    private Activity context;
+    private Trainingsplaner trainingsplaner;
+    public ListAdapterBauch(Activity con, List<Bauch> ueb, Trainingsplaner trainingsplaner){
         this.context= con;
         this.uebung=ueb;
+        this.trainingsplaner= trainingsplaner;
     }
 
     @Override
@@ -79,6 +85,16 @@ public class ListAdapterBauch extends BaseAdapter {
             Bitmap bitmap = BitmapFactory.decodeFile(uebung.get(position).getImg(), bmOptions);
             ueBild.setImageBitmap(bitmap);
         }
+
         return v;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if(trainingsplaner!= null){
+         android.app.FragmentTransaction ft= context.getFragmentManager().beginTransaction();
+            ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebung.get(position),trainingsplaner));
+            ft.commit();
+        }
     }
 }

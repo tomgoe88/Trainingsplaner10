@@ -11,21 +11,21 @@ public class Satz
 
 
 
-    private Date pause;
-    private Date belastungsIntervall;
+    private int pause;
+    private int belastungsIntervall;
 
-    public Date getBelastungsIntervall() {
+    public int getBelastungsIntervall() {
         return belastungsIntervall;
     }
 
-    public void setBelastungsIntervall(Date belastungsIntervall) {
+    public void setBelastungsIntervall(int belastungsIntervall) {
         this.belastungsIntervall = belastungsIntervall;
     }
-    public Date getPause() {
+    public int getPause() {
         return pause;
     }
 
-    public void setPause(Date pause) {
+    public void setPause(int pause) {
         this.pause = pause;
     }
 

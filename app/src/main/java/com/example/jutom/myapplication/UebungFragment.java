@@ -40,6 +40,7 @@ public class UebungFragment extends Fragment {
     private ListAdapterSchulter listAdapterSchulter= null;
     private ListAdapterRuecken listAdapterRuecken= null;
     private String listName;
+    private Trainingsplaner tp;
 
     private List<Uebung> uebungList;
 

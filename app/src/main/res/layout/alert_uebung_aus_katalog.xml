@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eigengewicht"
+        android:id="@+id/uekatEigengewicht"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="103dp"
+        android:layout_alignStart="@+id/uekatMaschine"
+        android:layout_alignEnd="@+id/uekatMaschine" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Maschine"
+        android:id="@+id/uekatMaschine"
+        android:layout_below="@+id/uekatEigengewicht"
+        android:layout_alignEnd="@+id/uekatFunktionelle"
+        android:layout_alignStart="@+id/uekatFunktionelle" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Funktionelle Übung"
+        android:id="@+id/uekatFunktionelle"
+        android:layout_below="@+id/uekatMaschine"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Freie Gewichte"
+        android:id="@+id/uekatFreieGewichte"
+        android:layout_below="@+id/uekatFunktionelle"
+        android:layout_alignEnd="@+id/uekatFunktionelle"
+        android:layout_alignStart="@+id/uekatFunktionelle" />
+</RelativeLayout>

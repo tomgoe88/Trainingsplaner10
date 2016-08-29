@@ -24,9 +24,11 @@ public class UebungListAdapter extends BaseAdapter {
 
     private List<UntererRuecken> uebung;
     private Context context;
-    public UebungListAdapter(Context con, List<UntererRuecken> ueb){
+    Trainingsplaner trainingsplaner;
+    public UebungListAdapter(Context con, List<UntererRuecken> ueb, Trainingsplaner trainingsplaner){
         this.context= con;
         this.uebung=ueb;
+        this.trainingsplaner=trainingsplaner;
     }
 
     @Override

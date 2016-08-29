@@ -23,9 +23,11 @@ public class ListAdapterTricep extends BaseAdapter {
 
     private List<Tricep> uebung;
     private Context context;
-    public ListAdapterTricep(Context con, List<Tricep> ueb){
+    Trainingsplaner trainingsplaner;
+    public ListAdapterTricep(Context con, List<Tricep> ueb, Trainingsplaner trainingsplaner){
         this.context= con;
         this.uebung=ueb;
+        this.trainingsplaner=trainingsplaner;
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.util.Date;
 public class SatzZeit
 {
     private int satzZahl;
-    private Date pause;
+    private int pause;
     private int wiederholungen;
 
     public int getSatzZahl() {
@@ -19,11 +19,11 @@ public class SatzZeit
         this.satzZahl = satzZahl;
     }
 
-    public Date getPause() {
+    public int getPause() {
         return pause;
     }
 
-    public void setPause(Date pause) {
+    public void setPause(int pause) {
         this.pause = pause;
     }
 

@@ -23,9 +23,11 @@ public class ListAdapterBeine extends BaseAdapter {
 
     private List<Beine> uebung;
     private Context context;
-    public ListAdapterBeine(Context con, List<Beine> ueb){
+    Trainingsplaner trainingsplaner;
+    public ListAdapterBeine(Context con, List<Beine> ueb, Trainingsplaner trainingsplaner){
         this.context= con;
         this.uebung=ueb;
+        this.trainingsplaner= trainingsplaner;
     }
 
     @Override

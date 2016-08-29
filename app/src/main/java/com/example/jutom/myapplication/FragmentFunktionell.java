@@ -27,7 +27,7 @@ public class FragmentFunktionell extends Fragment {
     private String mParam1;
     private String mParam2;
     private List<Fragment> uebungsFragments;
-    private String[] titles= {"Unterer Rücken", "Bauch", "Tricep", "Bicep", "Schulter", "Oberer Rücken", "Rücken", "Beine", "Brust"};
+   private List<String>titles;
     UebungFragment brustFragment = null;
     UebungFragment beinFragment = null;
     UebungFragment rueckenFragment= null;
@@ -37,10 +37,14 @@ public class FragmentFunktionell extends Fragment {
     UebungFragment tricepFragment= null;
     UebungFragment bauchFragment= null;
     UebungFragment untererRueckenFragment= null;
-
+Trainingsplaner trainingsplaner;
 
     public FragmentFunktionell() {
         // Required empty public constructor
+    }
+    public FragmentFunktionell(Trainingsplaner trainingsplaner) {
+        // Required empty public constructor
+        this.trainingsplaner=trainingsplaner;
     }
 
     /**
@@ -68,17 +72,27 @@ public class FragmentFunktionell extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        titles= new ArrayList<String>();
+        titles.add("Unterer Rücken");
+        titles.add("Bauch");
+        titles.add("Tricep");
+        titles.add("Bicep");
+        titles.add("Schulter");
+        titles.add("Oberer Rücken");
+        titles.add("Rücken");
+        titles.add("Beine");
+        titles.add("Brust");
 
         uebungsFragments= new ArrayList<Fragment>();
-        untererRueckenFragment= new UebungFragment(new UebungListAdapter(this.getContext(),SQLHelper.getFunktionelluntererRueckens()),"FunktionallUntererRuecken");
-        bauchFragment = new UebungFragment(new ListAdapterBauch(this.getContext(),SQLHelper.getFunktionellbauches()),"FunktionellBauch");
-        tricepFragment = new UebungFragment(new ListAdapterTricep(this.getContext(),SQLHelper.getFunktionelltriceps()),"FunktionellTricep");
-        bicepFragment = new UebungFragment(new ListAdapterBicep(this.getContext(),SQLHelper.getFunktionellbiceps()),"FunktionellBicep");
-        schulterFragment = new UebungFragment(new ListAdapterSchulter(this.getContext(),SQLHelper.getFunktionellschulters()),"FunktionellSchulter");
-        obererRueckenFragment = new UebungFragment(new ListAdapterObererRuecken(this.getContext(),SQLHelper.getFunktionellobererRueckens()),"FunktionellObererRuecken");
-        rueckenFragment = new UebungFragment(new ListAdapterRuecken(this.getContext(),SQLHelper.getFunktionellrueckens()),"FunktionellRuecken");
-        beinFragment= new UebungFragment(new ListAdapterBeine(this.getContext(),SQLHelper.getFunktionellbeines()),"FunktionellBein");
-        brustFragment = new UebungFragment(new ListAdapterBrust(this.getContext(),SQLHelper.getFunktionellbrusts()),"FunktionellBrust");
+        untererRueckenFragment= new UebungFragment(new UebungListAdapter(this.getActivity(),SQLHelper.getFunktionelluntererRueckens(),trainingsplaner),"FunktionallUntererRuecken");
+        bauchFragment = new UebungFragment(new ListAdapterBauch(this.getActivity(),SQLHelper.getFunktionellbauches(),trainingsplaner),"FunktionellBauch");
+        tricepFragment = new UebungFragment(new ListAdapterTricep(this.getActivity(),SQLHelper.getFunktionelltriceps(),trainingsplaner),"FunktionellTricep");
+        bicepFragment = new UebungFragment(new ListAdapterBicep(this.getActivity(),SQLHelper.getFunktionellbiceps(),trainingsplaner),"FunktionellBicep");
+        schulterFragment = new UebungFragment(new ListAdapterSchulter(this.getActivity(),SQLHelper.getFunktionellschulters(),trainingsplaner),"FunktionellSchulter");
+        obererRueckenFragment = new UebungFragment(new ListAdapterObererRuecken(this.getActivity(),SQLHelper.getFunktionellobererRueckens(),trainingsplaner),"FunktionellObererRuecken");
+        rueckenFragment = new UebungFragment(new ListAdapterRuecken(this.getActivity(),SQLHelper.getFunktionellrueckens(),trainingsplaner),"FunktionellRuecken");
+        beinFragment= new UebungFragment(new ListAdapterBeine(this.getActivity(),SQLHelper.getFunktionellbeines(),trainingsplaner),"FunktionellBein");
+        brustFragment = new UebungFragment(new ListAdapterBrust(this.getActivity(),SQLHelper.getFunktionellbrusts(),trainingsplaner),"FunktionellBrust");
         uebungsFragments.add(untererRueckenFragment);
         uebungsFragments.add(bauchFragment);
         uebungsFragments.add(tricepFragment);

@@ -23,9 +23,11 @@ public class ListAdapterBrust extends BaseAdapter {
 
     private List<Brust> uebung;
     private Context context;
-    public ListAdapterBrust(Context con, List<Brust> ueb){
+    Trainingsplaner trainingsplaner;
+    public ListAdapterBrust(Context con, List<Brust> ueb, Trainingsplaner trainingsplaner){
         this.context= con;
         this.uebung=ueb;
+        this.trainingsplaner= trainingsplaner;
     }
 
     @Override

@@ -11,11 +11,11 @@ import java.util.List;
  * Created by Jutom on 28.06.2016.
  */
 public class FragmentPager extends FragmentPagerAdapter {
-    private String[] titles;
+    private List<String> titles;
     private List<Fragment> fragments;
     int fcount;
 
-    public FragmentPager(FragmentManager fm, List<Fragment> fragmentList, String[] title){
+    public FragmentPager(FragmentManager fm, List<Fragment> fragmentList, List<String> title){
         super(fm);
         this.fragments= fragmentList;
         this.titles= title;
@@ -32,7 +32,7 @@ public class FragmentPager extends FragmentPagerAdapter {
     }
     @Override
     public CharSequence getPageTitle(int position) {
-        String tabtitle= titles[position];
+        String tabtitle= titles.get(position);
         return tabtitle;
     }
 }

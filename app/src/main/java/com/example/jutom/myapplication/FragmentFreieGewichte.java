@@ -27,7 +27,7 @@ public class FragmentFreieGewichte extends Fragment {
     private String mParam1;
     private String mParam2;
     private List<Fragment> uebungsFragments;
-    private String[] titles= {"Unterer Rücken", "Bauch", "Tricep", "Bicep", "Schulter", "Oberer Rücken", "Rücken", "Beine", "Brust"};
+    private List<String> titles;
     UebungFragment brustFragment = null;
     UebungFragment beinFragment = null;
     UebungFragment rueckenFragment= null;
@@ -37,11 +37,15 @@ public class FragmentFreieGewichte extends Fragment {
     UebungFragment tricepFragment= null;
     UebungFragment bauchFragment= null;
     UebungFragment untererRueckenFragment= null;
-
+    Trainingsplaner trainingsplaner;
 
 
     public FragmentFreieGewichte() {
         // Required empty public constructor
+    }
+    public FragmentFreieGewichte(Trainingsplaner trainingsplaner) {
+        // Required empty public constructor
+        this.trainingsplaner=trainingsplaner;
     }
 
     /**
@@ -69,17 +73,27 @@ public class FragmentFreieGewichte extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        titles= new ArrayList<String>();
+        titles.add("Unterer Rücken");
+        titles.add("Bauch");
+        titles.add("Tricep");
+        titles.add("Bicep");
+        titles.add("Schulter");
+        titles.add("Oberer Rücken");
+        titles.add("Rücken");
+        titles.add("Beine");
+        titles.add("Brust");
 
         uebungsFragments= new ArrayList<Fragment>();
-        untererRueckenFragment= new UebungFragment(new UebungListAdapter(this.getContext(),SQLHelper.getFreieuntererRueckens()),"FreieUntererRuecken");
-        bauchFragment = new UebungFragment(new ListAdapterBauch(this.getContext(),SQLHelper.getFreiebauches()),"FreieBauch");
-        tricepFragment = new UebungFragment(new ListAdapterTricep(this.getContext(),SQLHelper.getFreietriceps()),"FreieTricep");
-        bicepFragment = new UebungFragment(new ListAdapterBicep(this.getContext(),SQLHelper.getFreiebiceps()),"FreieBicep");
-        schulterFragment = new UebungFragment(new ListAdapterSchulter(this.getContext(),SQLHelper.getFreieschulters()),"FreieSchulter");
-        obererRueckenFragment = new UebungFragment(new ListAdapterObererRuecken(this.getContext(),SQLHelper.getFreieobererRueckens()),"FreieObererRuecken");
-        rueckenFragment = new UebungFragment(new ListAdapterRuecken(this.getContext(),SQLHelper.getFreierueckens()),"FreieRuecken");
-        beinFragment= new UebungFragment(new ListAdapterBeine(this.getContext(),SQLHelper.getFreiebeines()),"FreieBein");
-        brustFragment = new UebungFragment(new ListAdapterBrust(this.getContext(),SQLHelper.getFreiebrusts()),"FreieBrust");
+        untererRueckenFragment= new UebungFragment(new UebungListAdapter(this.getActivity(),SQLHelper.getFreieuntererRueckens(),trainingsplaner),"FreieUntererRuecken");
+        bauchFragment = new UebungFragment(new ListAdapterBauch(this.getActivity(),SQLHelper.getFreiebauches(),trainingsplaner),"FreieBauch");
+        tricepFragment = new UebungFragment(new ListAdapterTricep(this.getActivity(),SQLHelper.getFreietriceps(),trainingsplaner),"FreieTricep");
+        bicepFragment = new UebungFragment(new ListAdapterBicep(this.getActivity(),SQLHelper.getFreiebiceps(),trainingsplaner),"FreieBicep");
+        schulterFragment = new UebungFragment(new ListAdapterSchulter(this.getActivity(),SQLHelper.getFreieschulters(),trainingsplaner),"FreieSchulter");
+        obererRueckenFragment = new UebungFragment(new ListAdapterObererRuecken(this.getActivity(),SQLHelper.getFreieobererRueckens(),trainingsplaner),"FreieObererRuecken");
+        rueckenFragment = new UebungFragment(new ListAdapterRuecken(this.getActivity(),SQLHelper.getFreierueckens(),trainingsplaner),"FreieRuecken");
+        beinFragment= new UebungFragment(new ListAdapterBeine(this.getActivity(),SQLHelper.getFreiebeines(),trainingsplaner),"FreieBein");
+        brustFragment = new UebungFragment(new ListAdapterBrust(this.getActivity(),SQLHelper.getFreiebrusts(),trainingsplaner),"FreieBrust");
         uebungsFragments.add(untererRueckenFragment);
         uebungsFragments.add(bauchFragment);
         uebungsFragments.add(tricepFragment);
