@@ -4,11 +4,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -20,15 +23,19 @@ import java.util.List;
 /**
  * Created by Jutom on 28.06.2016.
  */
-public class UebungListAdapter extends BaseAdapter {
+public class UebungListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener{
 
-    private List<UntererRuecken> uebung;
-    private Context context;
+     List<UntererRuecken> uebung;
+    private FragmentActivity context;
     Trainingsplaner trainingsplaner;
-    public UebungListAdapter(Context con, List<UntererRuecken> ueb, Trainingsplaner trainingsplaner){
+    public UebungListAdapter(FragmentActivity con, List<UntererRuecken> ueb, Trainingsplaner trainingsplaner){
         this.context= con;
         this.uebung=ueb;
         this.trainingsplaner=trainingsplaner;
+        if(trainingsplaner!=null){
+            Log.v("String","Bild im Adapter= "+trainingsplaner.getName() );
+        }
+
     }
 
     @Override
@@ -60,7 +67,8 @@ public class UebungListAdapter extends BaseAdapter {
         if(nameUebung!=null){
             nameUebung.setText(uebung.get(position).getName());
         }
-        Log.v("String","Bild im Adapter= "+uebung.get(position).getImg() );
+
+
         if(ueBild!=null&& uebung.get(position).getImg()!=null){
 /*            int targetW = 80;
             int targetH = 80;
@@ -100,5 +108,15 @@ public class UebungListAdapter extends BaseAdapter {
             }
 
         return v;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.v("Test", ""+uebung.get(position).getName());
+        if(trainingsplaner!= null){
+            FragmentTransaction ft= context.getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebung.get(position),trainingsplaner));
+            ft.commit();
+        }
     }
 }

@@ -66,10 +66,10 @@ public class FragmentTrainingsplanPager extends Fragment {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_fragment_trainingsplan_pager, container, false);
         ViewPager vP= (ViewPager)v.findViewById(R.id.pagerTrainingeplaner);//TODO in dem Layout muss noch ein Pager eingefügt werden
-
+        Log.v("Get Trainingsplaner", "Trainingsplan "+ trainingsplaner.getName());
         vP.setAdapter(new FragmentPager(getChildFragmentManager(),tpFragments,titles));
         for(Uebung u:trainingsplaner.getTpUebungen()){
-            tpFragments.add(new FragmentTPUebung(u));//in diesem Fragment werden nur die Übungsdatenangezeigt
+            tpFragments.add(new FragmentUebungInPager(u));//in diesem Fragment werden nur die Übungsdatenangezeigt
         }
         vP.setCurrentItem(tpFragments.size()-1);
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fabNeueUebung);
@@ -79,12 +79,17 @@ public class FragmentTrainingsplanPager extends Fragment {
                 builder = new AlertDialog.Builder(getActivity());
                 LayoutInflater inflaters = getActivity().getLayoutInflater();
                 View theView = inflaters.inflate(R.layout.alert_neue_uebung, null);
-                Button ueAusUk= (Button) theView.findViewById(R.id.uebungKatalog);
-                Button neueUE= (Button) theView.findViewById(R.id.neueTPuebung);
 
-                ueAusUk.setOnClickListener(new View.OnClickListener() {
+
+                builder.setNeutralButton("Übung aus Übungskatalog", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setNeutralButton("Übung aus Übungskatalog", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
                         auswahlUK = new AlertDialog.Builder(getActivity());
                         LayoutInflater inflaters = getActivity().getLayoutInflater();
                         View theView = inflaters.inflate(R.layout.alert_uebung_aus_katalog, null);
@@ -98,7 +103,7 @@ public class FragmentTrainingsplanPager extends Fragment {
                             public void onClick(View v) {
                                 FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
 
-                                ft.replace(R.id.traininsplanerlayout,new FragmentEigengewicht());
+                                ft.replace(R.id.traininsplanerlayout,new FragmentEigengewicht(trainingsplaner));
                                 ft.commit();
                             }
                         });
@@ -108,7 +113,7 @@ public class FragmentTrainingsplanPager extends Fragment {
                             public void onClick(View v) {
                                 FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
 
-                                ft.replace(R.id.traininsplanerlayout,new FragmentMaschine());
+                                ft.replace(R.id.traininsplanerlayout,new FragmentMaschine(trainingsplaner));
                                 ft.commit();
                             }
                         });
@@ -118,7 +123,7 @@ public class FragmentTrainingsplanPager extends Fragment {
                             public void onClick(View v) {
                                 FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
 
-                                ft.replace(R.id.traininsplanerlayout,new FragmentFunktionell());
+                                ft.replace(R.id.traininsplanerlayout,new FragmentFunktionell(trainingsplaner));
                                 ft.commit();
                             }
                         });
@@ -128,32 +133,22 @@ public class FragmentTrainingsplanPager extends Fragment {
                             public void onClick(View v) {
                                 FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
 
-                                ft.replace(R.id.traininsplanerlayout,new FragmentFreieGewichte());
+                                ft.replace(R.id.traininsplanerlayout,new FragmentFreieGewichte(trainingsplaner));
                                 ft.commit();
                             }
                         });
+                        auswahlUK.setView(theView);
+                        auswahlUK.show();
 
-                        builder.show();
                     }
-                });
-                neueUE.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        auswahlNeueUebung = new AlertDialog.Builder(getActivity());
-                        LayoutInflater inflaters = getActivity().getLayoutInflater();
-                        View theView = inflaters.inflate(R.layout.alert_neue_uebung, null);
 
-
-
-
-
-                        builder.show();
-                    }
                 });
 
 
 
 
+
+                builder.setView(theView);
                 builder.show();
               //TODO, hier musst ein weiteres Fragment füt die neue Übung geöffnet werden  z.B NeueTPUebungFragment
 

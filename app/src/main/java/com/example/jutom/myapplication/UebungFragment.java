@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,6 +42,7 @@ public class UebungFragment extends Fragment {
     private ListAdapterRuecken listAdapterRuecken= null;
     private String listName;
     private Trainingsplaner tp;
+
 
     private List<Uebung> uebungList;
 
@@ -108,40 +110,58 @@ public class UebungFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 //das muss neu gemacht werden jeder Adapter braucht sein eigenes Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.uebung_fragment, container, false);
-        ListView listView= (ListView)v.findViewById(R.id.uebungList);
+        final ListView listView= (ListView)v.findViewById(R.id.uebungList);
         if (uebungListAdapter!= null){
             listView.setAdapter(uebungListAdapter);
+            tp= uebungListAdapter.trainingsplaner;
+            uebungList.addAll(uebungListAdapter.uebung);
             }
        else if (listAdapterBrust!= null){
             listView.setAdapter(listAdapterBrust);
-
+            tp= listAdapterBrust.trainingsplaner;
+            uebungList.addAll(listAdapterBrust.uebung);
         }
        else if (listAdapterTricep!= null){
            listView.setAdapter(listAdapterTricep);
+            tp= listAdapterTricep.trainingsplaner;
+            uebungList.addAll(listAdapterTricep.uebung);
             }
        else if (listAdapterBeine!= null){
             listView.setAdapter(listAdapterBeine);
+            tp= listAdapterBeine.trainingsplaner;
+            uebungList.addAll(listAdapterBeine.uebung);
             }
        else if (listAdapterBauch!= null){
             listView.setAdapter(listAdapterBauch);
+            tp= listAdapterBauch.trainingsplaner;
+            uebungList.addAll(listAdapterBauch.uebung);
             }
        else if (listAdapterObererRuecken!= null){
             listView.setAdapter(listAdapterObererRuecken);
+            tp= listAdapterObererRuecken.trainingsplaner;
+            uebungList.addAll(listAdapterObererRuecken.uebung);
             }
         else if (listAdapterSchulter!= null){
             listView.setAdapter(listAdapterSchulter);
+            tp= listAdapterSchulter.trainingsplaner;
+            uebungList.addAll(listAdapterSchulter.uebung);
             }
        else if (listAdapterBicep!= null){
             listView.setAdapter(listAdapterBicep);
+            tp= listAdapterBicep.trainingsplaner;
+            uebungList.addAll(listAdapterBicep.uebung);
             }
       else if (listAdapterRuecken!= null){
             listView.setAdapter(listAdapterRuecken);
+            tp= listAdapterRuecken.trainingsplaner;
+            uebungList.addAll(listAdapterRuecken.uebung);
             }
 
         //TODO hier muss noch ein Button bearbeitet werden hier muss auch die oben darrgestellte IF-Anweisung eingebracht werden um die neue Übung zu öffnen
@@ -157,6 +177,16 @@ public class UebungFragment extends Fragment {
                 neueUebung.putExtra("LISTBUNDLE", neu);
                 startActivity(neueUebung);
 
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(tp!= null){
+                    FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebungList.get(position),tp));
+                    ft.commit();
+                }
             }
         });
         return v;

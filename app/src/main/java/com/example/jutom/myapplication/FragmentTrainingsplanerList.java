@@ -95,8 +95,10 @@ public class FragmentTrainingsplanerList extends Fragment {
                 tp.setName("Neuer Plan");
                 Log.v("Fragment", "TP Fragment ist erstellt");
                 trainingsplaners.add(tp);
-                listAdapterTrainingsplaner=null;
-                listAdapterTrainingsplaner=new ListAdapterTrainingsplaner(getActivity(),trainingsplaners);
+                trainerList.setAdapter(null);
+                listAdapterTrainingsplaner.notifyDataSetChanged();
+                trainerList.setAdapter(listAdapterTrainingsplaner);
+
 
             }
         });
@@ -104,7 +106,7 @@ public class FragmentTrainingsplanerList extends Fragment {
         trainerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        FragmentTransaction ft= getChildFragmentManager().beginTransaction();
+                        FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(trainingsplaners.get(position)));
         ft.commit();
             }

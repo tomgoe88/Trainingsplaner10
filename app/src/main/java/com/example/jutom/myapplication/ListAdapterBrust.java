@@ -3,11 +3,14 @@ package com.example.jutom.myapplication;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -19,12 +22,12 @@ import java.util.List;
 /**
  * Created by Jutom on 28.06.2016.
  */
-public class ListAdapterBrust extends BaseAdapter {
+public class ListAdapterBrust extends BaseAdapter implements AdapterView.OnItemClickListener {
 
-    private List<Brust> uebung;
-    private Context context;
+     List<Brust> uebung;
+    private FragmentActivity context;
     Trainingsplaner trainingsplaner;
-    public ListAdapterBrust(Context con, List<Brust> ueb, Trainingsplaner trainingsplaner){
+    public ListAdapterBrust(FragmentActivity con, List<Brust> ueb, Trainingsplaner trainingsplaner){
         this.context= con;
         this.uebung=ueb;
         this.trainingsplaner= trainingsplaner;
@@ -83,5 +86,14 @@ public class ListAdapterBrust extends BaseAdapter {
             ueBild.setImageBitmap(bitmap);
         }
         return v;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if(trainingsplaner!= null){
+            FragmentTransaction ft= context.getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebung.get(position),trainingsplaner));
+            ft.commit();
+        }
     }
 }

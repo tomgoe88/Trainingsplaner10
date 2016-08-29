@@ -3,21 +3,4 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Übung aus Katalog"
-        android:id="@+id/uebungKatalog"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="185dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Neue Übung"
-        android:id="@+id/neueTPuebung"
-        android:layout_centerVertical="true"
-        android:layout_alignEnd="@+id/uebungKatalog"
-        android:layout_alignStart="@+id/uebungKatalog" />
 </RelativeLayout>

@@ -4,6 +4,7 @@ package com.example.jutom.myapplication;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,9 @@ public class FragmentEigengewicht extends Fragment {
         titles.add("Rücken");
         titles.add("Beine");
         titles.add("Brust");
+        if(trainingsplaner!=null){
+            Log.v("Get Training", "Trainings pla "+ trainingsplaner.getName());
+        }
 
         uebungsFragments= new ArrayList<Fragment>();
         untererRueckenFragment= new UebungFragment(new UebungListAdapter(this.getActivity(),SQLHelper.getEigengewichtuntererRueckens(), trainingsplaner),"EigenUntererRuecken");

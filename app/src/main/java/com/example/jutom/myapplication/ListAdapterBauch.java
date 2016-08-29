@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +25,10 @@ import java.util.List;
  */
 public class ListAdapterBauch extends BaseAdapter implements AdapterView.OnItemClickListener {
 
-    private List<Bauch> uebung;
-    private Activity context;
-    private Trainingsplaner trainingsplaner;
-    public ListAdapterBauch(Activity con, List<Bauch> ueb, Trainingsplaner trainingsplaner){
+     List<Bauch> uebung;
+    private FragmentActivity context;
+     Trainingsplaner trainingsplaner;
+    public ListAdapterBauch(FragmentActivity con, List<Bauch> ueb, Trainingsplaner trainingsplaner){
         this.context= con;
         this.uebung=ueb;
         this.trainingsplaner= trainingsplaner;
@@ -92,7 +93,7 @@ public class ListAdapterBauch extends BaseAdapter implements AdapterView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(trainingsplaner!= null){
-         android.app.FragmentTransaction ft= context.getFragmentManager().beginTransaction();
+            FragmentTransaction ft= context.getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebung.get(position),trainingsplaner));
             ft.commit();
         }
