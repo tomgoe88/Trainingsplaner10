@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="0"
+        android:id="@+id/txtPosition"
+        android:layout_marginTop="31dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Intervall"
+        android:id="@+id/txtIntervall"
+        android:layout_alignTop="@+id/txtPosition"
+        android:layout_toEndOf="@+id/txtPosition"
+        android:layout_marginStart="35dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Pause"
+        android:id="@+id/txtPause"
+        android:layout_alignTop="@+id/txtIntervall"
+        android:layout_toEndOf="@+id/txtIntervall"
+        android:layout_marginStart="31dp" />
+</RelativeLayout>

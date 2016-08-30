@@ -59,6 +59,11 @@ public class FragmentTrainingsplanPager extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         tpFragments= new ArrayList<Fragment>();
+        titles= new ArrayList<String>();
+        for(Uebung u:FragmentTrainingsplanerList.getTrainingsplaners().get(tpPosition).getTpUebungen()){
+            tpFragments.add(new FragmentUebungInPager(u));//in diesem Fragment werden nur die Übungsdatenangezeigt
+            titles.add(u.getName());
+        }
 
     }
 
@@ -70,9 +75,7 @@ public class FragmentTrainingsplanPager extends Fragment {
         ViewPager vP= (ViewPager)v.findViewById(R.id.pagerTrainingeplaner);//TODO in dem Layout muss noch ein Pager eingefügt werden
         Log.v("Get Trainingsplaner", "Trainingsplan "+ trainingsplaner.getName());
         vP.setAdapter(new FragmentPager(getChildFragmentManager(),tpFragments,titles));
-        for(Uebung u:FragmentTrainingsplanerList.getTrainingsplaners().get(tpPosition).getTpUebungen()){
-            tpFragments.add(new FragmentUebungInPager(u));//in diesem Fragment werden nur die Übungsdatenangezeigt
-        }
+
         vP.setCurrentItem(tpFragments.size()-1);
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fabNeueUebung);
         fab.setOnClickListener(new View.OnClickListener() {

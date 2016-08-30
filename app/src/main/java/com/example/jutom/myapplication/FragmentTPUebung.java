@@ -55,7 +55,7 @@ public class FragmentTPUebung extends Fragment {
     private String mParam1;
     private String mParam2;
     private Uebung uebung;
-
+    Uebung neu;
 
     public FragmentTPUebung(Uebung uebung, Trainingsplaner trainingsplaner, int pos) {
         // Required empty public constructor
@@ -73,12 +73,15 @@ public class FragmentTPUebung extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mCurrentPhotoPath=uebung.getImg();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+         neu=new Uebung();
+        Log.v("String", "Name ist "+uebung.getName());
         View v= inflater.inflate(R.layout.fragment_fragment_tpuebung, container, false);
         save = (Button) v.findViewById(R.id.btnSaveTP);
         imageView= (ImageView) v.findViewById(R.id.imageTPuebung);
@@ -91,25 +94,43 @@ public class FragmentTPUebung extends Fragment {
         });
         setPic();
         editBeschreibung=(EditText)v.findViewById(R.id.editTPbeschreibung);
-        editTPuebungsname=(EditText)v.findViewById(R.id.editTPbeschreibung);
+        editTPuebungsname=(EditText)v.findViewById(R.id.editTPuebung);
         satzzahl= (TextView)v.findViewById(R.id.txtSatzZiffer);
+        if(uebung.getName()!=null){
+           editTPuebungsname.setText(uebung.getName());
+        }
+        if(uebung.getBeschreibung()!=null){
+            editBeschreibung.setText(uebung.getBeschreibung());
+        }
+
+        //TODO: Es muss noch geschaut werden, warum die onreult Methode nicht läuft
 
         satzzahl.setText(""+(uebung.getSatzList().size()+uebung.getSatzZeitList().size())); //der Teil muss auch hinzugefügt werden, wenn ein neuer Satz angelegt wird
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(uebung.getImg()!= mCurrentPhotoPath){
-                    uebung.setImg(mCurrentPhotoPath);
+
+                if(uebung.getImg()!= mCurrentPhotoPath&& mCurrentPhotoPath!=null){
+                    neu.setImg(mCurrentPhotoPath);
                 }
-                if(uebung.getBeschreibung()!= editBeschreibung.getText().toString()){
-                    uebung.setBeschreibung(editBeschreibung.getText().toString());
+                else{
+                    neu.setImg(uebung.getImg());
                 }
-                if(uebung.getName()!= editTPuebungsname.getText().toString()){
-                    uebung.setName(editTPuebungsname.getText().toString());
+                if(uebung.getBeschreibung()==null){
+                    neu.setBeschreibung(editBeschreibung.getText().toString());
+                }
+                else {
+                    neu.setBeschreibung(uebung.getBeschreibung());
+                }
+                if(uebung.getName()==null){
+                    neu.setName(editTPuebungsname.getText().toString());
+                }
+                else{
+                    neu.setName(uebung.getName());
                 }
 
-                FragmentTrainingsplanerList.getTrainingsplaners().get(tpPositon).getTpUebungen().add(uebung);
+                FragmentTrainingsplanerList.getTrainingsplaners().get(tpPositon).getTpUebungen().add(neu);
                 FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(FragmentTrainingsplanerList.getTrainingsplaners().get(tpPositon), tpPositon));
                 ft.commit();
@@ -147,7 +168,7 @@ public class FragmentTPUebung extends Fragment {
         int targetH = imageView.getHeight();
         Log.v("Bildgröße", "Das Bild ist: "+targetH+ " x "+targetW+" groß");
 
-        Bitmap bitmap = BitmapFactory.decodeFile(uebung.getImg());
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
         Matrix matrix = new Matrix();
 
         matrix.postRotate(90);
@@ -165,7 +186,7 @@ public class FragmentTPUebung extends Fragment {
 /*            Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ueBild.setImageBitmap(imageBitmap);*/
-            uebung.setImg(mCurrentPhotoPath);
+
             setPic();
         }
     }
@@ -182,6 +203,7 @@ public class FragmentTPUebung extends Fragment {
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath =image.getAbsolutePath();
+
         return image;
     }
 
