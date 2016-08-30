@@ -1,5 +1,6 @@
 package com.example.jutom.myapplication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,8 +11,8 @@ public class Uebung
     private String name;
     private String beschreibung;
     private String img;
-    private List<Satz> satzList;
-    private List<SatzZeit> satzZeitList;
+    private List<Satz> satzList= new ArrayList<>();
+    private List<SatzZeit> satzZeitList= new ArrayList<>();
 
     public String getName() {
         return name;

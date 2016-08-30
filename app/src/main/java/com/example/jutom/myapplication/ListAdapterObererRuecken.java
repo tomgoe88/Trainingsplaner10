@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Created by Jutom on 28.06.2016.
  */
-public class ListAdapterObererRuecken extends BaseAdapter implements AdapterView.OnItemClickListener {
+public class ListAdapterObererRuecken extends BaseAdapter {
 
      List<ObererRuecken> uebung;
     private FragmentActivity context;
@@ -89,12 +89,5 @@ public class ListAdapterObererRuecken extends BaseAdapter implements AdapterView
         return v;
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if(trainingsplaner!= null){
-            FragmentTransaction ft= context.getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebung.get(position),trainingsplaner));
-            ft.commit();
-        }
-    }
+
 }

@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by Jutom on 28.06.2016.
  */
-public class ListAdapterBrust extends BaseAdapter implements AdapterView.OnItemClickListener {
+public class ListAdapterBrust extends BaseAdapter {
 
      List<Brust> uebung;
     private FragmentActivity context;
@@ -88,12 +88,5 @@ public class ListAdapterBrust extends BaseAdapter implements AdapterView.OnItemC
         return v;
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if(trainingsplaner!= null){
-            FragmentTransaction ft= context.getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebung.get(position),trainingsplaner));
-            ft.commit();
-        }
-    }
+
 }

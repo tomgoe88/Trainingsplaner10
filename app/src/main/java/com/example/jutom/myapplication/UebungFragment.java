@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,9 +33,9 @@ public class UebungFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private String listName;
-    private Trainingsplaner tp;
-    private String adapterName;
+     String listName;
+     Trainingsplaner tp;
+     String adapterName;
 
     UebungListAdapter uebungListAdapter;
     ListAdapterBauch listAdapterBauch;
@@ -56,6 +57,8 @@ public class UebungFragment extends Fragment {
     List<Schulter>schulters;
     List<Tricep>triceps;
 
+    int tpPosition;
+
 
 
     private List<Uebung> uebungList;
@@ -63,60 +66,9 @@ public class UebungFragment extends Fragment {
     public UebungFragment() {
         // Required empty public constructor
     }
-    public UebungFragment( String uA, String list, Trainingsplaner tp, List<UntererRuecken>uR){
-        this.listName=list;
-        this.adapterName=uA;
-        this.tp=tp;
-        this.untererRueckenList=uR;
-    }
-    public UebungFragment( String uA, String list, Trainingsplaner tp, List<Bauch>uR){
-        this.listName=list;
-        this.adapterName=uA;
-        this.tp=tp;
-        this.bauchList=uR;
-    }
-    public UebungFragment( String uA, String list, Trainingsplaner tp, List<Beine>uR){
-        this.listName=list;
-        this.adapterName=uA;
-        this.tp=tp;
-        this.beineList=uR;
-    }
-    public UebungFragment( String uA, String list, Trainingsplaner tp, List<Bicep>uR){
-        this.listName=list;
-        this.adapterName=uA;
-        this.tp=tp;
-        this.bicepList=uR;
-    }
-    public UebungFragment( String uA, String list, Trainingsplaner tp, List<Brust>uR){
-        this.listName=list;
-        this.adapterName=uA;
-        this.tp=tp;
-        this.brusts=uR;
-    }
-    public UebungFragment( String uA, String list, Trainingsplaner tp, List<ObererRuecken>uR){
-        this.listName=list;
-        this.adapterName=uA;
-        this.tp=tp;
-        this.obererRueckens=uR;
-    }
-    public UebungFragment( String uA, String list, Trainingsplaner tp, List<Ruecken>uR){
-        this.listName=list;
-        this.adapterName=uA;
-        this.tp=tp;
-        this.rueckens=uR;
-    }
-    public UebungFragment( String uA, String list, Trainingsplaner tp, List<Schulter>uR){
-        this.listName=list;
-        this.adapterName=uA;
-        this.tp=tp;
-        this.schulters=uR;
-    }
-    public UebungFragment( String uA, String list, Trainingsplaner tp, List<Tricep>uR){
-        this.listName=list;
-        this.adapterName=uA;
-        this.tp=tp;
-        this.triceps=uR;
-    }
+
+
+
 
     /**
      * Use this factory method to create a new instance of
@@ -151,9 +103,74 @@ public class UebungFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.uebung_fragment, container, false);
         final ListView listView= (ListView)v.findViewById(R.id.uebungList);
+        uebungList= new ArrayList<Uebung>();
+
         switch(adapterName){
             case("UntererRuecken"):
-                uebungListAdapter= new UebungListAdapter(getActivity(),,tp);
+                uebungListAdapter= new UebungListAdapter(getActivity(),untererRueckenList,tp);
+                listView.setAdapter(uebungListAdapter);
+                if(untererRueckenList!= null){
+                    uebungList.addAll(untererRueckenList);
+                }
+
+                break;
+            case("Bauch"):
+                listAdapterBauch= new ListAdapterBauch(getActivity(),bauchList,tp);
+                listView.setAdapter(listAdapterBauch);
+                if(bauchList!= null){
+                    uebungList.addAll(bauchList);
+                }
+                break;
+            case("Tricep"):
+                listAdapterTricep= new ListAdapterTricep(getActivity(),triceps,tp);
+                listView.setAdapter(listAdapterTricep);
+                if(triceps!= null){
+                    uebungList.addAll(triceps);
+                }
+                break;
+            case("Bicep"):
+                listAdapterBicep= new ListAdapterBicep(getActivity(),bicepList,tp);
+                listView.setAdapter(listAdapterBicep);
+                if(bicepList!= null){
+                    uebungList.addAll(bicepList);
+                }
+                break;
+            case("Schulter"):
+                listAdapterSchulter= new ListAdapterSchulter(getActivity(),schulters,tp);
+                listView.setAdapter(listAdapterSchulter);
+                if(schulters!= null){
+                    uebungList.addAll(schulters);
+                }
+                break;
+            case("ObererRuecken"):
+                listAdapterObererRuecken= new ListAdapterObererRuecken(getActivity(),obererRueckens,tp);
+                listView.setAdapter(listAdapterObererRuecken);
+                if(obererRueckens!= null){
+                    uebungList.addAll(obererRueckens);
+                }
+                break;
+            case("Ruecken"):
+                listAdapterRuecken= new ListAdapterRuecken(getActivity(),rueckens,tp);
+                listView.setAdapter(listAdapterRuecken);
+                if(rueckens!= null){
+                    uebungList.addAll(rueckens);
+                }
+                break;
+            case("Beine"):
+                listAdapterBeine= new ListAdapterBeine(getActivity(),beineList,tp);
+                listView.setAdapter(listAdapterBeine);
+                if(beineList!= null){
+                    uebungList.addAll(beineList);
+                }
+                break;
+            case("Brust"):
+                listAdapterBrust= new ListAdapterBrust(getActivity(),brusts,tp);
+                listView.setAdapter(listAdapterBrust);
+                if(brusts!= null){
+                    uebungList.addAll(brusts);
+                }
+                break;
+
 
 
         }
@@ -176,10 +193,10 @@ public class UebungFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.v("OnItem", "On item is clicked at postion "+position +" with tp = "+ tp.toString() );
+             //   Log.v("OnItem", "On item is clicked at postion "+position +" with tp = "+ tp.toString() );
                 if(tp!= null){
                     FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebungList.get(position),tp));
+                    ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebungList.get(position),tp, tpPosition));
                     ft.commit();
                 }
             }

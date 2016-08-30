@@ -38,13 +38,15 @@ public class FragmentFunktionell extends Fragment {
     UebungFragment bauchFragment= null;
     UebungFragment untererRueckenFragment= null;
 Trainingsplaner trainingsplaner;
+    int tpPosition;
 
     public FragmentFunktionell() {
         // Required empty public constructor
     }
-    public FragmentFunktionell(Trainingsplaner trainingsplaner) {
+    public FragmentFunktionell(Trainingsplaner trainingsplaner, int pos) {
         // Required empty public constructor
         this.trainingsplaner=trainingsplaner;
+        this.tpPosition=pos;
     }
 
     /**
@@ -84,15 +86,81 @@ Trainingsplaner trainingsplaner;
         titles.add("Brust");
 
         uebungsFragments= new ArrayList<Fragment>();
-        untererRueckenFragment= new UebungFragment(new UebungListAdapter(this.getActivity(),SQLHelper.getFunktionelluntererRueckens(),trainingsplaner),"FunktionallUntererRuecken");
-        bauchFragment = new UebungFragment(new ListAdapterBauch(this.getActivity(),SQLHelper.getFunktionellbauches(),trainingsplaner),"FunktionellBauch");
-        tricepFragment = new UebungFragment(new ListAdapterTricep(this.getActivity(),SQLHelper.getFunktionelltriceps(),trainingsplaner),"FunktionellTricep");
-        bicepFragment = new UebungFragment(new ListAdapterBicep(this.getActivity(),SQLHelper.getFunktionellbiceps(),trainingsplaner),"FunktionellBicep");
-        schulterFragment = new UebungFragment(new ListAdapterSchulter(this.getActivity(),SQLHelper.getFunktionellschulters(),trainingsplaner),"FunktionellSchulter");
-        obererRueckenFragment = new UebungFragment(new ListAdapterObererRuecken(this.getActivity(),SQLHelper.getFunktionellobererRueckens(),trainingsplaner),"FunktionellObererRuecken");
-        rueckenFragment = new UebungFragment(new ListAdapterRuecken(this.getActivity(),SQLHelper.getFunktionellrueckens(),trainingsplaner),"FunktionellRuecken");
-        beinFragment= new UebungFragment(new ListAdapterBeine(this.getActivity(),SQLHelper.getFunktionellbeines(),trainingsplaner),"FunktionellBein");
-        brustFragment = new UebungFragment(new ListAdapterBrust(this.getActivity(),SQLHelper.getFunktionellbrusts(),trainingsplaner),"FunktionellBrust");
+
+
+
+
+
+
+
+
+
+
+
+        untererRueckenFragment= new UebungFragment();
+        untererRueckenFragment.untererRueckenList=SQLHelper.getFunktionelluntererRueckens();
+        untererRueckenFragment.adapterName="UntererRuecken";
+        untererRueckenFragment.listName="FunktionallUntererRuecken";
+        untererRueckenFragment.tp=trainingsplaner;
+        untererRueckenFragment.tpPosition=tpPosition;
+
+        bauchFragment = new UebungFragment();
+        bauchFragment.bauchList=SQLHelper.getFunktionellbauches();
+        bauchFragment.adapterName="Bauch";
+        bauchFragment.listName="FunktionellBauch";
+        bauchFragment.tp=trainingsplaner;
+        bauchFragment.tpPosition=tpPosition;
+
+        tricepFragment = new UebungFragment();
+        tricepFragment.triceps=SQLHelper.getFunktionelltriceps();
+        tricepFragment.adapterName="Tricep";
+        tricepFragment.listName="FunktionellTricep";
+        tricepFragment.tp=trainingsplaner;
+        tricepFragment.tpPosition=tpPosition;
+
+        bicepFragment = new UebungFragment();
+        bicepFragment.bicepList=SQLHelper.getFunktionellbiceps();
+        bicepFragment.adapterName="Bicep";
+        bicepFragment.listName="FunktionellBicep";
+        bicepFragment.tp=trainingsplaner;
+        bicepFragment.tpPosition=tpPosition;
+
+        schulterFragment = new UebungFragment();
+        schulterFragment.schulters=SQLHelper.getFunktionellschulters();
+        schulterFragment.adapterName="Schulter";
+        schulterFragment.listName="FunktionellSchulter";
+        schulterFragment.tp=trainingsplaner;
+        schulterFragment.tpPosition=tpPosition;
+
+        obererRueckenFragment = new UebungFragment();
+        obererRueckenFragment.obererRueckens=SQLHelper.getFunktionellobererRueckens();
+        obererRueckenFragment.adapterName="ObererRuecken";
+        obererRueckenFragment.listName="FunktionellObererRuecken";
+        obererRueckenFragment.tp=trainingsplaner;
+        obererRueckenFragment.tpPosition=tpPosition;
+
+        rueckenFragment = new UebungFragment();
+        rueckenFragment.rueckens=SQLHelper.getFunktionellrueckens();
+        rueckenFragment.adapterName="Ruecken";
+        rueckenFragment.listName="FunktionellRuecken";
+        rueckenFragment.tp=trainingsplaner;
+        rueckenFragment.tpPosition=tpPosition;
+
+        beinFragment= new UebungFragment();
+        beinFragment.beineList=SQLHelper.getFunktionellbeines();
+        beinFragment.adapterName="Beine";
+        beinFragment.listName="FunktionellBein";
+        beinFragment.tp=trainingsplaner;
+        beinFragment.tpPosition=tpPosition;
+
+        brustFragment = new UebungFragment();
+        brustFragment.brusts=SQLHelper.getFunktionellbrusts();
+        brustFragment.adapterName="Brust";
+        brustFragment.listName="FunktionellBrust";
+        brustFragment.tp=trainingsplaner;
+        brustFragment.tpPosition=tpPosition;
+
+
         uebungsFragments.add(untererRueckenFragment);
         uebungsFragments.add(bauchFragment);
         uebungsFragments.add(tricepFragment);

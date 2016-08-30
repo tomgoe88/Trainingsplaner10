@@ -1,13 +1,38 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.jutom.myapplication.FragmentUebungInPager">
+    <ImageView
+        android:layout_width="200sp"
+        android:layout_height="200sp"
+        android:id="@+id/imagePagerUebung"
+        android:src="@drawable/kurzhantel"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/beschreibungPager"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/listSazZeit" />
 
-</FrameLayout>
+    <ListView
+        android:layout_width="150sp"
+        android:layout_height="150sp"
+        android:id="@+id/listSazZeit"
+        android:layout_below="@+id/imagePagerUebung"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="59dp" />
+    <ListView
+        android:layout_width="150sp"
+        android:layout_height="150sp"
+        android:id="@+id/listSatzKlassisch"
+        android:layout_alignTop="@+id/listSazZeit"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

@@ -107,7 +107,7 @@ public class FragmentTrainingsplanerList extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(trainingsplaners.get(position)));
+        ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(trainingsplaners.get(position), position));
         ft.commit();
             }
         });

@@ -1,12 +1,31 @@
 package com.example.jutom.myapplication;
 
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class FragmentTPUebung extends Fragment {
@@ -15,6 +34,22 @@ public class FragmentTPUebung extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     Trainingsplaner trainingsplaner;
+    int tpPositon;
+
+    private ImageView imageView;
+    private TextView uebungsname;
+    private EditText editTPuebungsname;
+    private TextView beschreibung;
+    private EditText editBeschreibung;
+    private Button save;
+    private Button neuerSatz;
+    private TextView satzzahl;
+
+    String mCurrentPhotoPath;
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_TAKE_PHOTO = 1;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -22,10 +57,11 @@ public class FragmentTPUebung extends Fragment {
     private Uebung uebung;
 
 
-    public FragmentTPUebung(Uebung uebung, Trainingsplaner trainingsplaner) {
+    public FragmentTPUebung(Uebung uebung, Trainingsplaner trainingsplaner, int pos) {
         // Required empty public constructor
         this.uebung=uebung; //durch diese Referenzu werden die einzelen Parameter der Übung angezeigt
         this.trainingsplaner=trainingsplaner; //dieser Traingsplaner muss mitgegeben werden, wenn das FragmentTrainingsplanPager aufgerufen wird
+        this.tpPositon=pos; //wird benötigt um die übung am Ende im Richtigen Trainingsplaner zu speicher
     }
 
 
@@ -43,7 +79,110 @@ public class FragmentTPUebung extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_tpuebung, container, false);
+        View v= inflater.inflate(R.layout.fragment_fragment_tpuebung, container, false);
+        save = (Button) v.findViewById(R.id.btnSaveTP);
+        imageView= (ImageView) v.findViewById(R.id.imageTPuebung);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent();
+
+            }
+        });
+        setPic();
+        editBeschreibung=(EditText)v.findViewById(R.id.editTPbeschreibung);
+        editTPuebungsname=(EditText)v.findViewById(R.id.editTPbeschreibung);
+        satzzahl= (TextView)v.findViewById(R.id.txtSatzZiffer);
+
+        satzzahl.setText(""+(uebung.getSatzList().size()+uebung.getSatzZeitList().size())); //der Teil muss auch hinzugefügt werden, wenn ein neuer Satz angelegt wird
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(uebung.getImg()!= mCurrentPhotoPath){
+                    uebung.setImg(mCurrentPhotoPath);
+                }
+                if(uebung.getBeschreibung()!= editBeschreibung.getText().toString()){
+                    uebung.setBeschreibung(editBeschreibung.getText().toString());
+                }
+                if(uebung.getName()!= editTPuebungsname.getText().toString()){
+                    uebung.setName(editTPuebungsname.getText().toString());
+                }
+
+                FragmentTrainingsplanerList.getTrainingsplaners().get(tpPositon).getTpUebungen().add(uebung);
+                FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(FragmentTrainingsplanerList.getTrainingsplaners().get(tpPositon), tpPositon));
+                ft.commit();
+            }
+        });
+        return v;
+    }
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                Log.v("Take Picture", ex.getMessage());
+            }
+            Log.v("Test", photoFile.toString());
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(getActivity(),
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                Log.v("Test", takePictureIntent.getExtras().toString());
+                getActivity().startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+    }
+    private void setPic() {
+
+        // Get the dimensions of the View
+        int targetW = imageView.getWidth();
+        int targetH = imageView.getHeight();
+        Log.v("Bildgröße", "Das Bild ist: "+targetH+ " x "+targetW+" groß");
+
+        Bitmap bitmap = BitmapFactory.decodeFile(uebung.getImg());
+        Matrix matrix = new Matrix();
+
+        matrix.postRotate(90);
+
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,600,600,true);
+
+        Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap .getWidth(), scaledBitmap .getHeight(), matrix, true);
+
+        //Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        imageView.setImageBitmap(rotatedBitmap);
+    }
+    @Override
+    public  void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
+/*            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ueBild.setImageBitmap(imageBitmap);*/
+            uebung.setImg(mCurrentPhotoPath);
+            setPic();
+        }
+    }
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath =image.getAbsolutePath();
+        return image;
     }
 
 }

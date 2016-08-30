@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by Jutom on 28.06.2016.
  */
-public class SatzZeit
+public class SatzZeit extends SatzMaster
 {
     private int satzZahl;
     private int pause;

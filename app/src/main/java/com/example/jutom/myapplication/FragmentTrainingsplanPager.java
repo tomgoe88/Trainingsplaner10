@@ -38,11 +38,13 @@ public class FragmentTrainingsplanPager extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    int tpPosition;
 
 
-    public FragmentTrainingsplanPager(Trainingsplaner trainingsplaner) {
+    public FragmentTrainingsplanPager(Trainingsplaner trainingsplaner, int position) {
         // Required empty public constructor
         this.trainingsplaner= trainingsplaner;
+        this.tpPosition=position;
     }
 
 
@@ -68,7 +70,7 @@ public class FragmentTrainingsplanPager extends Fragment {
         ViewPager vP= (ViewPager)v.findViewById(R.id.pagerTrainingeplaner);//TODO in dem Layout muss noch ein Pager eingefügt werden
         Log.v("Get Trainingsplaner", "Trainingsplan "+ trainingsplaner.getName());
         vP.setAdapter(new FragmentPager(getChildFragmentManager(),tpFragments,titles));
-        for(Uebung u:trainingsplaner.getTpUebungen()){
+        for(Uebung u:FragmentTrainingsplanerList.getTrainingsplaners().get(tpPosition).getTpUebungen()){
             tpFragments.add(new FragmentUebungInPager(u));//in diesem Fragment werden nur die Übungsdatenangezeigt
         }
         vP.setCurrentItem(tpFragments.size()-1);
@@ -103,7 +105,7 @@ public class FragmentTrainingsplanPager extends Fragment {
                             public void onClick(View v) {
                                 FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
 
-                                ft.replace(R.id.traininsplanerlayout,new FragmentEigengewicht(trainingsplaner));
+                                ft.replace(R.id.traininsplanerlayout,new FragmentEigengewicht(trainingsplaner,tpPosition));
                                 ft.commit();
                             }
                         });
@@ -113,7 +115,7 @@ public class FragmentTrainingsplanPager extends Fragment {
                             public void onClick(View v) {
                                 FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
 
-                                ft.replace(R.id.traininsplanerlayout,new FragmentMaschine(trainingsplaner));
+                                ft.replace(R.id.traininsplanerlayout,new FragmentMaschine(trainingsplaner,tpPosition));
                                 ft.commit();
                             }
                         });
@@ -123,7 +125,7 @@ public class FragmentTrainingsplanPager extends Fragment {
                             public void onClick(View v) {
                                 FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
 
-                                ft.replace(R.id.traininsplanerlayout,new FragmentFunktionell(trainingsplaner));
+                                ft.replace(R.id.traininsplanerlayout,new FragmentFunktionell(trainingsplaner,tpPosition));
                                 ft.commit();
                             }
                         });
@@ -133,7 +135,7 @@ public class FragmentTrainingsplanPager extends Fragment {
                             public void onClick(View v) {
                                 FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
 
-                                ft.replace(R.id.traininsplanerlayout,new FragmentFreieGewichte(trainingsplaner));
+                                ft.replace(R.id.traininsplanerlayout,new FragmentFreieGewichte(trainingsplaner,tpPosition));
                                 ft.commit();
                             }
                         });

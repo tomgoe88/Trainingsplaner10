@@ -39,13 +39,15 @@ public class FragmentMaschine extends Fragment {
     UebungFragment bauchFragment= null;
     UebungFragment untererRueckenFragment= null;
     Trainingsplaner trainingsplaner;
+    int tpPosition;
 
     public FragmentMaschine() {
         // Required empty public constructor
     }
-    public FragmentMaschine(Trainingsplaner trainingsplaner) {
+    public FragmentMaschine(Trainingsplaner trainingsplaner,int pos) {
         // Required empty public constructor
         this.trainingsplaner=trainingsplaner;
+        this.tpPosition=pos;
     }
 
     /**
@@ -86,15 +88,81 @@ public class FragmentMaschine extends Fragment {
         titles.add("Brust");
 
         uebungsFragments= new ArrayList<Fragment>();
-        untererRueckenFragment= new UebungFragment(new UebungListAdapter(this.getActivity(),SQLHelper.getMaschineuntererRueckens(),trainingsplaner),"MaschineUntererRuecken");
-        bauchFragment = new UebungFragment(new ListAdapterBauch(this.getActivity(),SQLHelper.getMaschinebauches(),trainingsplaner),"MaschineBauch");
-        tricepFragment = new UebungFragment(new ListAdapterTricep(this.getActivity(),SQLHelper.getMaschinetriceps(),trainingsplaner),"MaschineTricep");
-        bicepFragment = new UebungFragment(new ListAdapterBicep(this.getActivity(),SQLHelper.getMaschinebiceps(),trainingsplaner),"MaschineBicep");
-        schulterFragment = new UebungFragment(new ListAdapterSchulter(this.getActivity(),SQLHelper.getMaschineschulters(),trainingsplaner),"MaschineSchulter");
-        obererRueckenFragment = new UebungFragment(new ListAdapterObererRuecken(this.getActivity(),SQLHelper.getMaschineobererRueckens(),trainingsplaner),"MaschineObererRuecken");
-        rueckenFragment = new UebungFragment(new ListAdapterRuecken(this.getActivity(),SQLHelper.getMaschinerueckens(),trainingsplaner),"MaschineRuecken");
-        beinFragment= new UebungFragment(new ListAdapterBeine(this.getActivity(),SQLHelper.getMaschinebeines(),trainingsplaner),"MaschineBein");
-        brustFragment = new UebungFragment(new ListAdapterBrust(this.getActivity(),SQLHelper.getMaschinebrusts(),trainingsplaner),"MaschineBrust");
+
+
+
+
+
+
+
+
+
+
+
+
+        untererRueckenFragment= new UebungFragment();
+        untererRueckenFragment.untererRueckenList=SQLHelper.getMaschineuntererRueckens();
+        untererRueckenFragment.adapterName="UntererRuecken";
+        untererRueckenFragment.listName="MaschineUntererRuecken";
+        untererRueckenFragment.tp=trainingsplaner;
+        untererRueckenFragment.tpPosition=tpPosition;
+
+        bauchFragment = new UebungFragment();
+        bauchFragment.bauchList=SQLHelper.getMaschinebauches();
+        bauchFragment.adapterName="Bauch";
+        bauchFragment.listName="MaschineBauch";
+        bauchFragment.tp=trainingsplaner;
+        bauchFragment.tpPosition=tpPosition;
+
+        tricepFragment = new UebungFragment();
+        tricepFragment.triceps=SQLHelper.getMaschinetriceps();
+        tricepFragment.adapterName="Tricep";
+        tricepFragment.listName="MaschineTricep";
+        tricepFragment.tp=trainingsplaner;
+        tricepFragment.tpPosition=tpPosition;
+
+        bicepFragment = new UebungFragment();
+        bicepFragment.bicepList=SQLHelper.getMaschinebiceps();
+        bicepFragment.adapterName="Bicep";
+        bicepFragment.listName="MaschineBicep";
+        bicepFragment.tp=trainingsplaner;
+        bicepFragment.tpPosition=tpPosition;
+
+        schulterFragment = new UebungFragment();
+        schulterFragment.schulters=SQLHelper.getMaschineschulters();
+        schulterFragment.adapterName="Schulter";
+        schulterFragment.listName="MaschineSchulter";
+        schulterFragment.tp=trainingsplaner;
+        schulterFragment.tpPosition=tpPosition;
+
+        obererRueckenFragment = new UebungFragment();
+        obererRueckenFragment.obererRueckens=SQLHelper.getMaschineobererRueckens();
+        obererRueckenFragment.adapterName="ObererRuecken";
+        obererRueckenFragment.listName="MaschineObererRuecken";
+        obererRueckenFragment.tp=trainingsplaner;
+        obererRueckenFragment.tpPosition=tpPosition;
+
+        rueckenFragment = new UebungFragment();
+        rueckenFragment.rueckens=SQLHelper.getMaschinerueckens();
+        rueckenFragment.adapterName="Ruecken";
+        rueckenFragment.listName="MaschineRuecken";
+        rueckenFragment.tp=trainingsplaner;
+        rueckenFragment.tpPosition=tpPosition;
+
+        beinFragment= new UebungFragment();
+        beinFragment.beineList=SQLHelper.getMaschinebeines();
+        beinFragment.adapterName="Beine";
+        beinFragment.listName="MaschineBein";
+        beinFragment.tp=trainingsplaner;
+        beinFragment.tpPosition=tpPosition;
+
+        brustFragment = new UebungFragment();
+        brustFragment.brusts=SQLHelper.getMaschinebrusts();
+        brustFragment.adapterName="Brust";
+        brustFragment.listName="MaschineBrust";
+        brustFragment.tp=trainingsplaner;
+        brustFragment.tpPosition=tpPosition;
+
         uebungsFragments.add(untererRueckenFragment);
         uebungsFragments.add(bauchFragment);
         uebungsFragments.add(tricepFragment);

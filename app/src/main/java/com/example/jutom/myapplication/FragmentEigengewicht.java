@@ -40,15 +40,17 @@ public class FragmentEigengewicht extends Fragment {
     UebungFragment bauchFragment= null;
     UebungFragment untererRueckenFragment= null;
     Trainingsplaner trainingsplaner;
+    int tpPosition;
 
 
 
     public FragmentEigengewicht() {
         // Required empty public constructor
     }
-    public FragmentEigengewicht(Trainingsplaner tp) {
+    public FragmentEigengewicht(Trainingsplaner tp, int pos) {
         // Required empty public constructor
         this.trainingsplaner=tp;
+        this.tpPosition=pos;
     }
 
     /**
@@ -91,15 +93,79 @@ public class FragmentEigengewicht extends Fragment {
         }
 
         uebungsFragments= new ArrayList<Fragment>();
-        untererRueckenFragment= new UebungFragment("UntererRuecken","EigenUntererRuecken",trainingsplaner,SQLHelper.getEigengewichtuntererRueckens());
-        bauchFragment = new UebungFragment("Bauch","EigenBauch",trainingsplaner,SQLHelper.getEigengewichtbauches());
-        tricepFragment = new UebungFragment("Tricep","EigenTricep",trainingsplaner,SQLHelper.getEigengewichttriceps());
-        bicepFragment = new UebungFragment("Bicep","EigenBicep", trainingsplaner, SQLHelper.getEigengewichtbiceps());
-        schulterFragment = new UebungFragment("Schulter","EigenSchulter", trainingsplaner, SQLHelper.getEigengewichtschulters());
-        obererRueckenFragment = new UebungFragment("ObererRuecken","EigenObererRuecken", trainingsplaner,SQLHelper.getEigengewichtobererRueckens());
-        rueckenFragment = new UebungFragment("Ruecken","EigenRuecken", trainingsplaner, SQLHelper.getEigengewichtrueckens());
-        beinFragment= new UebungFragment("Beine","EigenBein", trainingsplaner, SQLHelper.getEigengewichtbeines());
-        brustFragment = new UebungFragment("Brust","EigenBrust", trainingsplaner,SQLHelper.getEigengewichtbrusts());
+
+
+
+
+
+
+
+
+
+
+        untererRueckenFragment= new UebungFragment();
+        untererRueckenFragment.untererRueckenList=SQLHelper.getEigengewichtuntererRueckens();
+        untererRueckenFragment.adapterName="UntererRuecken";
+        untererRueckenFragment.listName="EigenUntererRuecken";
+        untererRueckenFragment.tp=trainingsplaner;
+        untererRueckenFragment.tpPosition=tpPosition;
+
+        bauchFragment = new UebungFragment();
+        bauchFragment.bauchList=SQLHelper.getEigengewichtbauches();
+        bauchFragment.adapterName="Bauch";
+        bauchFragment.listName="EigenBauch";
+        bauchFragment.tp=trainingsplaner;
+        bauchFragment.tpPosition=tpPosition;
+
+        tricepFragment = new UebungFragment();
+        tricepFragment.triceps=SQLHelper.getEigengewichttriceps();
+        tricepFragment.adapterName="Tricep";
+        tricepFragment.listName="EigenTricep";
+        tricepFragment.tp=trainingsplaner;
+        tricepFragment.tpPosition=tpPosition;
+
+        bicepFragment = new UebungFragment();
+        bicepFragment.bicepList=SQLHelper.getEigengewichtbiceps();
+        bicepFragment.adapterName="Bicep";
+        bicepFragment.listName="EigenBicep";
+        bicepFragment.tp=trainingsplaner;
+        bicepFragment.tpPosition=tpPosition;
+
+        schulterFragment = new UebungFragment();
+        schulterFragment.schulters=SQLHelper.getEigengewichtschulters();
+        schulterFragment.adapterName="Schulter";
+        schulterFragment.listName="EigenSchulter";
+        schulterFragment.tp=trainingsplaner;
+        schulterFragment.tpPosition=tpPosition;
+
+        obererRueckenFragment = new UebungFragment();
+        obererRueckenFragment.obererRueckens=SQLHelper.getEigengewichtobererRueckens();
+        obererRueckenFragment.adapterName="ObererRuecken";
+        obererRueckenFragment.listName="EigenObererRuecken";
+        obererRueckenFragment.tp=trainingsplaner;
+        obererRueckenFragment.tpPosition=tpPosition;
+
+        rueckenFragment = new UebungFragment();
+        rueckenFragment.rueckens=SQLHelper.getEigengewichtrueckens();
+        rueckenFragment.adapterName="Ruecken";
+        rueckenFragment.listName="EigenRuecken";
+        rueckenFragment.tp=trainingsplaner;
+        rueckenFragment.tpPosition=tpPosition;
+
+        beinFragment= new UebungFragment();
+        beinFragment.beineList=SQLHelper.getEigengewichtbeines();
+        beinFragment.adapterName="Beine";
+        beinFragment.listName="EigenBein";
+        beinFragment.tp=trainingsplaner;
+        beinFragment.tpPosition=tpPosition;
+
+        brustFragment = new UebungFragment();
+        brustFragment.brusts=SQLHelper.getEigengewichtbrusts();
+        brustFragment.adapterName="Brust";
+        brustFragment.listName="EigenBrust";
+        brustFragment.tp=trainingsplaner;
+        brustFragment.tpPosition=tpPosition;
+
         uebungsFragments.add(untererRueckenFragment);
         uebungsFragments.add(bauchFragment);
        uebungsFragments.add(tricepFragment);
