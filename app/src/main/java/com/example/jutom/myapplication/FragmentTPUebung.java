@@ -2,6 +2,7 @@ package com.example.jutom.myapplication;
 
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +22,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 public class FragmentTPUebung extends Fragment {
@@ -44,6 +49,11 @@ public class FragmentTPUebung extends Fragment {
     private Button save;
     private Button neuerSatz;
     private TextView satzzahl;
+    View intervallView;
+    private View v;
+    View theView;
+    Calendar calendar;
+    AlertDialog.Builder builder;
 
     String mCurrentPhotoPath;
 
@@ -84,6 +94,7 @@ public class FragmentTPUebung extends Fragment {
         Log.v("String", "Name ist "+uebung.getName());
         View v= inflater.inflate(R.layout.fragment_fragment_tpuebung, container, false);
         save = (Button) v.findViewById(R.id.btnSaveTP);
+        neuerSatz=(Button)v.findViewById(R.id.btnNeuerSatz);
         imageView= (ImageView) v.findViewById(R.id.imageTPuebung);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +145,109 @@ public class FragmentTPUebung extends Fragment {
                 FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(FragmentTrainingsplanerList.getTrainingsplaners().get(tpPositon), tpPositon));
                 ft.commit();
+            }
+        });
+
+        neuerSatz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                builder = new AlertDialog.Builder(getActivity());
+                LayoutInflater inflaters = getActivity().getLayoutInflater();
+                View theView = inflaters.inflate(R.layout.alert_neuer_satz, null);
+                Button intervall= (Button)theView.findViewById(R.id.intervallButton);
+                Button klassisch=(Button)theView.findViewById(R.id.klassischButton);
+
+                intervall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        builder = new AlertDialog.Builder(getActivity());
+                        LayoutInflater inflaters = getActivity().getLayoutInflater();
+                        intervallView = inflaters.inflate(R.layout.alert_neuer_satz_zeit, null);
+
+                        final NumberPicker minute_intervall = (NumberPicker) intervallView.findViewById(R.id.picker_minute_intervall);
+                        final NumberPicker second_intervall = (NumberPicker) intervallView.findViewById(R.id.picker_second_intervall);
+                        // final Button save = (Button) theView.findViewById(R.id.savepick);
+                        final NumberPicker minute_pause = (NumberPicker) intervallView.findViewById(R.id.picker_minute_intervall);
+                        final NumberPicker second_pause = (NumberPicker) intervallView.findViewById(R.id.picker_second_intervall);
+
+                        minute_intervall.setMinValue(0);
+                        minute_intervall.setMaxValue(59);
+
+                        second_intervall.setMinValue(0);
+                        second_intervall.setMaxValue(59);
+
+                        minute_pause.setMinValue(0);
+                        minute_pause.setMaxValue(59);
+
+                        second_pause.setMinValue(0);
+                        second_pause.setMaxValue(59);
+                        Log.v("Button", "Item ist clicked");
+                        builder.setView(intervallView);
+
+                        minute_intervall.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                            @Override
+                            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                                return;
+                                //TODO Textview ändern Button einfügen und diesen teoö da einfügen
+
+
+                            }
+                        });
+                        second_intervall.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                            @Override
+                            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                                return;
+                            }
+                        });
+
+                        minute_pause.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                            @Override
+                            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                                return;
+                                //TODO Textview ändern Button einfügen und diesen teoö da einfügen
+
+
+                            }
+                        });
+                        second_pause.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                            @Override
+                            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                                return;
+                            }
+                        });
+
+                        builder.setNeutralButton("Save", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Satz intervallSatz= new Satz();
+                                intervallSatz.setBelastungsIntervall(intervallSatz.getBelastungsIntervall()+minute_intervall.getValue()+(second_intervall.getValue()*60));
+                                intervallSatz.setPause(intervallSatz.getBelastungsIntervall()+minute_pause.getValue()+(second_pause.getValue()*60));
+                                neu.getSatzList().add(intervallSatz);
+
+
+                            }
+                        });
+/*                    save.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+
+                        }
+                    });*/
+                        builder.show();
+                    }
+                });
+
+                klassisch.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+
+                builder.setView(theView);
+                builder.show();
             }
         });
         return v;
