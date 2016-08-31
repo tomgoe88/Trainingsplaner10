@@ -50,6 +50,7 @@ public class FragmentTPUebung extends Fragment {
     private Button neuerSatz;
     private TextView satzzahl;
     View intervallView;
+    View klassischView;
     private View v;
     View theView;
     Calendar calendar;
@@ -154,8 +155,12 @@ public class FragmentTPUebung extends Fragment {
                 builder = new AlertDialog.Builder(getActivity());
                 LayoutInflater inflaters = getActivity().getLayoutInflater();
                 View theView = inflaters.inflate(R.layout.alert_neuer_satz, null);
+                final Button klassisch=(Button)theView.findViewById(R.id.klassischButton);
                 Button intervall= (Button)theView.findViewById(R.id.intervallButton);
-                Button klassisch=(Button)theView.findViewById(R.id.klassischButton);
+
+                if(neu.getSatzZeitList().size()==0){
+
+                }
 
                 intervall.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -167,8 +172,8 @@ public class FragmentTPUebung extends Fragment {
                         final NumberPicker minute_intervall = (NumberPicker) intervallView.findViewById(R.id.picker_minute_intervall);
                         final NumberPicker second_intervall = (NumberPicker) intervallView.findViewById(R.id.picker_second_intervall);
                         // final Button save = (Button) theView.findViewById(R.id.savepick);
-                        final NumberPicker minute_pause = (NumberPicker) intervallView.findViewById(R.id.picker_minute_intervall);
-                        final NumberPicker second_pause = (NumberPicker) intervallView.findViewById(R.id.picker_second_intervall);
+                        final NumberPicker minute_pause = (NumberPicker) intervallView.findViewById(R.id.picker_minute_pause);
+                        final NumberPicker second_pause = (NumberPicker) intervallView.findViewById(R.id.picker_second_pause);
 
                         minute_intervall.setMinValue(0);
                         minute_intervall.setMaxValue(59);
@@ -221,9 +226,9 @@ public class FragmentTPUebung extends Fragment {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Satz intervallSatz= new Satz();
                                 intervallSatz.setBelastungsIntervall(intervallSatz.getBelastungsIntervall()+minute_intervall.getValue()+(second_intervall.getValue()*60));
-                                intervallSatz.setPause(intervallSatz.getBelastungsIntervall()+minute_pause.getValue()+(second_pause.getValue()*60));
+                                intervallSatz.setPause(intervallSatz.getPause()+minute_pause.getValue()+(second_pause.getValue()*60));
                                 neu.getSatzList().add(intervallSatz);
-
+                                satzzahl.setText(""+(neu.getSatzList().size()+neu.getSatzZeitList().size()));
 
                             }
                         });
@@ -238,12 +243,82 @@ public class FragmentTPUebung extends Fragment {
                     }
                 });
 
+
+
                 klassisch.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        builder = new AlertDialog.Builder(getActivity());
+                        LayoutInflater inflaters = getActivity().getLayoutInflater();
+                        klassischView = inflaters.inflate(R.layout.alert_neuer_satz_klassisch, null);
 
+                        final NumberPicker wdh_picker = (NumberPicker) klassischView.findViewById(R.id.picker_wdh);
+
+                        // final Button save = (Button) theView.findViewById(R.id.savepick);
+                        final NumberPicker minute_pause = (NumberPicker) klassischView.findViewById(R.id.picker_minute);
+                        final NumberPicker second_pause = (NumberPicker) klassischView.findViewById(R.id.picker_second);
+
+                        wdh_picker.setMinValue(0);
+                        wdh_picker.setMaxValue(59);
+
+
+                        minute_pause.setMinValue(0);
+                        minute_pause.setMaxValue(59);
+
+                        second_pause.setMinValue(0);
+                        second_pause.setMaxValue(59);
+                        Log.v("Button", "Item ist clicked");
+                        builder.setView(klassischView);
+
+                        wdh_picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                            @Override
+                            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                                return;
+                                //TODO Textview ändern Button einfügen und diesen teoö da einfügen
+
+
+                            }
+                        });
+
+                        minute_pause.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                            @Override
+                            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                                return;
+                                //TODO Textview ändern Button einfügen und diesen teoö da einfügen
+
+
+                            }
+                        });
+                        second_pause.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                            @Override
+                            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                                return;
+                            }
+                        });
+
+                        builder.setNeutralButton("Save", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                SatzZeit klassischSatz= new SatzZeit();
+                                klassischSatz.setWiederholungen(wdh_picker.getValue());
+                                klassischSatz.setPause(klassischSatz.getPause()+minute_pause.getValue()+(second_pause.getValue()*60));
+                                neu.getSatzZeitList().add(klassischSatz);
+
+                                satzzahl.setText(""+(neu.getSatzList().size()+neu.getSatzZeitList().size()));
+
+                            }
+                        });
+/*                    save.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+
+                        }
+                    });*/
+                        builder.show();
                     }
                 });
+
 
 
                 builder.setView(theView);

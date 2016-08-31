@@ -51,13 +51,17 @@ public class FragmentUebungInPager extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         listAdapterSatzKlassisch= new ListAdapterSatzKlassisch(getActivity(), uebung.getSatzZeitList());
         listAdapterSatzZeit=new ListAdapterSatzZeit(getActivity(), uebung.getSatzList());
         View v= inflater.inflate(R.layout.fragment_fragment_uebung_in_pager, container, false);
         ListView klassischList= (ListView) v.findViewById(R.id.listSatzKlassisch);
-        ListView zeitList=(ListView)v.findViewById(R.id.listSazZeit);
-        klassischList.setAdapter(listAdapterSatzKlassisch);
-        zeitList.setAdapter(listAdapterSatzZeit);
+       // ListView zeitList=(ListView)v.findViewById(R.id.listSazZeit);
+        if(uebung.getSatzList().size()==0) {
+            klassischList.setAdapter(listAdapterSatzKlassisch);
+        } else {
+            klassischList.setAdapter(listAdapterSatzZeit);
+        }
         ueBild= (ImageView)v.findViewById(R.id.imagePagerUebung);
         setPic();
         TextView beschreibung= (TextView) v.findViewById(R.id.beschreibungPager);

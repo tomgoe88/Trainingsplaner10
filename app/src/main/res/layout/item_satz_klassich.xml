@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Wdh"
-        android:id="@+id/txtWdh"
+        android:id="@+id/plapla"
         android:layout_alignTop="@+id/txtPositionKlassisch"
         android:layout_toEndOf="@+id/txtPositionKlassisch"
         android:layout_marginStart="35dp" />
@@ -27,8 +27,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Pause"
         android:id="@+id/txtPauseKlassisch"
-        android:layout_alignTop="@+id/txtWdh"
-        android:layout_toEndOf="@+id/txtWdh"
+        android:layout_alignTop="@+id/plapla"
+        android:layout_toEndOf="@+id/plapla"
         android:layout_marginStart="31dp" />
 
 </RelativeLayout>

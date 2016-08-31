@@ -53,12 +53,12 @@ public class ListAdapterSatzKlassisch extends BaseAdapter {
             v = vi.inflate(R.layout.item_satz_klassich, null);
         }
 
-        tpName= (TextView) v.findViewById(R.id.txtWdh);
-        pause= (TextView) v.findViewById(R.id.txtPause);
-        pos= (TextView) v.findViewById(R.id.txtPosition);
+        tpName= (TextView) v.findViewById(R.id.plapla);
+        pause= (TextView) v.findViewById(R.id.txtPauseKlassisch);
+        pos= (TextView) v.findViewById(R.id.txtPositionKlassisch);
 
         pos.setText(""+position+1);
-        tpName.setText(uebung.get(position).getWiederholungen());
+        tpName.setText(""+uebung.get(position).getWiederholungen());
         pause.setText(""+String.format("%d:%02d",
                 TimeUnit.MILLISECONDS.toMinutes( uebung.get(position).getPause()*1000),
                 TimeUnit.MILLISECONDS.toSeconds(uebung.get(position).getPause()*1000) -
