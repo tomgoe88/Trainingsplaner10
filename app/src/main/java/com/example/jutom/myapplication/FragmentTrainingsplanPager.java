@@ -99,8 +99,8 @@ public class FragmentTrainingsplanPager extends Fragment {
                         FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebung,trainingsplaner, tpPosition));
                         ft.commit();
-                        builder.setCancelable(true);
-
+                        neueUebungErstellen.setVisibility(View.INVISIBLE);
+                        uebungAusKatalog.setVisibility(View.INVISIBLE);
                     }
                 });
                 uebungAusKatalog.setOnClickListener(new View.OnClickListener() {
@@ -109,10 +109,12 @@ public class FragmentTrainingsplanPager extends Fragment {
                         auswahlUK = new AlertDialog.Builder(getActivity());
                         LayoutInflater inflaters = getActivity().getLayoutInflater();
                         View theView = inflaters.inflate(R.layout.alert_uebung_aus_katalog, null);
-                        Button eigen= (Button) theView.findViewById(R.id.uekatEigengewicht);
-                        Button maschine= (Button) theView.findViewById(R.id.uekatMaschine);
-                        Button funktionell= (Button) theView.findViewById(R.id.uekatFunktionelle);
-                        Button freie= (Button) theView.findViewById(R.id.uekatFreieGewichte);
+                       final Button eigen= (Button) theView.findViewById(R.id.uekatEigengewicht);
+                        final Button maschine= (Button) theView.findViewById(R.id.uekatMaschine);
+                        final Button funktionell= (Button) theView.findViewById(R.id.uekatFunktionelle);
+                        final Button freie= (Button) theView.findViewById(R.id.uekatFreieGewichte);
+                        neueUebungErstellen.setVisibility(View.INVISIBLE);
+                        uebungAusKatalog.setVisibility(View.INVISIBLE);
 
                         eigen.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -121,6 +123,10 @@ public class FragmentTrainingsplanPager extends Fragment {
 
                                 ft.replace(R.id.traininsplanerlayout,new FragmentEigengewicht(trainingsplaner,tpPosition));
                                 ft.commit();
+                                eigen.setVisibility(View.INVISIBLE);
+                                maschine.setVisibility(View.INVISIBLE);
+                                funktionell.setVisibility(View.INVISIBLE);
+                                freie.setVisibility(View.INVISIBLE);
                             }
                         });
 
@@ -131,6 +137,10 @@ public class FragmentTrainingsplanPager extends Fragment {
 
                                 ft.replace(R.id.traininsplanerlayout,new FragmentMaschine(trainingsplaner,tpPosition));
                                 ft.commit();
+                                eigen.setVisibility(View.INVISIBLE);
+                                maschine.setVisibility(View.INVISIBLE);
+                                funktionell.setVisibility(View.INVISIBLE);
+                                freie.setVisibility(View.INVISIBLE);
                             }
                         });
 
@@ -141,6 +151,10 @@ public class FragmentTrainingsplanPager extends Fragment {
 
                                 ft.replace(R.id.traininsplanerlayout,new FragmentFunktionell(trainingsplaner,tpPosition));
                                 ft.commit();
+                                eigen.setVisibility(View.INVISIBLE);
+                                maschine.setVisibility(View.INVISIBLE);
+                                funktionell.setVisibility(View.INVISIBLE);
+                                freie.setVisibility(View.INVISIBLE);
                             }
                         });
 
@@ -151,8 +165,13 @@ public class FragmentTrainingsplanPager extends Fragment {
 
                                 ft.replace(R.id.traininsplanerlayout,new FragmentFreieGewichte(trainingsplaner,tpPosition));
                                 ft.commit();
+                                eigen.setVisibility(View.INVISIBLE);
+                                maschine.setVisibility(View.INVISIBLE);
+                                funktionell.setVisibility(View.INVISIBLE);
+                                freie.setVisibility(View.INVISIBLE);
                             }
                         });
+
                         auswahlUK.setView(theView);
                         auswahlUK.show();
                     }
