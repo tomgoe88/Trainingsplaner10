@@ -48,6 +48,8 @@ public class FragmentTPUebung extends Fragment {
     private EditText editBeschreibung;
     private Button save;
     private Button neuerSatz;
+    Button intervall;
+    Button klassisch;
     private TextView satzzahl;
     View intervallView;
     View klassischView;
@@ -104,7 +106,10 @@ public class FragmentTPUebung extends Fragment {
 
             }
         });
-        setPic();
+        if(uebung.getImg()!=null){
+            setPic();
+        }
+
         editBeschreibung=(EditText)v.findViewById(R.id.editTPbeschreibung);
         editTPuebungsname=(EditText)v.findViewById(R.id.editTPuebung);
         satzzahl= (TextView)v.findViewById(R.id.txtSatzZiffer);
@@ -155,12 +160,27 @@ public class FragmentTPUebung extends Fragment {
                 builder = new AlertDialog.Builder(getActivity());
                 LayoutInflater inflaters = getActivity().getLayoutInflater();
                 View theView = inflaters.inflate(R.layout.alert_neuer_satz, null);
-                final Button klassisch=(Button)theView.findViewById(R.id.klassischButton);
-                Button intervall= (Button)theView.findViewById(R.id.intervallButton);
-
-                if(neu.getSatzZeitList().size()==0){
-
+                  klassisch=(Button)theView.findViewById(R.id.klassischButton);
+                  intervall= (Button)theView.findViewById(R.id.intervallButton);
+                if(neu.getSatzList().size()>0){
+                    klassisch.setVisibility(View.INVISIBLE);
                 }
+                else if(neu.getSatzZeitList().size()>0){
+                    intervall.setVisibility(View.INVISIBLE);
+                }
+                DialogInterface test= new DialogInterface() {
+                    @Override
+                    public void cancel() {
+
+                    }
+
+                    @Override
+                    public void dismiss() {
+
+                    }
+                };
+
+
 
                 intervall.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -229,6 +249,7 @@ public class FragmentTPUebung extends Fragment {
                                 intervallSatz.setPause(intervallSatz.getPause()+minute_pause.getValue()+(second_pause.getValue()*60));
                                 neu.getSatzList().add(intervallSatz);
                                 satzzahl.setText(""+(neu.getSatzList().size()+neu.getSatzZeitList().size()));
+                               klassisch.setVisibility(View.INVISIBLE);
 
                             }
                         });
@@ -305,6 +326,7 @@ public class FragmentTPUebung extends Fragment {
                                 neu.getSatzZeitList().add(klassischSatz);
 
                                 satzzahl.setText(""+(neu.getSatzList().size()+neu.getSatzZeitList().size()));
+                                intervall.setVisibility(View.INVISIBLE);
 
                             }
                         });

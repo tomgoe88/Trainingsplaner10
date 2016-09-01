@@ -39,6 +39,8 @@ public class FragmentTrainingsplanPager extends Fragment {
     private String mParam1;
     private String mParam2;
     int tpPosition;
+    Button neueUebungErstellen;
+    Button uebungAusKatalog;
 
 
     public FragmentTrainingsplanPager(Trainingsplaner trainingsplaner, int position) {
@@ -81,18 +83,83 @@ public class FragmentTrainingsplanPager extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                builder = new AlertDialog.Builder(getActivity());
+                 builder = new AlertDialog.Builder(getActivity());
                 LayoutInflater inflaters = getActivity().getLayoutInflater();
                 View theView = inflaters.inflate(R.layout.alert_neue_uebung, null);
 
 
-                builder.setNeutralButton("Übung aus Übungskatalog", new DialogInterface.OnClickListener() {
+
+                neueUebungErstellen= (Button) theView.findViewById(R.id.neueUebungErstellen);
+                uebungAusKatalog=(Button)theView.findViewById(R.id.uebungAusKatalog);
+
+                neueUebungErstellen.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(View v) {
+                        Uebung uebung= new Uebung();
+                        FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebung,trainingsplaner, tpPosition));
+                        ft.commit();
+                        builder.setCancelable(true);
 
                     }
                 });
-                builder.setNeutralButton("Übung aus Übungskatalog", new DialogInterface.OnClickListener() {
+                uebungAusKatalog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        auswahlUK = new AlertDialog.Builder(getActivity());
+                        LayoutInflater inflaters = getActivity().getLayoutInflater();
+                        View theView = inflaters.inflate(R.layout.alert_uebung_aus_katalog, null);
+                        Button eigen= (Button) theView.findViewById(R.id.uekatEigengewicht);
+                        Button maschine= (Button) theView.findViewById(R.id.uekatMaschine);
+                        Button funktionell= (Button) theView.findViewById(R.id.uekatFunktionelle);
+                        Button freie= (Button) theView.findViewById(R.id.uekatFreieGewichte);
+
+                        eigen.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
+
+                                ft.replace(R.id.traininsplanerlayout,new FragmentEigengewicht(trainingsplaner,tpPosition));
+                                ft.commit();
+                            }
+                        });
+
+                        maschine.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
+
+                                ft.replace(R.id.traininsplanerlayout,new FragmentMaschine(trainingsplaner,tpPosition));
+                                ft.commit();
+                            }
+                        });
+
+                        funktionell.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
+
+                                ft.replace(R.id.traininsplanerlayout,new FragmentFunktionell(trainingsplaner,tpPosition));
+                                ft.commit();
+                            }
+                        });
+
+                        freie.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
+
+                                ft.replace(R.id.traininsplanerlayout,new FragmentFreieGewichte(trainingsplaner,tpPosition));
+                                ft.commit();
+                            }
+                        });
+                        auswahlUK.setView(theView);
+                        auswahlUK.show();
+                    }
+                });
+
+
+/*                builder.setNeutralButton("Übung aus Übungskatalog", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         auswahlUK = new AlertDialog.Builder(getActivity());
@@ -147,7 +214,16 @@ public class FragmentTrainingsplanPager extends Fragment {
 
                     }
 
-                });
+                });*/
+     /*           builder.setNeutralButton("Neue Übung erstellen", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Uebung uebung= new Uebung();
+                        FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebung,trainingsplaner, tpPosition));
+                        ft.commit();
+                    }
+                });*/
 
 
 
