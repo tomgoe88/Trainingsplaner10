@@ -108,7 +108,7 @@ public class FragmentTrainingsplanPager extends Fragment {
                     public void onClick(View v) {
                         auswahlUK = new AlertDialog.Builder(getActivity());
                         LayoutInflater inflaters = getActivity().getLayoutInflater();
-                        View theView = inflaters.inflate(R.layout.alert_uebung_aus_katalog, null);
+                        final View theView = inflaters.inflate(R.layout.alert_uebung_aus_katalog, null);
                        final Button eigen= (Button) theView.findViewById(R.id.uekatEigengewicht);
                         final Button maschine= (Button) theView.findViewById(R.id.uekatMaschine);
                         final Button funktionell= (Button) theView.findViewById(R.id.uekatFunktionelle);
@@ -127,6 +127,8 @@ public class FragmentTrainingsplanPager extends Fragment {
                                 maschine.setVisibility(View.INVISIBLE);
                                 funktionell.setVisibility(View.INVISIBLE);
                                 freie.setVisibility(View.INVISIBLE);
+
+
                             }
                         });
 
@@ -171,7 +173,7 @@ public class FragmentTrainingsplanPager extends Fragment {
                                 freie.setVisibility(View.INVISIBLE);
                             }
                         });
-
+                        auswahlUK.create().cancel();
                         auswahlUK.setView(theView);
                         auswahlUK.show();
                     }
