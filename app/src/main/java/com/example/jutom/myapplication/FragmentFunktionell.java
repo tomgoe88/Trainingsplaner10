@@ -88,16 +88,59 @@ Trainingsplaner trainingsplaner;
         uebungsFragments= new ArrayList<Fragment>();
 
 
-
-
-
-
-
-
-
-
-
         untererRueckenFragment= new UebungFragment();
+
+        untererRueckenFragment.listName="Funktionell";
+        untererRueckenFragment.adapterName="UntererRuecken";
+
+        bauchFragment = new UebungFragment();
+
+        bauchFragment.listName="Funktionell";
+        bauchFragment.adapterName="Bauch";
+
+        tricepFragment = new UebungFragment();
+
+        tricepFragment.listName="Funktionell";
+        tricepFragment.adapterName="Tricep";
+
+        bicepFragment = new UebungFragment();
+
+        bicepFragment.listName="Funktionell";
+        bicepFragment.adapterName="Bicep";
+
+        schulterFragment = new UebungFragment();
+
+        schulterFragment.listName="Funktionell";
+        schulterFragment.adapterName="Schulter";
+
+        obererRueckenFragment = new UebungFragment();
+
+        obererRueckenFragment.listName="Funktionell";
+        obererRueckenFragment.adapterName="ObererRuecken";
+
+        rueckenFragment = new UebungFragment();
+
+        rueckenFragment.listName="Funktionell";
+        rueckenFragment.adapterName="Ruecken";
+
+        beinFragment= new UebungFragment();
+
+        beinFragment.listName="Funktionell";
+        beinFragment.adapterName="Beine";
+
+        brustFragment = new UebungFragment();
+
+        brustFragment.listName="Funktionell";
+        brustFragment.adapterName="Brust";
+
+
+
+
+
+
+
+
+/*        untererRueckenFragment= new UebungFragment();
         untererRueckenFragment.untererRueckenList=SQLHelper.getFunktionelluntererRueckens();
         untererRueckenFragment.adapterName="UntererRuecken";
         untererRueckenFragment.listName="FunktionallUntererRuecken";
@@ -158,7 +201,7 @@ Trainingsplaner trainingsplaner;
         brustFragment.adapterName="Brust";
         brustFragment.listName="FunktionellBrust";
         brustFragment.tp=trainingsplaner;
-        brustFragment.tpPosition=tpPosition;
+        brustFragment.tpPosition=tpPosition;*/
 
 
         uebungsFragments.add(untererRueckenFragment);

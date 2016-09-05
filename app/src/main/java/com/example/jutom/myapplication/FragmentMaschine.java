@@ -91,16 +91,60 @@ public class FragmentMaschine extends Fragment {
 
 
 
-
-
-
-
-
-
-
-
-
         untererRueckenFragment= new UebungFragment();
+
+        untererRueckenFragment.listName="Maschine";
+        untererRueckenFragment.adapterName="UntererRuecken";
+
+        bauchFragment = new UebungFragment();
+
+        bauchFragment.listName="Maschine";
+        bauchFragment.adapterName="Bauch";
+
+        tricepFragment = new UebungFragment();
+
+        tricepFragment.listName="Maschine";
+        tricepFragment.adapterName="Tricep";
+
+        bicepFragment = new UebungFragment();
+
+        bicepFragment.listName="Maschine";
+        bicepFragment.adapterName="Bicep";
+
+        schulterFragment = new UebungFragment();
+
+        schulterFragment.listName="Maschine";
+        schulterFragment.adapterName="Schulter";
+
+        obererRueckenFragment = new UebungFragment();
+
+        obererRueckenFragment.listName="Maschine";
+        obererRueckenFragment.adapterName="ObererRuecken";
+
+        rueckenFragment = new UebungFragment();
+
+        rueckenFragment.listName="Maschine";
+        rueckenFragment.adapterName="Ruecken";
+
+        beinFragment= new UebungFragment();
+
+        beinFragment.listName="Maschine";
+        beinFragment.adapterName="Beine";
+
+        brustFragment = new UebungFragment();
+
+        brustFragment.listName="Maschine";
+        brustFragment.adapterName="Brust";
+
+
+
+
+
+
+
+
+
+/*        untererRueckenFragment= new UebungFragment();
         untererRueckenFragment.untererRueckenList=SQLHelper.getMaschineuntererRueckens();
         untererRueckenFragment.adapterName="UntererRuecken";
         untererRueckenFragment.listName="MaschineUntererRuecken";
@@ -161,7 +205,7 @@ public class FragmentMaschine extends Fragment {
         brustFragment.adapterName="Brust";
         brustFragment.listName="MaschineBrust";
         brustFragment.tp=trainingsplaner;
-        brustFragment.tpPosition=tpPosition;
+        brustFragment.tpPosition=tpPosition;*/
 
         uebungsFragments.add(untererRueckenFragment);
         uebungsFragments.add(bauchFragment);

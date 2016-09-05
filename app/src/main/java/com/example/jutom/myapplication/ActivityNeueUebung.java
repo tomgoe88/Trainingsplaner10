@@ -1,6 +1,8 @@
 package com.example.jutom.myapplication;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -23,11 +25,13 @@ import java.util.Date;
 
 public class ActivityNeueUebung extends AppCompatActivity {
     private String listName;
+    private String typName;
     private EditText uebeschreibung;
     private EditText uename;
     private ImageView ueBild;
     private Button saveButton;
     String mCurrentPhotoPath;
+    SQLiteDatabase trainingsplaner;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 1;
@@ -40,6 +44,7 @@ public class ActivityNeueUebung extends AppCompatActivity {
         Bundle bundle= i.getBundleExtra("LISTBUNDLE");
         Log.v("Bundle", "Bundle ist ok -> "+ bundle.getString("LIST"));
         listName= bundle.getString("LIST");
+        typName= bundle.getString("TYP");
         Log.v("Listname", "Listname = "+listName);
         uebeschreibung= (EditText) findViewById(R.id.uebeschreibung);
         uename=(EditText)findViewById(R.id.uename);
@@ -90,262 +95,135 @@ public class ActivityNeueUebung extends AppCompatActivity {
         String bildpfad= mCurrentPhotoPath;
         Log.v("Bildpfad", "Bildpfad = "+bildpfad);
         switch (listName){
-            case("EigenUntererRuecken"):
-                untererRuecken=new UntererRuecken();
+            case("UntererRuecken"):
+                try {
+                    trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                    trainingsplaner.execSQL("INSERT INTO UntererRuecken(uebungsname, uebungsbeschreibung, uebungsbild, uebungsart)VALUES('"+name+"','"+beschreibung+"', '"+bildpfad+"','"+typName+"')");
+                } catch(Exception e){
+                    Log.v("SQL_Fehler", e.getMessage());
+                }
+
+    /*            untererRuecken=new UntererRuecken();
                 untererRuecken.setName(name);
                 untererRuecken.setBeschreibung(beschreibung);
                 untererRuecken.setImg(bildpfad);
 
-                SQLHelper.getEigengewichtuntererRueckens().add(untererRuecken);
-               Log.v("StringPfad", "String = "+ SQLHelper.getEigengewichtuntererRueckens().get(SQLHelper.getEigengewichtuntererRueckens().size()-1).getImg());
+                SQLHelper.getEigengewichtuntererRueckens().add(untererRuecken);*/
+              // Log.v("StringPfad", "String = "+ SQLHelper.getEigengewichtuntererRueckens().get(SQLHelper.getEigengewichtuntererRueckens().size()-1).getImg());
                 break;
-            case("EigenBauch"):
-                bauch=new Bauch();
+            case("Bauch"):
+                try {
+                    trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                    trainingsplaner.execSQL("INSERT INTO Bauch(uebungsname, uebungsbeschreibung, uebungsbild, uebungsart)VALUES('"+name+"','"+beschreibung+"', '"+bildpfad+"','"+typName+"')");
+                } catch(Exception e){
+                    Log.v("SQL_Fehler", e.getMessage());
+                }
+
+    /*            bauch=new Bauch();
                 bauch.setBeschreibung(beschreibung);
                 bauch.setImg(bildpfad);
                 bauch.setName(uename.getText().toString());
-                SQLHelper.getEigengewichtbauches().add(bauch);
+                SQLHelper.getEigengewichtbauches().add(bauch);*/
                 break;
-            case("EigenTricep"):
-                tricep=new Tricep();
+            case("Tricep"):
+                try {
+                    trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                    trainingsplaner.execSQL("INSERT INTO Tricep(uebungsname, uebungsbeschreibung, uebungsbild, uebungsart)VALUES('"+name+"','"+beschreibung+"', '"+bildpfad+"','"+typName+"')");
+                } catch(Exception e){
+                    Log.v("SQL_Fehler", e.getMessage());
+                }
+
+    /*            tricep=new Tricep();
                 tricep.setBeschreibung(beschreibung);
                 tricep.setImg(bildpfad);
                 tricep.setName(uename.getText().toString());
-                SQLHelper.getEigengewichttriceps().add(tricep);
+                SQLHelper.getEigengewichttriceps().add(tricep);*/
                 break;
-            case("EigenBicep"):
-                bicep=new Bicep();
+            case("Bicep"):
+                try {
+                    trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                    trainingsplaner.execSQL("INSERT INTO Bicep(uebungsname, uebungsbeschreibung, uebungsbild, uebungsart)VALUES('"+name+"','"+beschreibung+"', '"+bildpfad+"','"+typName+"')");
+                } catch(Exception e){
+                    Log.v("SQL_Fehler", e.getMessage());
+                }
+
+/*                bicep=new Bicep();
                 bicep.setBeschreibung(beschreibung);
                 bicep.setImg(bildpfad);
                 bicep.setName(uename.getText().toString());
-                SQLHelper.getEigengewichtbiceps().add(bicep);
+                SQLHelper.getEigengewichtbiceps().add(bicep);*/
                 break;
-            case("EigenSchulter"):
+            case("Schulter"):
+                try {
+                    trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                    trainingsplaner.execSQL("INSERT INTO Schulter(uebungsname, uebungsbeschreibung, uebungsbild, uebungsart)VALUES('"+name+"','"+beschreibung+"', '"+bildpfad+"','"+typName+"')");
+                } catch(Exception e){
+                    Log.v("SQL_Fehler", e.getMessage());
+                }
+
                 schulter=new Schulter();
                 schulter.setBeschreibung(beschreibung);
                 schulter.setImg(bildpfad);
                 schulter.setName(uename.getText().toString());
                 SQLHelper.getEigengewichtschulters().add(schulter);
                 break;
-            case("EigenObererRuecken"):
-                obererRuecken=new ObererRuecken();
-                obererRuecken.setBeschreibung(beschreibung);
-                obererRuecken.setImg(bildpfad);
-                obererRuecken.setName(uename.getText().toString());
-                SQLHelper.getEigengewichtobererRueckens().add(obererRuecken);
-                break;
-            case("EigenRuecken"):
-                ruecken=new Ruecken();
-                ruecken.setBeschreibung(beschreibung);
-                ruecken.setImg(bildpfad);
-                ruecken.setName(uename.getText().toString());
-                SQLHelper.getEigengewichtrueckens().add(ruecken);
-                break;
-            case("EigenBein"):
-                bein=new Beine();
-                bein.setBeschreibung(beschreibung);
-                bein.setImg(bildpfad);
-                bein.setName(uename.getText().toString());
-                SQLHelper.getEigengewichtbeines().add(bein);
-                break;
-            case("EigenBrust"):
-                brust=new Brust();
-                brust.setBeschreibung(beschreibung);
-                brust.setImg(bildpfad);
-                brust.setName(uename.getText().toString());
-                SQLHelper.getEigengewichtbrusts().add(brust);
-                break;
-            case("FreieUntererRuecken"):
-                untererRuecken=new UntererRuecken();
-                untererRuecken.setBeschreibung(beschreibung);
-                untererRuecken.setImg(bildpfad);
+            case("ObererRuecken"):
+                try {
+                    trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                    trainingsplaner.execSQL("INSERT INTO ObererRuecken(uebungsname, uebungsbeschreibung, uebungsbild, uebungsart)VALUES('"+name+"','"+beschreibung+"', '"+bildpfad+"','"+typName+"')");
+                } catch(Exception e){
+                    Log.v("SQL_Fehler", e.getMessage());
+                }
 
-                untererRuecken.setName(uename.getText().toString());
-                SQLHelper.getFreieuntererRueckens().add(untererRuecken);
-                break;
-            case("FreieBauch"):
-                bauch=new Bauch();
-                bauch.setBeschreibung(beschreibung);
-                bauch.setImg(bildpfad);
-                bauch.setName(uename.getText().toString());
-                SQLHelper.getFreiebauches().add(bauch);
-                break;
-            case("FreieTricep"):
-                tricep=new Tricep();
-                tricep.setBeschreibung(beschreibung);
-                tricep.setImg(bildpfad);
-                tricep.setName(uename.getText().toString());
-                SQLHelper.getFreietriceps().add(tricep);
-                break;
-            case("FreieBicep"):
-                bicep=new Bicep();
-                bicep.setBeschreibung(beschreibung);
-                bicep.setImg(bildpfad);
-                bicep.setName(uename.getText().toString());
-                SQLHelper.getFreiebiceps().add(bicep);
-                break;
-            case("FreieSchulter"):
-                schulter=new Schulter();
-                schulter.setBeschreibung(beschreibung);
-                schulter.setImg(bildpfad);
-                schulter.setName(uename.getText().toString());
-                SQLHelper.getFreieschulters().add(schulter);
-                break;
-            case("FreieObererRuecken"):
-                obererRuecken=new ObererRuecken();
+ /*               obererRuecken=new ObererRuecken();
                 obererRuecken.setBeschreibung(beschreibung);
                 obererRuecken.setImg(bildpfad);
+                obererRuecken.setName(uename.getText().toString());
+                SQLHelper.getEigengewichtobererRueckens().add(obererRuecken);*/
+                break;
+            case("Ruecken"):
+                try {
+                    trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                    trainingsplaner.execSQL("INSERT INTO Ruecken(uebungsname, uebungsbeschreibung, uebungsbild, uebungsart)VALUES('"+name+"','"+beschreibung+"', '"+bildpfad+"','"+typName+"')");
+                } catch(Exception e){
+                    Log.v("SQL_Fehler", e.getMessage());
+                }
 
-                obererRuecken.setName(uename.getText().toString());
-                SQLHelper.getFreieobererRueckens().add(obererRuecken);
-                break;
-            case("FreieRuecken"):
-                ruecken=new Ruecken();
+   /*             ruecken=new Ruecken();
                 ruecken.setBeschreibung(beschreibung);
                 ruecken.setImg(bildpfad);
                 ruecken.setName(uename.getText().toString());
-                SQLHelper.getFreierueckens().add(ruecken);
+                SQLHelper.getEigengewichtrueckens().add(ruecken);*/
                 break;
-            case("FreieBein"):
-                bein=new Beine();
+            case("Beine"):
+                try {
+                    trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                    trainingsplaner.execSQL("INSERT INTO Beine(uebungsname, uebungsbeschreibung, uebungsbild, uebungsart)VALUES('"+name+"','"+beschreibung+"', '"+bildpfad+"','"+typName+"')");
+                } catch(Exception e){
+                    Log.v("SQL_Fehler", e.getMessage());
+                }
+
+/*                bein=new Beine();
                 bein.setBeschreibung(beschreibung);
                 bein.setImg(bildpfad);
                 bein.setName(uename.getText().toString());
-                SQLHelper.getFreiebeines().add(bein);
+                SQLHelper.getEigengewichtbeines().add(bein);*/
                 break;
-            case("FreieBrust"):
-                brust=new Brust();
+            case("Brust"):
+                try {
+                    trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                    trainingsplaner.execSQL("INSERT INTO Brust(uebungsname, uebungsbeschreibung, uebungsbild, uebungsart)VALUES('"+name+"','"+beschreibung+"', '"+bildpfad+"','"+typName+"')");
+                } catch(Exception e){
+                    Log.v("SQL_Fehler", e.getMessage());
+                }
+
+          /*      brust=new Brust();
                 brust.setBeschreibung(beschreibung);
                 brust.setImg(bildpfad);
                 brust.setName(uename.getText().toString());
-                SQLHelper.getFreiebrusts().add(brust);
+                SQLHelper.getEigengewichtbrusts().add(brust);*/
                 break;
-            case("FunktionallUntererRuecken"):
-                untererRuecken=new UntererRuecken();
-                untererRuecken.setBeschreibung(beschreibung);
-                untererRuecken.setImg(bildpfad);
-                untererRuecken.setName(uename.getText().toString());
-                SQLHelper.getFunktionelluntererRueckens().add(untererRuecken);
-                break;
-            case("FunktionellBauch"):
-                bauch=new Bauch();
-                bauch.setBeschreibung(beschreibung);
-                bauch.setImg(bildpfad);
-                bauch.setName(uename.getText().toString());
-                SQLHelper.getFunktionellbauches().add(bauch);
-                break;
-            case("FunktionellTricep"):
-                tricep=new Tricep();
-                tricep.setBeschreibung(beschreibung);
-                tricep.setImg(bildpfad);
-                tricep.setName(uename.getText().toString());
-                SQLHelper.getFunktionelltriceps().add(tricep);
-                break;
-            case("FunktionellBicep"):
-                bicep=new Bicep();
-                bicep.setBeschreibung(beschreibung);
-                bicep.setImg(bildpfad);
-                bicep.setName(uename.getText().toString());
-                SQLHelper.getFunktionellbiceps().add(bicep);
-                break;
-            case("FunktionellSchulter"):
-                schulter=new Schulter();
-                schulter.setBeschreibung(beschreibung);
-                schulter.setImg(bildpfad);
-                schulter.setName(uename.getText().toString());
-                SQLHelper.getFunktionellschulters().add(schulter);
-                break;
-            case("FunktionellObererRuecken"):
-                obererRuecken=new ObererRuecken();
-                obererRuecken.setBeschreibung(beschreibung);
-                obererRuecken.setImg(bildpfad);
-                obererRuecken.setName(uename.getText().toString());
-                SQLHelper.getFunktionellobererRueckens().add(obererRuecken);
-                break;
-            case("FunktionellRuecken"):
-                ruecken=new Ruecken();
-                ruecken.setBeschreibung(beschreibung);
-                ruecken.setImg(bildpfad);
-                ruecken.setName(uename.getText().toString());
-                SQLHelper.getFunktionellrueckens().add(ruecken);
-                break;
-            case("FunktionellBein"):
-                bein=new Beine();
-                bein.setBeschreibung(beschreibung);
-                bein.setImg(bildpfad);
-                bein.setName(uename.getText().toString());
-                SQLHelper.getFunktionellbeines().add(bein);
-                break;
-            case("FunktionellBrust"):
-                brust=new Brust();
-                brust.setBeschreibung(beschreibung);
-                brust.setImg(bildpfad);
-                brust.setName(uename.getText().toString());
-                SQLHelper.getFunktionellbrusts().add(brust);
-                break;
-            case("MaschineUntererRuecken"):
-                untererRuecken=new UntererRuecken();
-                untererRuecken.setBeschreibung(beschreibung);
-                untererRuecken.setImg(bildpfad);
-                untererRuecken.setName(uename.getText().toString());
-                SQLHelper.getMaschineuntererRueckens().add(untererRuecken);
-                break;
-            case("MaschineBauch"):
-                bauch=new Bauch();
-                bauch.setBeschreibung(beschreibung);
-                bauch.setImg(bildpfad);
-                bauch.setName(uename.getText().toString());
-                SQLHelper.getMaschinebauches().add(bauch);
-                break;
-            case("MaschineTricep"):
-                tricep=new Tricep();
-                tricep.setBeschreibung(beschreibung);
-                tricep.setImg(bildpfad);
-                tricep.setName(uename.getText().toString());
-                SQLHelper.getMaschinetriceps().add(tricep);
-                break;
-            case("MaschineBicep"):
-                bicep=new Bicep();
-                bicep.setBeschreibung(beschreibung);
-                bicep.setImg(bildpfad);
-                bicep.setName(uename.getText().toString());
-                SQLHelper.getMaschinebiceps().add(bicep);
-                break;
-            case("MaschineSchulter"):
-                schulter=new Schulter();
-                schulter.setBeschreibung(beschreibung);
-                schulter.setImg(bildpfad);
-                schulter.setName(uename.getText().toString());
-                SQLHelper.getMaschineschulters().add(schulter);
-                break;
-            case("MaschineObererRuecken"):
-                obererRuecken=new ObererRuecken();
-                obererRuecken.setBeschreibung(beschreibung);
-                obererRuecken.setImg(bildpfad);
-                obererRuecken.setName(uename.getText().toString());
-                SQLHelper.getMaschineobererRueckens().add(obererRuecken);
-                break;
-            case("MaschineRuecken"):
-                ruecken=new Ruecken();
-                ruecken.setBeschreibung(beschreibung);
-                ruecken.setImg(bildpfad);
-                ruecken.setName(uename.getText().toString());
-                SQLHelper.getMaschinerueckens().add(ruecken);
-                break;
-            case("MaschineBein"):
-                bein=new Beine();
-                bein.setBeschreibung(beschreibung);
-                bein.setImg(bildpfad);
-                bein.setName(uename.getText().toString());
-                SQLHelper.getMaschinebeines().add(bein);
-                break;
-            case("MaschineBrust"):
-                brust=new Brust();
-                brust.setBeschreibung(beschreibung);
-                brust.setImg(bildpfad);
-                brust.setName(uename.getText().toString());
-                SQLHelper.getMaschinebrusts().add(brust);
-                break;
+
 
 
         }

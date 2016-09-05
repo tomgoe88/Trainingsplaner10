@@ -88,8 +88,53 @@ public class FragmentFreieGewichte extends Fragment {
 
         uebungsFragments= new ArrayList<Fragment>();
 
-
         untererRueckenFragment= new UebungFragment();
+
+        untererRueckenFragment.listName="FreieGewichte";
+        untererRueckenFragment.adapterName="UntererRuecken";
+
+        bauchFragment = new UebungFragment();
+
+        bauchFragment.listName="FreieGewichte";
+        bauchFragment.adapterName="Bauch";
+
+        tricepFragment = new UebungFragment();
+
+        tricepFragment.listName="FreieGewichte";
+        tricepFragment.adapterName="Tricep";
+
+        bicepFragment = new UebungFragment();
+
+        bicepFragment.listName="FreieGewichte";
+        bicepFragment.adapterName="Bicep";
+
+        schulterFragment = new UebungFragment();
+
+        schulterFragment.listName="FreieGewichte";
+        schulterFragment.adapterName="Schulter";
+
+        obererRueckenFragment = new UebungFragment();
+
+        obererRueckenFragment.listName="FreieGewichte";
+        obererRueckenFragment.adapterName="ObererRuecken";
+
+        rueckenFragment = new UebungFragment();
+
+        rueckenFragment.listName="FreieGewichte";
+        rueckenFragment.adapterName="Ruecken";
+
+        beinFragment= new UebungFragment();
+
+        beinFragment.listName="FreieGewichte";
+        beinFragment.adapterName="Beine";
+
+        brustFragment = new UebungFragment();
+
+        brustFragment.listName="FreieGewichte";
+        brustFragment.adapterName="Brust";
+
+
+/*        untererRueckenFragment= new UebungFragment();
         untererRueckenFragment.untererRueckenList=SQLHelper.getFreieuntererRueckens();
         untererRueckenFragment.adapterName="UntererRuecken";
         untererRueckenFragment.listName="FreieUntererRuecken";
@@ -150,7 +195,7 @@ public class FragmentFreieGewichte extends Fragment {
         brustFragment.adapterName="Brust";
         brustFragment.listName="FreieBrust";
         brustFragment.tp=trainingsplaner;
-        brustFragment.tpPosition=tpPosition;
+        brustFragment.tpPosition=tpPosition;*/
 
         uebungsFragments.add(untererRueckenFragment);
         uebungsFragments.add(bauchFragment);
