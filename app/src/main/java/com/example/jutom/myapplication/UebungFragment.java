@@ -1,7 +1,10 @@
 package com.example.jutom.myapplication;
 
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -107,10 +110,19 @@ public class UebungFragment extends Fragment {
 
         switch(adapterName){
             case("UntererRuecken"):
-                uebungListAdapter= new UebungListAdapter(getActivity(),untererRueckenList,tp);
+/*                uebungListAdapter= new UebungListAdapter(getActivity(),untererRueckenList,tp);
                 listView.setAdapter(uebungListAdapter);
                 if(untererRueckenList!= null){
                     uebungList.addAll(untererRueckenList);
+                }*/
+                try{
+                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                    trainingsplaner.execSQL("INSERT INTO UntererRuecken(uebungsname, uebungsbild, uebungsart)VALUES('Keks', 'test', 'Eigengewicht')");
+                    Cursor cursor= trainingsplaner.rawQuery("SELECT _id, uebungsname, uebungsbild FROM UntererRuecken WHERE uebungsart ='"+listName+"'",null);
+                    MyCursorAdapter myCursorAdapter= new MyCursorAdapter(getActivity(),cursor);
+                    listView.setAdapter(myCursorAdapter);
+                } catch(Exception e){
+                    Log.v("Exception", e.getMessage());
                 }
 
                 break;

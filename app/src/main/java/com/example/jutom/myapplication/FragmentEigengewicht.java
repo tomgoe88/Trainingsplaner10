@@ -103,12 +103,14 @@ public class FragmentEigengewicht extends Fragment {
 
 
 
-        untererRueckenFragment= new UebungFragment();
+        untererRueckenFragment= new UebungFragment();/*
         untererRueckenFragment.untererRueckenList=SQLHelper.getEigengewichtuntererRueckens();
         untererRueckenFragment.adapterName="UntererRuecken";
         untererRueckenFragment.listName="EigenUntererRuecken";
         untererRueckenFragment.tp=trainingsplaner;
-        untererRueckenFragment.tpPosition=tpPosition;
+        untererRueckenFragment.tpPosition=tpPosition;*/
+        untererRueckenFragment.listName="Eigengewicht";
+        untererRueckenFragment.adapterName="UntererRuecken";
 
         bauchFragment = new UebungFragment();
         bauchFragment.bauchList=SQLHelper.getEigengewichtbauches();
