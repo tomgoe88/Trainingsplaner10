@@ -2,6 +2,7 @@ package com.example.jutom.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -94,7 +95,26 @@ public class ActivityNeueUebung extends AppCompatActivity {
         String beschreibung= uebeschreibung.getText().toString();
         String bildpfad= mCurrentPhotoPath;
         Log.v("Bildpfad", "Bildpfad = "+bildpfad);
-        switch (listName){
+
+
+        try {
+            trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+            Cursor muskel= trainingsplaner.rawQuery("SELECT muskegruppenname FROM Muskelgruppe WHERE muskelgruppe_id='"+listName+"'", null);
+            int mudkelid= muskel.getInt(muskel.getColumnIndex("muskegruppenname"));
+            Cursor uebungsart= trainingsplaner.rawQuery("SELECT uebungsartname FROM Uebungsart WHERE uebungsart_id='"+typName+"'", null);
+            int uebungid= muskel.getInt(uebungsart.getColumnIndex("uebungsartname"));
+            trainingsplaner.execSQL("INSERT INTO Uebung(uebungsname, uebungsbeschreibung, uebungsbild, muskelgruppe_id, uebungsart_id)VALUES('"+name+"','"+beschreibung+"', '"+bildpfad+"','"+mudkelid+"', '"+uebungid+"')");
+        } catch(Exception e){
+            Log.v("SQL_Fehler", e.getMessage());
+        }
+
+
+
+
+
+
+
+/*        switch (listName){
             case("UntererRuecken"):
                 try {
                     trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
@@ -103,12 +123,12 @@ public class ActivityNeueUebung extends AppCompatActivity {
                     Log.v("SQL_Fehler", e.getMessage());
                 }
 
-    /*            untererRuecken=new UntererRuecken();
+    *//*            untererRuecken=new UntererRuecken();
                 untererRuecken.setName(name);
                 untererRuecken.setBeschreibung(beschreibung);
                 untererRuecken.setImg(bildpfad);
 
-                SQLHelper.getEigengewichtuntererRueckens().add(untererRuecken);*/
+                SQLHelper.getEigengewichtuntererRueckens().add(untererRuecken);*//*
               // Log.v("StringPfad", "String = "+ SQLHelper.getEigengewichtuntererRueckens().get(SQLHelper.getEigengewichtuntererRueckens().size()-1).getImg());
                 break;
             case("Bauch"):
@@ -119,11 +139,11 @@ public class ActivityNeueUebung extends AppCompatActivity {
                     Log.v("SQL_Fehler", e.getMessage());
                 }
 
-    /*            bauch=new Bauch();
+    *//*            bauch=new Bauch();
                 bauch.setBeschreibung(beschreibung);
                 bauch.setImg(bildpfad);
                 bauch.setName(uename.getText().toString());
-                SQLHelper.getEigengewichtbauches().add(bauch);*/
+                SQLHelper.getEigengewichtbauches().add(bauch);*//*
                 break;
             case("Tricep"):
                 try {
@@ -133,11 +153,11 @@ public class ActivityNeueUebung extends AppCompatActivity {
                     Log.v("SQL_Fehler", e.getMessage());
                 }
 
-    /*            tricep=new Tricep();
+    *//*            tricep=new Tricep();
                 tricep.setBeschreibung(beschreibung);
                 tricep.setImg(bildpfad);
                 tricep.setName(uename.getText().toString());
-                SQLHelper.getEigengewichttriceps().add(tricep);*/
+                SQLHelper.getEigengewichttriceps().add(tricep);*//*
                 break;
             case("Bicep"):
                 try {
@@ -147,11 +167,11 @@ public class ActivityNeueUebung extends AppCompatActivity {
                     Log.v("SQL_Fehler", e.getMessage());
                 }
 
-/*                bicep=new Bicep();
+*//*                bicep=new Bicep();
                 bicep.setBeschreibung(beschreibung);
                 bicep.setImg(bildpfad);
                 bicep.setName(uename.getText().toString());
-                SQLHelper.getEigengewichtbiceps().add(bicep);*/
+                SQLHelper.getEigengewichtbiceps().add(bicep);*//*
                 break;
             case("Schulter"):
                 try {
@@ -175,11 +195,11 @@ public class ActivityNeueUebung extends AppCompatActivity {
                     Log.v("SQL_Fehler", e.getMessage());
                 }
 
- /*               obererRuecken=new ObererRuecken();
+ *//*               obererRuecken=new ObererRuecken();
                 obererRuecken.setBeschreibung(beschreibung);
                 obererRuecken.setImg(bildpfad);
                 obererRuecken.setName(uename.getText().toString());
-                SQLHelper.getEigengewichtobererRueckens().add(obererRuecken);*/
+                SQLHelper.getEigengewichtobererRueckens().add(obererRuecken);*//*
                 break;
             case("Ruecken"):
                 try {
@@ -189,11 +209,11 @@ public class ActivityNeueUebung extends AppCompatActivity {
                     Log.v("SQL_Fehler", e.getMessage());
                 }
 
-   /*             ruecken=new Ruecken();
+   *//*             ruecken=new Ruecken();
                 ruecken.setBeschreibung(beschreibung);
                 ruecken.setImg(bildpfad);
                 ruecken.setName(uename.getText().toString());
-                SQLHelper.getEigengewichtrueckens().add(ruecken);*/
+                SQLHelper.getEigengewichtrueckens().add(ruecken);*//*
                 break;
             case("Beine"):
                 try {
@@ -203,11 +223,11 @@ public class ActivityNeueUebung extends AppCompatActivity {
                     Log.v("SQL_Fehler", e.getMessage());
                 }
 
-/*                bein=new Beine();
+*//*                bein=new Beine();
                 bein.setBeschreibung(beschreibung);
                 bein.setImg(bildpfad);
                 bein.setName(uename.getText().toString());
-                SQLHelper.getEigengewichtbeines().add(bein);*/
+                SQLHelper.getEigengewichtbeines().add(bein);*//*
                 break;
             case("Brust"):
                 try {
@@ -217,16 +237,16 @@ public class ActivityNeueUebung extends AppCompatActivity {
                     Log.v("SQL_Fehler", e.getMessage());
                 }
 
-          /*      brust=new Brust();
+          *//*      brust=new Brust();
                 brust.setBeschreibung(beschreibung);
                 brust.setImg(bildpfad);
                 brust.setName(uename.getText().toString());
-                SQLHelper.getEigengewichtbrusts().add(brust);*/
+                SQLHelper.getEigengewichtbrusts().add(brust);*//*
                 break;
 
 
 
-        }
+        }*/
     }
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
