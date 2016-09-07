@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
 
         try{
             SQLiteDatabase trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", MODE_PRIVATE, null);
-            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS Ruecken(_id INTEGER PRIMARY KEY AUTOINCREMENT, uebungsname VARCHAR(50), uebungsbeschreibung TEXT, uebungsbild VARCHAR(255), uebungsart VARCHAR(55))");
+/*            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS Ruecken(_id INTEGER PRIMARY KEY AUTOINCREMENT, uebungsname VARCHAR(50), uebungsbeschreibung TEXT, uebungsbild VARCHAR(255), uebungsart VARCHAR(55))");
             trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS Brust(_id INTEGER PRIMARY KEY AUTOINCREMENT, uebungsname VARCHAR(50), uebungsbeschreibung TEXT, uebungsbild VARCHAR(255), uebungsart)");
             trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS UntererRuecken(_id INTEGER PRIMARY KEY AUTOINCREMENT, uebungsname VARCHAR(50), uebungsbeschreibung TEXT, uebungsbild VARCHAR(255), uebungsart)");
             trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS ObererRuecken(_id INTEGER PRIMARY KEY AUTOINCREMENT, uebungsname VARCHAR(50), uebungsbeschreibung TEXT, uebungsbild VARCHAR(255), uebungsart)");
@@ -62,13 +62,67 @@ public class MainActivity extends AppCompatActivity
             trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS Bicep(_id INTEGER PRIMARY KEY AUTOINCREMENT, uebungsname VARCHAR(50), uebungsbeschreibung TEXT, uebungsbild VARCHAR(255), uebungsart)");
             trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS Tricep(_id INTEGER PRIMARY KEY AUTOINCREMENT, uebungsname VARCHAR(50), uebungsbeschreibung TEXT, uebungsbild VARCHAR(255), uebungsart)");
             trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS Bauch(_id INTEGER PRIMARY KEY AUTOINCREMENT, uebungsname VARCHAR(50), uebungsbeschreibung TEXT, uebungsbild VARCHAR(255), uebungsart)");
-            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS Schulter(_id INTEGER PRIMARY KEY AUTOINCREMENT, uebungsname VARCHAR(50), uebungsbeschreibung TEXT, uebungsbild VARCHAR(255), uebungsart)");
+            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS Schulter(_id INTEGER PRIMARY KEY AUTOINCREMENT, uebungsname VARCHAR(50), uebungsbeschreibung TEXT, uebungsbild VARCHAR(255), uebungsart)");*/
 
 
-            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS trainingsplan(_id INTEGER PRIMARY KEY AUTOINCREMENT, trainingsplanname VARCHAR(50)) ");
-            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS trainingsplanuebung(_id INTEGER PRIMARY KEY AUTOINCREMENT,  uebungsname VARCHAR(50), uebungsbeschreibung TEXT, uebungsbild VARCHAR(255), TrainingsID INTERGER, FOREIGN KEY(TrainingsID) REFERENCES trainingsplan(_id))");
-            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS satzintervall(_id INTEGER PRIMARY KEY AUTOINCREMENT, intevall INTEGER, pause INTEGER, UeID INTEGER, FOREIGN KEY(UeID) REFERENCES trainingsplanuebung(_id))");
-            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS satzklassisch(_id INTEGER PRIMARY KEY AUTOINCREMENT, wiederholung INTEGER, pause INTEGER, UeID INTEGER, FOREIGN KEY(UeID) REFERENCES trainingsplanuebung(_id))");
+            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS trainingsplan(" +
+                    "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " trainingsplanname VARCHAR(50)" +
+                    ")");
+            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS trainingsplanuebung(" +
+                    "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "Uebungs_id INTEGER , " +
+                    "TrainingsplanID INTEGER, " +
+                    "FOREIGN KEY(TrainingsplanID) REFERENCES trainingsplan(_id), " +
+                    "FOREIGN KEY(Uebungs_id) REFERENCES Uebung(Uebung_id)" +
+                    ")");
+            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS satzintervall(" +
+                    "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " intevall INTEGER, pause INTEGER, " +
+                    "TrainingUebungID INTEGER, " +
+                    "FOREIGN KEY(TrainingUebungID) REFERENCES trainingsplanuebung(_id)" +
+                    ")");
+            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS satzklassisch(" +
+                    "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "wiederholung INTEGER, pause INTEGER, " +
+                    "TrainingUebungID INTEGER, " +
+                    "FOREIGN KEY(TrainingUebungID) REFERENCES trainingsplanuebung(_id)" +
+                    ")");
+
+
+            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS Uebung(" +
+                    "Uebung_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "uebungsname VARCHAR(50), " +
+                    "uebungsbeschreibung TEXT, " +
+                    "uebungsbild VARCHAR(255), " +
+                    "muskelgruppe_id INTEGER, " +
+                    "uebungsart_id INTEGER," +
+                    "FOREIGN KEY(muskelgruppe_id) REFERENCES Muskelgruppe(muskelgruppe_id)" +
+                    "FOREIGN KEY(uebungsart_id) REFERENCES Uebungsart(uebungsart_id)" +
+                    ")");
+
+            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS Muskelgruppe(muskelgruppe_id INTEGER PRIMARY KEY AUTOINCREMENT, muskegruppenname VARCHAR(50))");
+            trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS Uebungsart(uebungsart_id INTEGER PRIMARY KEY AUTOINCREMENT, uebungsartname VARCHAR(50))");
+
+
+            trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Ruecken')");
+            trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Brust')");
+            trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('UntererRuecken')");
+            trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('ObererRuecken')");
+            trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Beine')");
+            trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Bicep')");
+            trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Tricep')");
+            trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Bauch')");
+            trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Schulter')");
+
+            trainingsplaner.execSQL("INSERT INTO Uebungsart(uebungsartname)VALUES('Maschine')");
+            trainingsplaner.execSQL("INSERT INTO Uebungsart(uebungsartname)VALUES('Funktionell')");
+            trainingsplaner.execSQL("INSERT INTO Uebungsart(uebungsartname)VALUES('FreieGewichte')");
+            trainingsplaner.execSQL("INSERT INTO Uebungsart(uebungsartname)VALUES('Eigengewicht')");
+
+
+
+
             trainingsplaner.close();
         } catch(Exception e){
             Log.v("SQL Exception", "Fehler: "+e.getMessage());

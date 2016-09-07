@@ -95,46 +95,64 @@ public class FragmentMaschine extends Fragment {
 
         untererRueckenFragment.listName="Maschine";
         untererRueckenFragment.adapterName="UntererRuecken";
+        untererRueckenFragment.tpPosition=tpPosition;
+        untererRueckenFragment.tp= trainingsplaner;
 
         bauchFragment = new UebungFragment();
 
         bauchFragment.listName="Maschine";
         bauchFragment.adapterName="Bauch";
+        bauchFragment.tpPosition=tpPosition;
+        bauchFragment.tp= trainingsplaner;
 
         tricepFragment = new UebungFragment();
 
         tricepFragment.listName="Maschine";
         tricepFragment.adapterName="Tricep";
+        tricepFragment.tpPosition=tpPosition;
+        tricepFragment.tp= trainingsplaner;
 
         bicepFragment = new UebungFragment();
 
         bicepFragment.listName="Maschine";
         bicepFragment.adapterName="Bicep";
+        bicepFragment.tpPosition=tpPosition;
+        bicepFragment.tp= trainingsplaner;
 
         schulterFragment = new UebungFragment();
 
         schulterFragment.listName="Maschine";
         schulterFragment.adapterName="Schulter";
+        schulterFragment.tpPosition=tpPosition;
+        schulterFragment.tp= trainingsplaner;
 
         obererRueckenFragment = new UebungFragment();
 
         obererRueckenFragment.listName="Maschine";
         obererRueckenFragment.adapterName="ObererRuecken";
+        obererRueckenFragment.tpPosition=tpPosition;
+        obererRueckenFragment.tp= trainingsplaner;
 
         rueckenFragment = new UebungFragment();
 
         rueckenFragment.listName="Maschine";
         rueckenFragment.adapterName="Ruecken";
+        rueckenFragment.tpPosition=tpPosition;
+        rueckenFragment.tp= trainingsplaner;
 
         beinFragment= new UebungFragment();
 
         beinFragment.listName="Maschine";
         beinFragment.adapterName="Beine";
+        beinFragment.tpPosition=tpPosition;
+        beinFragment.tp= trainingsplaner;
 
         brustFragment = new UebungFragment();
 
         brustFragment.listName="Maschine";
         brustFragment.adapterName="Brust";
+        brustFragment.tpPosition=tpPosition;
+        brustFragment.tp= trainingsplaner;
 
 
 

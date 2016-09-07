@@ -111,6 +111,8 @@ public class FragmentEigengewicht extends Fragment {
         untererRueckenFragment.tpPosition=tpPosition;*/
         untererRueckenFragment.listName="Eigengewicht";
         untererRueckenFragment.adapterName="UntererRuecken";
+        untererRueckenFragment.tpPosition=tpPosition;
+        untererRueckenFragment.tp= trainingsplaner;
 
         bauchFragment = new UebungFragment();
 /*        bauchFragment.bauchList=SQLHelper.getEigengewichtbauches();
@@ -120,6 +122,8 @@ public class FragmentEigengewicht extends Fragment {
         bauchFragment.tpPosition=tpPosition;*/
         bauchFragment.listName="Eigengewicht";
         bauchFragment.adapterName="Bauch";
+        bauchFragment.tpPosition=tpPosition;
+        bauchFragment.tp= trainingsplaner;
 
         tricepFragment = new UebungFragment();
  /*       tricepFragment.triceps=SQLHelper.getEigengewichttriceps();
@@ -129,6 +133,8 @@ public class FragmentEigengewicht extends Fragment {
         tricepFragment.tpPosition=tpPosition;*/
         tricepFragment.listName="Eigengewicht";
         tricepFragment.adapterName="Tricep";
+        tricepFragment.tpPosition=tpPosition;
+        tricepFragment.tp= trainingsplaner;
 
         bicepFragment = new UebungFragment();
 /*        bicepFragment.bicepList=SQLHelper.getEigengewichtbiceps();
@@ -138,6 +144,8 @@ public class FragmentEigengewicht extends Fragment {
         bicepFragment.tpPosition=tpPosition;*/
         bicepFragment.listName="Eigengewicht";
         bicepFragment.adapterName="Bicep";
+        bicepFragment.tpPosition=tpPosition;
+        bicepFragment.tp= trainingsplaner;
 
         schulterFragment = new UebungFragment();
 /*        schulterFragment.schulters=SQLHelper.getEigengewichtschulters();
@@ -147,6 +155,8 @@ public class FragmentEigengewicht extends Fragment {
         schulterFragment.tpPosition=tpPosition;*/
         schulterFragment.listName="Eigengewicht";
         schulterFragment.adapterName="Schulter";
+        schulterFragment.tpPosition=tpPosition;
+        schulterFragment.tp= trainingsplaner;
 
         obererRueckenFragment = new UebungFragment();
 /*        obererRueckenFragment.obererRueckens=SQLHelper.getEigengewichtobererRueckens();
@@ -156,6 +166,8 @@ public class FragmentEigengewicht extends Fragment {
         obererRueckenFragment.tpPosition=tpPosition;*/
         obererRueckenFragment.listName="Eigengewicht";
         obererRueckenFragment.adapterName="ObererRuecken";
+        obererRueckenFragment.tpPosition=tpPosition;
+        obererRueckenFragment.tp= trainingsplaner;
 
         rueckenFragment = new UebungFragment();
 /*        rueckenFragment.rueckens=SQLHelper.getEigengewichtrueckens();
@@ -165,6 +177,8 @@ public class FragmentEigengewicht extends Fragment {
         rueckenFragment.tpPosition=tpPosition;*/
         rueckenFragment.listName="Eigengewicht";
         rueckenFragment.adapterName="Ruecken";
+        rueckenFragment.tpPosition=tpPosition;
+        rueckenFragment.tp= trainingsplaner;
 
         beinFragment= new UebungFragment();
 /*        beinFragment.beineList=SQLHelper.getEigengewichtbeines();
@@ -174,6 +188,8 @@ public class FragmentEigengewicht extends Fragment {
         beinFragment.tpPosition=tpPosition;*/
         beinFragment.listName="Eigengewicht";
         beinFragment.adapterName="Beine";
+        beinFragment.tpPosition=tpPosition;
+        beinFragment.tp= trainingsplaner;
 
         brustFragment = new UebungFragment();
 /*        brustFragment.brusts=SQLHelper.getEigengewichtbrusts();
@@ -183,6 +199,8 @@ public class FragmentEigengewicht extends Fragment {
         brustFragment.tpPosition=tpPosition;*/
         brustFragment.listName="Eigengewicht";
         brustFragment.adapterName="Brust";
+        brustFragment.tpPosition=tpPosition;
+        brustFragment.tp= trainingsplaner;
 
         uebungsFragments.add(untererRueckenFragment);
         uebungsFragments.add(bauchFragment);

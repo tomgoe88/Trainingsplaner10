@@ -92,46 +92,64 @@ Trainingsplaner trainingsplaner;
 
         untererRueckenFragment.listName="Funktionell";
         untererRueckenFragment.adapterName="UntererRuecken";
+        untererRueckenFragment.tpPosition=tpPosition;
+        untererRueckenFragment.tp= trainingsplaner;
 
         bauchFragment = new UebungFragment();
 
         bauchFragment.listName="Funktionell";
         bauchFragment.adapterName="Bauch";
+        bauchFragment.tpPosition=tpPosition;
+        bauchFragment.tp= trainingsplaner;
 
         tricepFragment = new UebungFragment();
 
         tricepFragment.listName="Funktionell";
         tricepFragment.adapterName="Tricep";
+        tricepFragment.tpPosition=tpPosition;
+        tricepFragment.tp= trainingsplaner;
 
         bicepFragment = new UebungFragment();
 
         bicepFragment.listName="Funktionell";
         bicepFragment.adapterName="Bicep";
+        bicepFragment.tpPosition=tpPosition;
+        bicepFragment.tp= trainingsplaner;
 
         schulterFragment = new UebungFragment();
 
         schulterFragment.listName="Funktionell";
         schulterFragment.adapterName="Schulter";
+        schulterFragment.tpPosition=tpPosition;
+        schulterFragment.tp= trainingsplaner;
 
         obererRueckenFragment = new UebungFragment();
 
         obererRueckenFragment.listName="Funktionell";
         obererRueckenFragment.adapterName="ObererRuecken";
+        obererRueckenFragment.tpPosition=tpPosition;
+        obererRueckenFragment.tp= trainingsplaner;
 
         rueckenFragment = new UebungFragment();
 
         rueckenFragment.listName="Funktionell";
         rueckenFragment.adapterName="Ruecken";
+        rueckenFragment.tpPosition=tpPosition;
+        rueckenFragment.tp= trainingsplaner;
 
         beinFragment= new UebungFragment();
 
         beinFragment.listName="Funktionell";
         beinFragment.adapterName="Beine";
+        beinFragment.tpPosition=tpPosition;
+        beinFragment.tp= trainingsplaner;
 
         brustFragment = new UebungFragment();
 
         brustFragment.listName="Funktionell";
         brustFragment.adapterName="Brust";
+        brustFragment.tpPosition=tpPosition;
+        brustFragment.tp= trainingsplaner;
 
 
 
