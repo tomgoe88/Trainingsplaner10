@@ -33,6 +33,10 @@ public class ActivityNeueUebung extends AppCompatActivity {
     private Button saveButton;
     String mCurrentPhotoPath;
     SQLiteDatabase trainingsplaner;
+    int uebungid;
+    int mudkelid;
+    Cursor muskel;
+    Cursor uebungsart;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 1;
@@ -99,14 +103,42 @@ public class ActivityNeueUebung extends AppCompatActivity {
 
         try {
             trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-            Cursor muskel= trainingsplaner.rawQuery("SELECT muskegruppenname FROM Muskelgruppe WHERE muskelgruppe_id='"+listName+"'", null);
-            int mudkelid= muskel.getInt(muskel.getColumnIndex("muskegruppenname"));
-            Cursor uebungsart= trainingsplaner.rawQuery("SELECT uebungsartname FROM Uebungsart WHERE uebungsart_id='"+typName+"'", null);
-            int uebungid= muskel.getInt(uebungsart.getColumnIndex("uebungsartname"));
-            trainingsplaner.execSQL("INSERT INTO Uebung(uebungsname, uebungsbeschreibung, uebungsbild, muskelgruppe_id, uebungsart_id)VALUES('"+name+"','"+beschreibung+"', '"+bildpfad+"','"+mudkelid+"', '"+uebungid+"')");
+            muskel= trainingsplaner.rawQuery("SELECT * FROM Muskelgruppe WHERE muskegruppenname='"+listName+"'", null);
+            muskel.moveToFirst();
+             do{
+                mudkelid= muskel.getInt(muskel.getColumnIndex("muskelgruppe_id"));//muskel.getColumnIndex("muskelgruppe_id");
+                Log.v("String", "Int = "+mudkelid+" "+listName);
+            }while (muskel.moveToNext());
+
+            muskel.close();
+            trainingsplaner.close();
         } catch(Exception e){
-            Log.v("SQL_Fehler", e.getMessage());
+            Log.v("SaveSQL", e.getMessage());
         }
+        try {
+            trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+            uebungsart= trainingsplaner.rawQuery("SELECT * FROM Uebungsart WHERE uebungsartname='"+typName+"'", null);
+            uebungsart.moveToFirst();
+            do{
+
+                uebungid= uebungsart.getInt(uebungsart.getColumnIndex("uebungsart_id"));//uebungsart.getColumnIndex("uebungsart_id")
+                Log.v("String", "Int = "+uebungid+" "+ typName);
+            }while (uebungsart.moveToNext());
+
+            uebungsart.close();
+            trainingsplaner.close();
+        } catch(Exception e){
+            Log.v("UebungSQL", e.getMessage());
+        }
+        try {
+            trainingsplaner= this.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+            trainingsplaner.execSQL("INSERT INTO Uebung(uebungsname, uebungsbeschreibung, uebungsbild, muskelgruppe_id, uebungsart_id)VALUES('"+name+"','"+beschreibung+"', '"+bildpfad+"','"+mudkelid+"', '"+uebungid+"')");
+            trainingsplaner.close();
+        } catch(Exception e){
+            Log.v("UebungSQL", e.getMessage());
+        }
+;
+
 
 
 
