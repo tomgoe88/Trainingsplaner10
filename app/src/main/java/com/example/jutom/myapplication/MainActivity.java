@@ -1,6 +1,7 @@
 package com.example.jutom.myapplication;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -104,6 +105,23 @@ public class MainActivity extends AppCompatActivity
             trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS Muskelgruppe(muskelgruppe_id INTEGER PRIMARY KEY AUTOINCREMENT, muskegruppenname VARCHAR(50))");
             trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS Uebungsart(uebungsart_id INTEGER PRIMARY KEY AUTOINCREMENT, uebungsartname VARCHAR(50))");
 
+            Cursor cursor= trainingsplaner.rawQuery("SELECT * FROM Muskelgruppe", null);
+            if(cursor.getCount()==0){
+                trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Ruecken')");
+                trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Brust')");
+                trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('UntererRuecken')");
+                trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('ObererRuecken')");
+                trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Beine')");
+                trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Bicep')");
+                trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Tricep')");
+                trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Bauch')");
+                trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Schulter')");
+
+                trainingsplaner.execSQL("INSERT INTO Uebungsart(uebungsartname)VALUES('Maschine')");
+                trainingsplaner.execSQL("INSERT INTO Uebungsart(uebungsartname)VALUES('Funktionell')");
+                trainingsplaner.execSQL("INSERT INTO Uebungsart(uebungsartname)VALUES('FreieGewichte')");
+                trainingsplaner.execSQL("INSERT INTO Uebungsart(uebungsartname)VALUES('Eigengewicht')");
+            }
 
          /*   trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Ruecken')");
             trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Brust')");

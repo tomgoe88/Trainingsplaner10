@@ -17,7 +17,7 @@ import android.widget.TextView;
 public class MyCursorAdapter extends CursorAdapter {
     View v;
     public MyCursorAdapter(Context context, Cursor c) {
-        super(context, c, 0);
+        super(context, c, true);
     }
 
     @Override
