@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -121,6 +122,9 @@ public class MainActivity extends AppCompatActivity
                 trainingsplaner.execSQL("INSERT INTO Uebungsart(uebungsartname)VALUES('Funktionell')");
                 trainingsplaner.execSQL("INSERT INTO Uebungsart(uebungsartname)VALUES('FreieGewichte')");
                 trainingsplaner.execSQL("INSERT INTO Uebungsart(uebungsartname)VALUES('Eigengewicht')");
+                Toast.makeText(this,"Erfolgreich gestartet", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this,"Datenbank ist ok!", Toast.LENGTH_LONG).show();
             }
 
          /*   trainingsplaner.execSQL("INSERT INTO Muskelgruppe(muskegruppenname)VALUES('Ruecken')");

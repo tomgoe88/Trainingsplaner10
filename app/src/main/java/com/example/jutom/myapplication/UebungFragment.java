@@ -59,6 +59,7 @@ public class UebungFragment extends Fragment {
     List<Ruecken>rueckens;
     List<Schulter>schulters;
     List<Tricep>triceps;
+    Cursor cursor;
 
     int tpPosition;
 
@@ -112,184 +113,25 @@ public class UebungFragment extends Fragment {
             SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
             // trainingsplaner.execSQL("INSERT INTO UntererRuecken(uebungsname, uebungsbild, uebungsart)VALUES('Keks', 'test', 'Eigengewicht')");
 
-            Cursor cursor= trainingsplaner.rawQuery("SELECT Uebung_id AS _id, uebungsname, uebungsbild FROM " +
+             cursor= trainingsplaner.rawQuery("SELECT Uebung_id AS _id, uebungsname, uebungsbild FROM " +
                     "(Uebung INNER JOIN Muskelgruppe ON Muskelgruppe.muskelgruppe_id = Uebung.muskelgruppe_id)" +
                     "INNER JOIN Uebungsart ON Uebung.uebungsart_id = Uebungsart.uebungsart_id " +
                     "WHERE Uebungsart.uebungsartname ='"+listName+"'" +
                     "AND Muskelgruppe.muskegruppenname ='"+adapterName+"'", null);
-            cursor.moveToFirst();
-            MyCursorAdapter myCursorAdapter= new MyCursorAdapter(getActivity(),cursor);
-            listView.setAdapter(myCursorAdapter);
+
+
         } catch(Exception e){
             Log.v("Exception", e.getMessage());
         }
-
-  /*      switch(adapterName){
-            case("UntererRuecken"):
-*//*                uebungListAdapter= new UebungListAdapter(getActivity(),untererRueckenList,tp);
-                listView.setAdapter(uebungListAdapter);
-                if(untererRueckenList!= null){
-                    uebungList.addAll(untererRueckenList);
-                }*//*
-                try{
-                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                   // trainingsplaner.execSQL("INSERT INTO UntererRuecken(uebungsname, uebungsbild, uebungsart)VALUES('Keks', 'test', 'Eigengewicht')");
-                    Cursor cursor= trainingsplaner.rawQuery("SELECT _id, uebungsname, uebungsbild FROM UntererRuecken WHERE uebungsart ='"+listName+"'",null);
-                    cursor.moveToFirst();
-                    MyCursorAdapter myCursorAdapter= new MyCursorAdapter(getActivity(),cursor);
-                    listView.setAdapter(myCursorAdapter);
-                } catch(Exception e){
-                    Log.v("Exception", e.getMessage());
-                }
-
-                break;
-            case("Bauch"):
- *//*               listAdapterBauch= new ListAdapterBauch(getActivity(),bauchList,tp);
-                listView.setAdapter(listAdapterBauch);
-                if(bauchList!= null){
-                    uebungList.addAll(bauchList);
-                }*//*
-
-                try{
-                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                   // trainingsplaner.execSQL("INSERT INTO Bauch(uebungsname, uebungsbild, uebungsart)VALUES('Keks', 'test', 'Eigengewicht')");
-                    Cursor cursor= trainingsplaner.rawQuery("SELECT _id, uebungsname, uebungsbild FROM Bauch WHERE uebungsart ='"+listName+"'",null);
-                    cursor.moveToFirst();
-                    MyCursorAdapter myCursorAdapter= new MyCursorAdapter(getActivity(),cursor);
-                    listView.setAdapter(myCursorAdapter);
-                } catch(Exception e){
-                    Log.v("Exception", e.getMessage());
-                }
-                break;
-            case("Tricep"):
-*//*                listAdapterTricep= new ListAdapterTricep(getActivity(),triceps,tp);
-                listView.setAdapter(listAdapterTricep);
-                if(triceps!= null){
-                    uebungList.addAll(triceps);
-                }*//*
-
-                try{
-                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                   // trainingsplaner.execSQL("INSERT INTO Tricep(uebungsname, uebungsbild, uebungsart)VALUES('Keks', 'test', 'Eigengewicht')");
-                    Cursor cursor= trainingsplaner.rawQuery("SELECT _id, uebungsname, uebungsbild FROM Tricep WHERE uebungsart ='"+listName+"'",null);
-                    cursor.moveToFirst();
-                    MyCursorAdapter myCursorAdapter= new MyCursorAdapter(getActivity(),cursor);
-                    listView.setAdapter(myCursorAdapter);
-                } catch(Exception e){
-                    Log.v("Exception", e.getMessage());
-                }
-                break;
-            case("Bicep"):
-*//*                listAdapterBicep= new ListAdapterBicep(getActivity(),bicepList,tp);
-                listView.setAdapter(listAdapterBicep);
-                if(bicepList!= null){
-                    uebungList.addAll(bicepList);
-                }*//*
-
-                try{
-                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                   // trainingsplaner.execSQL("INSERT INTO Bicep(uebungsname, uebungsbild, uebungsart)VALUES('Keks', 'test', 'Eigengewicht')");
-                    Cursor cursor= trainingsplaner.rawQuery("SELECT _id, uebungsname, uebungsbild FROM Bicep WHERE uebungsart ='"+listName+"'",null);
-                    cursor.moveToFirst();
-                    MyCursorAdapter myCursorAdapter= new MyCursorAdapter(getActivity(),cursor);
-                    listView.setAdapter(myCursorAdapter);
-                } catch(Exception e){
-                    Log.v("Exception", e.getMessage());
-                }
-                break;
-            case("Schulter"):
-*//*                listAdapterSchulter= new ListAdapterSchulter(getActivity(),schulters,tp);
-                listView.setAdapter(listAdapterSchulter);
-                if(schulters!= null){
-                    uebungList.addAll(schulters);
-                }*//*
-                try{
-                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                   // trainingsplaner.execSQL("INSERT INTO Schulter(uebungsname, uebungsbild, uebungsart)VALUES('Keks', 'test', 'Eigengewicht')");
-                    Cursor cursor= trainingsplaner.rawQuery("SELECT _id, uebungsname, uebungsbild FROM Schulter WHERE uebungsart ='"+listName+"'",null);
-                    cursor.moveToFirst();
-                    MyCursorAdapter myCursorAdapter= new MyCursorAdapter(getActivity(),cursor);
-                    listView.setAdapter(myCursorAdapter);
-                } catch(Exception e){
-                    Log.v("Exception", e.getMessage());
-                }
-                break;
-            case("ObererRuecken"):
-*//*                listAdapterObererRuecken= new ListAdapterObererRuecken(getActivity(),obererRueckens,tp);
-                listView.setAdapter(listAdapterObererRuecken);
-                if(obererRueckens!= null){
-                    uebungList.addAll(obererRueckens);
-                }*//*
-
-                try{
-                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                   // trainingsplaner.execSQL("INSERT INTO ObererRuecken(uebungsname, uebungsbild, uebungsart)VALUES('Keks', 'test', 'Eigengewicht')");
-                    Cursor cursor= trainingsplaner.rawQuery("SELECT _id, uebungsname, uebungsbild FROM ObererRuecken WHERE uebungsart ='"+listName+"'",null);
-                    cursor.moveToFirst();
-                    MyCursorAdapter myCursorAdapter= new MyCursorAdapter(getActivity(),cursor);
-
-                    listView.setAdapter(myCursorAdapter);
-                } catch(Exception e){
-                    Log.v("Exception", e.getMessage());
-                }
-                break;
-            case("Ruecken"):
-*//*                listAdapterRuecken= new ListAdapterRuecken(getActivity(),rueckens,tp);
-                listView.setAdapter(listAdapterRuecken);
-                if(rueckens!= null){
-                    uebungList.addAll(rueckens);
-                }*//*
-
-                try{
-                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                   // trainingsplaner.execSQL("INSERT INTO Ruecken(uebungsname, uebungsbild, uebungsart)VALUES('Keks', 'test', 'Eigengewicht')");
-                    Cursor cursor= trainingsplaner.rawQuery("SELECT _id, uebungsname, uebungsbild FROM Ruecken WHERE uebungsart ='"+listName+"'",null);
-                    cursor.moveToFirst();
-                    MyCursorAdapter myCursorAdapter= new MyCursorAdapter(getActivity(),cursor);
-                    listView.setAdapter(myCursorAdapter);
-                } catch(Exception e){
-                    Log.v("Exception", e.getMessage());
-                }
-                break;
-            case("Beine"):
-*//*                listAdapterBeine= new ListAdapterBeine(getActivity(),beineList,tp);
-                listView.setAdapter(listAdapterBeine);
-                if(beineList!= null){
-                    uebungList.addAll(beineList);
-                }*//*
-                try{
-                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                   // trainingsplaner.execSQL("INSERT INTO Beine(uebungsname, uebungsbild, uebungsart)VALUES('Keks', 'test', 'Eigengewicht')");
-                    Cursor cursor= trainingsplaner.rawQuery("SELECT _id, uebungsname, uebungsbild FROM Beine WHERE uebungsart ='"+listName+"'",null);
-                    cursor.moveToFirst();
-                    MyCursorAdapter myCursorAdapter= new MyCursorAdapter(getActivity(),cursor);
-                    listView.setAdapter(myCursorAdapter);
-                } catch(Exception e){
-                    Log.v("Exception", e.getMessage());
-                }
-                break;
-            case("Brust"):
-*//*                listAdapterBrust= new ListAdapterBrust(getActivity(),brusts,tp);
-                listView.setAdapter(listAdapterBrust);
-                if(brusts!= null){
-                    uebungList.addAll(brusts);
-                }*//*
-
-                try{
-                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                  //  trainingsplaner.execSQL("INSERT INTO Brust(uebungsname, uebungsbild, uebungsart)VALUES('Keks', 'test', 'Eigengewicht')");
-                    Cursor cursor= trainingsplaner.rawQuery("SELECT _id, uebungsname, uebungsbild FROM Brust WHERE uebungsart ='"+listName+"'",null);
-                    cursor.moveToFirst();
-                    MyCursorAdapter myCursorAdapter= new MyCursorAdapter(getActivity(),cursor);
-                    listView.setAdapter(myCursorAdapter);
-                } catch(Exception e){
-                    Log.v("Exception", e.getMessage());
-                }
-                break;
-
-
-
+        cursor.moveToFirst();
+        String test;
+/*        while(cursor.moveToNext()){
+            Log.v("Cursor Test", " Wert ist: "+ cursor.getString(cursor.getColumnIndex("uebungsname")) );
         }*/
+        MyCursorAdapter myCursorAdapter= new MyCursorAdapter(getActivity(),cursor);
+        listView.setAdapter(myCursorAdapter);
+
+
 
         //TODO hier muss noch ein Button bearbeitet werden hier muss auch die oben darrgestellte IF-Anweisung eingebracht werden um die neue Übung zu öffnen
         //TODO um welche übung es sich handelt sollte über einen String übergeben werden in den Konstruktor
