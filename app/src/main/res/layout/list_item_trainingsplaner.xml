@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
+    <!--TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -20,5 +20,5 @@
         android:id="@+id/uebungenAnzahl"
         android:layout_alignTop="@+id/nameTrainingsplan"
         android:layout_toEndOf="@+id/nameTrainingsplan"
-        android:layout_marginStart="55dp" />
+        android:layout_marginStart="55dp" /-->
 </RelativeLayout>

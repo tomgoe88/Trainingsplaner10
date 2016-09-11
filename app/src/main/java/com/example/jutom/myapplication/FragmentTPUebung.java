@@ -149,7 +149,7 @@ public class FragmentTPUebung extends Fragment {
 
                 FragmentTrainingsplanerList.getTrainingsplaners().get(tpPositon).getTpUebungen().add(neu);
                 FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(FragmentTrainingsplanerList.getTrainingsplaners().get(tpPositon), tpPositon));
+                ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(tpPositon));
                 ft.commit();
             }
         });

@@ -1,8 +1,11 @@
 package com.example.jutom.myapplication;
 
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -43,7 +46,7 @@ public class FragmentTrainingsplanPager extends Fragment {
     Button uebungAusKatalog;
 
 
-    public FragmentTrainingsplanPager(Trainingsplaner trainingsplaner, int position) {
+    public FragmentTrainingsplanPager(int position) {
         // Required empty public constructor
         this.trainingsplaner= trainingsplaner;
         this.tpPosition=position;
@@ -61,11 +64,39 @@ public class FragmentTrainingsplanPager extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         tpFragments= new ArrayList<Fragment>();
+        try{
+            SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+            Cursor cursor= trainingsplaner.rawQuery("SELECT trainingsplanuebung._id AS _id," +
+                    "Uebung.Uebung_id," +
+                    "Uebung.uebungsname," +
+                    "Uebung.uebungsbeschreibung," +
+                    "Uebung.uebungsbild," +
+                    "satzintervall.intevall," +
+                    "satzintervall.pause," +
+                    "satzklassisch.wiederholung," +
+                    "satzklassisch.pause " +
+                    "FROM trainingsplanuebung INNER JOIN trainingsplan ON " +
+                    "trainingsplanuebung.TrainingsplanID=trainingsplan._id " +
+                    "INNER JOIN Uebung ON " +
+                    "trainingsplanuebung.Uebungs_id= Uebung.Uebung_id " +
+                    "INNER JOIN satzintervall ON " +
+                    "satzintervall.TrainingUebungID=trainingsplanuebung._id " +
+                    "INNER JOIN satzklassisch ON " +
+                    "satzklassisch.TrainingUebungID= trainingsplanuebung._id " +
+                    "WHERE trainingsplan._id='"+tpPosition+"'", null);
+            cursor.moveToFirst();
+            do{
+                Log.v("Test", cursor.getString(cursor.getColumnIndex("uebungsname"))+" ,"+ cursor.getInt(cursor.getColumnIndex("wiederholung"))+" "+cursor.getInt(cursor.getColumnIndex("intervall")));
+            } while(cursor.moveToNext());
+
+        }catch (Exception e){
+            Log.v("PagerTrainingsplan", e.getMessage());
+        }
         titles= new ArrayList<String>();
-        for(Uebung u:FragmentTrainingsplanerList.getTrainingsplaners().get(tpPosition).getTpUebungen()){
+ /*       for(Uebung u:FragmentTrainingsplanerList.getTrainingsplaners().get(tpPosition).getTpUebungen()){
             tpFragments.add(new FragmentUebungInPager(u));//in diesem Fragment werden nur die Übungsdatenangezeigt
             titles.add(u.getName());
-        }
+        }*/
 
     }
 
@@ -75,7 +106,7 @@ public class FragmentTrainingsplanPager extends Fragment {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_fragment_trainingsplan_pager, container, false);
         ViewPager vP= (ViewPager)v.findViewById(R.id.pagerTrainingeplaner);//TODO in dem Layout muss noch ein Pager eingefügt werden
-        Log.v("Get Trainingsplaner", "Trainingsplan "+ trainingsplaner.getName());
+        //Log.v("Get Trainingsplaner", "Trainingsplan "+ trainingsplaner.getName());
         vP.setAdapter(new FragmentPager(getChildFragmentManager(),tpFragments,titles));
 
         vP.setCurrentItem(tpFragments.size()-1);

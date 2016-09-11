@@ -1,11 +1,15 @@
 package com.example.jutom.myapplication;
 
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.CursorAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +34,9 @@ public class FragmentTrainingsplanerList extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     Button newPlan; //TODO, hierrüber soll eine neuer Plan angelegt werden, anschließend muss der Adapter refreshed werden.
     View v;
+    Cursor cursor;
     ListView trainerList;
-    ListAdapterTrainingsplaner listAdapterTrainingsplaner;
+    MyCusrorAdapterTrainingsplan listAdapterTrainingsplaner;
    public static List<Trainingsplaner> trainingsplaners=new ArrayList<Trainingsplaner>();
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -85,19 +90,36 @@ public class FragmentTrainingsplanerList extends Fragment {
         // Inflate the layout for this fragment
         v= inflater.inflate(R.layout.fragment_fragment_trainingsplaner_list, container, false);
         trainerList = (ListView) v.findViewById(R.id.listTrainingsplaner);
-        listAdapterTrainingsplaner= new ListAdapterTrainingsplaner(getActivity(), trainingsplaners);
+        try {
+            SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+            cursor= trainingsplaner.rawQuery("SELECT _id, trainingsplanname FROM trainingsplan", null);
+            cursor.moveToFirst();
+        }catch(Exception e){
+            Log.v("NeuerPlan", e.getMessage());
+        }
+        listAdapterTrainingsplaner= new MyCusrorAdapterTrainingsplan(getActivity(), cursor);
         trainerList.setAdapter(listAdapterTrainingsplaner);
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fabNeuerTP);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Trainingsplaner tp= new Trainingsplaner();
+             /*   Trainingsplaner tp= new Trainingsplaner();
                 tp.setName("Neuer Plan");
                 Log.v("Fragment", "TP Fragment ist erstellt");
-                trainingsplaners.add(tp);
-                trainerList.setAdapter(null);
-                listAdapterTrainingsplaner.notifyDataSetChanged();
-                trainerList.setAdapter(listAdapterTrainingsplaner);
+                trainingsplaners.add(tp);*/
+                try {
+                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                    trainingsplaner.execSQL("INSERT INTO trainingsplan(trainingsplanname) VALUES('Neuer Plan')");
+                    trainerList.setAdapter(null);
+                    Cursor newCursor= trainingsplaner.rawQuery("SELECT _id, trainingsplanname FROM trainingsplan", null);
+                    cursor.moveToFirst();
+                    listAdapterTrainingsplaner.changeCursor(newCursor);
+                    listAdapterTrainingsplaner.notifyDataSetChanged();
+                    trainerList.setAdapter(listAdapterTrainingsplaner);
+                } catch (Exception e){
+                    Log.v("NeuerPlanZuFügen", e.getMessage());
+                }
+
 
 
             }
@@ -107,7 +129,7 @@ public class FragmentTrainingsplanerList extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(trainingsplaners.get(position), position));
+        ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(Integer.parseInt(listAdapterTrainingsplaner.tpIDString.get(position))));
         ft.commit();
             }
         });

@@ -57,7 +57,7 @@ public class ListAdapterTrainingsplaner extends BaseAdapter {
             v = vi.inflate(R.layout.list_item_trainingsplaner, null);
         }
         tpName= (TextView) v.findViewById(R.id.nameTrainingsplan);
-        uebungAnzahl= (TextView) v.findViewById(R.id.uebungenAnzahl);
+        //uebungAnzahl= (TextView) v.findViewById(R.id.uebungenAnzahl);
 
         if(uebung.get(position).getName()!= null){
             tpName.setText(uebung.get(position).getName());
