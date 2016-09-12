@@ -1,7 +1,9 @@
 package com.example.jutom.myapplication;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -41,9 +43,21 @@ public class MyCusrorAdapterTrainingsplan extends CursorAdapter {
         ViewHolder holder= new ViewHolder();
 
         holder.tpName= (TextView) v.findViewById(R.id.nameTrainingsplan);
-        //holder.uebungAnzahl= (TextView) v.findViewById(R.id.uebungenAnzahl);
+        holder.uebungsAnzahl= (TextView) v.findViewById(R.id.uebungenAnzahl);
         int id=cursor.getInt(cursor.getColumnIndex("_id"));
         tpIDString.add(""+id);
+        holder.tpID=cursor.getInt(cursor.getColumnIndex("_id"));
+        try{
+            SQLiteDatabase trainingsplaner= context.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+            Cursor cursor1= trainingsplaner.rawQuery("SELECT Count(*) AS _id FROM trainingsplanuebung WHERE Uebungs_id='"+holder.tpID+"'", null);
+            cursor1.moveToFirst();
+            do{
+                holder.uebungsAnzahl.setText(cursor1.getString(cursor1.getColumnIndex("_id")));
+            }while(cursor1.moveToNext());
+        }catch (Exception e){
+            Log.v("GetCount", e.getMessage());
+        }
+
 
         if(holder.tpName!= null){
             holder.tpName.setText(cursor.getString(cursor.getColumnIndex("trainingsplanname")));

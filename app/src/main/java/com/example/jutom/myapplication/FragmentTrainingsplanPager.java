@@ -41,6 +41,7 @@ public class FragmentTrainingsplanPager extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    int tempId;
     int tpPosition;
     Button neueUebungErstellen;
     Button uebungAusKatalog;
@@ -71,7 +72,7 @@ public class FragmentTrainingsplanPager extends Fragment {
                     "Uebung.Uebung_id," +
                     "Uebung.uebungsname," +
                     "Uebung.uebungsbeschreibung," +
-                    "Uebung.uebungsbild," +
+                    "Uebung.uebungsbild " +
                     "FROM trainingsplanuebung INNER JOIN trainingsplan ON " +
                     "trainingsplanuebung.TrainingsplanID=trainingsplan._id " +
                     "INNER JOIN Uebung ON " +
@@ -125,9 +126,23 @@ public class FragmentTrainingsplanPager extends Fragment {
                 neueUebungErstellen.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Uebung uebung= new Uebung();
+                       // Uebung uebung= new Uebung();
+
+                        try {
+                            SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                            trainingsplaner.execSQL("INSERT INTO uebung VALUES");
+                            Cursor cursor= trainingsplaner.rawQuery("SELECT Uebung_id AS _id FROM uebung WHERE Uebung_id =(SELECT MAX(Uebung_id) FROM uebung", null);
+                            do{
+                                tempId= cursor.getInt(cursor.getColumnIndex("_id"));
+                            }while (cursor.moveToNext());
+                            trainingsplaner.execSQL("INSERT INTO trainingsplanuebung(Uebungs_id, TrainingsplanID) VALUES ('"+tempId+"','"+tpPosition+"'");
+                            //es muss noch die letzte Übung abgefragt werden
+                        } catch(Exception e){
+                            Log.v("NeueUebung", e.getMessage());
+                        }
+
                         FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebung,trainingsplaner, tpPosition));
+                       // ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebung,trainingsplaner, tpPosition));
                         ft.commit();
                         neueUebungErstellen.setVisibility(View.INVISIBLE);
                         uebungAusKatalog.setVisibility(View.INVISIBLE);

@@ -1,6 +1,9 @@
 package com.example.jutom.myapplication;
 
 
+import android.app.Activity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -45,6 +48,35 @@ public class FragmentUebungInPager extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        try {
+            SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+            Cursor cursor= trainingsplaner.rawQuery("SELECT _id, intevall, pause FROM satzintervall WHERE TrainingUebungID='"+uebung.getTpUebungId()+"'", null);
+            Cursor cursor1= trainingsplaner.rawQuery("SELECT _id, wiederholung, pause FROM satzklassisch WHERE TrainingUebungID='"+uebung.getTpUebungId()+"'", null);
+            cursor.moveToFirst();
+            do{
+                Satz satz = new Satz();
+                satz.setBelastungsIntervall(cursor.getInt(cursor.getColumnIndex("intevall")));
+                satz.setPause(cursor.getInt(cursor.getColumnIndex("pause")));
+                uebung.getSatzList().add(satz);
+            }while (cursor.moveToNext());
+        }catch (Exception e){
+            Log.v("ZeigeSatzZeit", e.getMessage());
+        }
+        try {
+            SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+
+            Cursor cursor1= trainingsplaner.rawQuery("SELECT _id, wiederholung, pause FROM satzklassisch WHERE TrainingUebungID='"+uebung.getTpUebungId()+"'", null);
+            cursor1.moveToFirst();
+            do{
+                SatzZeit satz = new SatzZeit();
+                satz.setWiederholungen(cursor1.getInt(cursor1.getColumnIndex("wiederholung")));
+                satz.setPause(cursor1.getInt(cursor1.getColumnIndex("pause")));
+                uebung.getSatzZeitList().add(satz);
+            }while (cursor1.moveToNext());
+        }catch (Exception e){
+            Log.v("ZeigeSatz", e.getMessage());
+        }
+
     }
 
     @Override
