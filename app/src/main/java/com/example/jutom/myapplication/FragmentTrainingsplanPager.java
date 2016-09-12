@@ -43,6 +43,7 @@ public class FragmentTrainingsplanPager extends Fragment {
     private String mParam2;
     int tempId;
     int tpPosition;
+    int tempTraining;
     Button neueUebungErstellen;
     Button uebungAusKatalog;
 
@@ -137,12 +138,16 @@ public class FragmentTrainingsplanPager extends Fragment {
                             }while (cursor.moveToNext());
                             trainingsplaner.execSQL("INSERT INTO trainingsplanuebung(Uebungs_id, TrainingsplanID) VALUES ('"+tempId+"','"+tpPosition+"'");
                             //es muss noch die letzte Übung abgefragt werden
+                            Cursor cursor2= trainingsplaner.rawQuery("SELECT  _id FROM trainingsplanuebung WHERE Uebung_id =(SELECT MAX(_id) FROM trainingsplanuebung", null);
+                            do{
+                                tempTraining= cursor2.getInt(cursor.getColumnIndex("_id"));
+                            }while (cursor2.moveToNext());
                         } catch(Exception e){
                             Log.v("NeueUebung", e.getMessage());
                         }
 
                         FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
-                       // ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebung,trainingsplaner, tpPosition));
+                        ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(tpPosition,tempId, tempTraining));
                         ft.commit();
                         neueUebungErstellen.setVisibility(View.INVISIBLE);
                         uebungAusKatalog.setVisibility(View.INVISIBLE);

@@ -57,6 +57,9 @@ public class FragmentTPUebung extends Fragment {
     View theView;
     Calendar calendar;
     AlertDialog.Builder builder;
+    int trainingsplanID;
+    int uebungID;
+    int trainingsplanUebungID;
 
     String mCurrentPhotoPath;
 
@@ -70,11 +73,11 @@ public class FragmentTPUebung extends Fragment {
     private Uebung uebung;
     Uebung neu;
 
-    public FragmentTPUebung(Uebung uebung, Trainingsplaner trainingsplaner, int pos) {
-        // Required empty public constructor
-        this.uebung=uebung; //durch diese Referenzu werden die einzelen Parameter der Übung angezeigt
-        this.trainingsplaner=trainingsplaner; //dieser Traingsplaner muss mitgegeben werden, wenn das FragmentTrainingsplanPager aufgerufen wird
-        this.tpPositon=pos; //wird benötigt um die übung am Ende im Richtigen Trainingsplaner zu speicher
+    public FragmentTPUebung(int tpID, int uebungID, int pos) {
+        this.trainingsplanID= tpID;
+        this.uebungID= uebungID;
+        this.trainingsplanUebungID= pos;
+
     }
 
 
