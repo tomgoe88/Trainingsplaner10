@@ -13,6 +13,15 @@ public class Uebung
     private String img;
     private List<Satz> satzList= new ArrayList<>();
     private List<SatzZeit> satzZeitList= new ArrayList<>();
+    private int tpUebungId;
+
+    public int getTpUebungId() {
+        return tpUebungId;
+    }
+
+    public void setTpUebungId(int tpUebungId) {
+        this.tpUebungId = tpUebungId;
+    }
 
     public String getName() {
         return name;

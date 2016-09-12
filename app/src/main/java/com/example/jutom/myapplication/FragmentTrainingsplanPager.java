@@ -64,6 +64,7 @@ public class FragmentTrainingsplanPager extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         tpFragments= new ArrayList<Fragment>();
+        titles= new ArrayList<String>();
         try{
             SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
             Cursor cursor= trainingsplaner.rawQuery("SELECT trainingsplanuebung._id AS _id," +
@@ -71,6 +72,7 @@ public class FragmentTrainingsplanPager extends Fragment {
                     "Uebung.uebungsname," +
                     "Uebung.uebungsbeschreibung," +
                     "Uebung.uebungsbild," +
+                    "trainingsplanuebung._id AS tpUebung," +
                     "satzintervall.intevall," +
                     "satzintervall.pause," +
                     "satzklassisch.wiederholung," +
@@ -79,20 +81,22 @@ public class FragmentTrainingsplanPager extends Fragment {
                     "trainingsplanuebung.TrainingsplanID=trainingsplan._id " +
                     "INNER JOIN Uebung ON " +
                     "trainingsplanuebung.Uebungs_id= Uebung.Uebung_id " +
-                    "INNER JOIN satzintervall ON " +
-                    "satzintervall.TrainingUebungID=trainingsplanuebung._id " +
-                    "INNER JOIN satzklassisch ON " +
-                    "satzklassisch.TrainingUebungID= trainingsplanuebung._id " +
-                    "WHERE trainingsplan._id='"+tpPosition+"'", null);
+                    "WHERE trainingsplan._id='"+tpPosition+"'", null);  //der Satz wird dann in dem FragmentUebungInPager gesucht Referen trainingsplanuebung._id
             cursor.moveToFirst();
             do{
+                Uebung uebung= new Uebung();
+                uebung.setTpUebungId(cursor.getInt(cursor.getColumnIndex("tpUebung")));
+                // add more
+                tpFragments.add(new FragmentUebungInPager(uebung));
+                titles.add(uebung.getName());
+
                 Log.v("Test", cursor.getString(cursor.getColumnIndex("uebungsname"))+" ,"+ cursor.getInt(cursor.getColumnIndex("wiederholung"))+" "+cursor.getInt(cursor.getColumnIndex("intervall")));
             } while(cursor.moveToNext());
 
         }catch (Exception e){
             Log.v("PagerTrainingsplan", e.getMessage());
         }
-        titles= new ArrayList<String>();
+
  /*       for(Uebung u:FragmentTrainingsplanerList.getTrainingsplaners().get(tpPosition).getTpUebungen()){
             tpFragments.add(new FragmentUebungInPager(u));//in diesem Fragment werden nur die Übungsdatenangezeigt
             titles.add(u.getName());
