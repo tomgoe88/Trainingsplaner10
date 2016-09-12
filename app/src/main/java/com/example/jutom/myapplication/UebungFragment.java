@@ -153,11 +153,11 @@ public class UebungFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
              //   Log.v("OnItem", "On item is clicked at postion "+position +" with tp = "+ tp.toString() );
-                if(tp!= null){
+        /*        if(tp!= null){
                     FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(uebungList.get(position),tp, tpPosition));
                     ft.commit();
-                }
+                }*/
             }
         });
         return v;

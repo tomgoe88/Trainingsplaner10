@@ -131,8 +131,8 @@ public class FragmentTrainingsplanPager extends Fragment {
 
                         try {
                             SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                            trainingsplaner.execSQL("INSERT INTO uebung VALUES");
-                            Cursor cursor= trainingsplaner.rawQuery("SELECT Uebung_id AS _id FROM uebung WHERE Uebung_id =(SELECT MAX(Uebung_id) FROM uebung", null);
+                            trainingsplaner.execSQL("INSERT INTO uebung(uebungsname, uebungsbeschreibung, uebungsbild) VALUES('neu', 'neu', 'neu')");
+                            Cursor cursor= trainingsplaner.rawQuery("SELECT Uebung_id AS _id FROM uebung WHERE Uebung_id =(SELECT MAX(Uebung_id) FROM uebung)", null);
                             do{
                                 tempId= cursor.getInt(cursor.getColumnIndex("_id"));
                             }while (cursor.moveToNext());

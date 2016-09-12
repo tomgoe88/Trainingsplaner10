@@ -89,7 +89,7 @@ public class FragmentTPUebung extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        mCurrentPhotoPath=uebung.getImg();
+       // mCurrentPhotoPath=uebung.getImg();
     }
 
     @Override
@@ -248,10 +248,12 @@ public class FragmentTPUebung extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Satz intervallSatz= new Satz();
-                                intervallSatz.setBelastungsIntervall(intervallSatz.getBelastungsIntervall()+minute_intervall.getValue()+(second_intervall.getValue()*60));
-                                intervallSatz.setPause(intervallSatz.getPause()+minute_pause.getValue()+(second_pause.getValue()*60));
+                                int belastungsintervall= minute_intervall.getValue()+(second_intervall.getValue()*60);
+                                int pause = minute_pause.getValue()+(second_pause.getValue()*60);
+
+                                //TODO hier geht es weiter
                                 neu.getSatzList().add(intervallSatz);
-                                satzzahl.setText(""+(neu.getSatzList().size()+neu.getSatzZeitList().size()));
+                                satzzahl.setText(Integer.parseInt(""+satzzahl.getText())+1);
                                klassisch.setVisibility(View.INVISIBLE);
 
                             }
