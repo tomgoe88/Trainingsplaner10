@@ -72,11 +72,6 @@ public class FragmentTrainingsplanPager extends Fragment {
                     "Uebung.uebungsname," +
                     "Uebung.uebungsbeschreibung," +
                     "Uebung.uebungsbild," +
-                    "trainingsplanuebung._id AS tpUebung," +
-                    "satzintervall.intevall," +
-                    "satzintervall.pause," +
-                    "satzklassisch.wiederholung," +
-                    "satzklassisch.pause " +
                     "FROM trainingsplanuebung INNER JOIN trainingsplan ON " +
                     "trainingsplanuebung.TrainingsplanID=trainingsplan._id " +
                     "INNER JOIN Uebung ON " +
@@ -85,7 +80,7 @@ public class FragmentTrainingsplanPager extends Fragment {
             cursor.moveToFirst();
             do{
                 Uebung uebung= new Uebung();
-                uebung.setTpUebungId(cursor.getInt(cursor.getColumnIndex("tpUebung")));
+                uebung.setTpUebungId(cursor.getInt(cursor.getColumnIndex("_id")));
                 // add more
                 tpFragments.add(new FragmentUebungInPager(uebung));
                 titles.add(uebung.getName());
