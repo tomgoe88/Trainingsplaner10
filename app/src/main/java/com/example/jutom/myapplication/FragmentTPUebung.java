@@ -4,6 +4,7 @@ package com.example.jutom.myapplication;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -97,7 +98,7 @@ public class FragmentTPUebung extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
          neu=new Uebung();
-        Log.v("String", "Name ist "+uebung.getName());
+//        Log.v("String", "Name ist "+uebung.getName());
         View v= inflater.inflate(R.layout.fragment_fragment_tpuebung, container, false);
         save = (Button) v.findViewById(R.id.btnSaveTP);
         neuerSatz=(Button)v.findViewById(R.id.btnNeuerSatz);
@@ -109,29 +110,30 @@ public class FragmentTPUebung extends Fragment {
 
             }
         });
-        if(uebung.getImg()!=null){
+/*        if(uebung.getImg()!=null){
             setPic();
-        }
+        }*/
 
         editBeschreibung=(EditText)v.findViewById(R.id.editTPbeschreibung);
         editTPuebungsname=(EditText)v.findViewById(R.id.editTPuebung);
-        satzzahl= (TextView)v.findViewById(R.id.txtSatzZiffer);
-        if(uebung.getName()!=null){
+        satzzahl= (TextView)v.findViewById(R.id.txtSatzZiffer_);
+        satzzahl.setText(""+1);
+/*        if(uebung.getName()!=null){
            editTPuebungsname.setText(uebung.getName());
         }
         if(uebung.getBeschreibung()!=null){
             editBeschreibung.setText(uebung.getBeschreibung());
-        }
+        }*/
 
         //TODO: Es muss noch geschaut werden, warum die onreult Methode nicht läuft
 
-        satzzahl.setText(""+(uebung.getSatzList().size()+uebung.getSatzZeitList().size())); //der Teil muss auch hinzugefügt werden, wenn ein neuer Satz angelegt wird
+       // satzzahl.setText(""+(uebung.getSatzList().size()+uebung.getSatzZeitList().size())); //der Teil muss auch hinzugefügt werden, wenn ein neuer Satz angelegt wird
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(uebung.getImg()!= mCurrentPhotoPath&& mCurrentPhotoPath!=null){
+ /*               if(uebung.getImg()!= mCurrentPhotoPath&& mCurrentPhotoPath!=null){
                     neu.setImg(mCurrentPhotoPath);
                 }
                 else{
@@ -148,9 +150,19 @@ public class FragmentTPUebung extends Fragment {
                 }
                 else{
                     neu.setName(uebung.getName());
+                }*/
+                try {
+                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                    trainingsplaner.execSQL("UPDATE Uebung SET uebungsname = '"+editTPuebungsname.getText().toString()+"', " +
+                            "uebungsbeschreibung = '"+editBeschreibung.getText().toString()+"', " +
+                            "uebungsbild = '"+mCurrentPhotoPath+"' WHERE Uebung_id ='"+uebungID+"'");
+
+                }catch (Exception e){
+                    Log.v("Neue Übung", e.getMessage());
                 }
 
-                FragmentTrainingsplanerList.getTrainingsplaners().get(tpPositon).getTpUebungen().add(neu);
+
+                //FragmentTrainingsplanerList.getTrainingsplaners().get(tpPositon).getTpUebungen().add(neu);
                 FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(tpPositon));
                 ft.commit();
@@ -247,13 +259,19 @@ public class FragmentTPUebung extends Fragment {
                         builder.setNeutralButton("Save", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Satz intervallSatz= new Satz();
+
                                 int belastungsintervall= minute_intervall.getValue()+(second_intervall.getValue()*60);
                                 int pause = minute_pause.getValue()+(second_pause.getValue()*60);
+                                try {
+                                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                                    trainingsplaner.execSQL("INSERT INTO satzintervall(intevall, pause, TrainingUebungID) VALUES('"+belastungsintervall+"', '"+pause+"', '"+trainingsplanUebungID+"')");
 
+                                }catch (Exception e){
+                                    Log.v("Neuer Satz", e.getMessage());
+                                }
                                 //TODO hier geht es weiter
-                                neu.getSatzList().add(intervallSatz);
-                                satzzahl.setText(Integer.parseInt(""+satzzahl.getText())+1);
+
+                                satzzahl.setText(""+(Integer.parseInt(satzzahl.getText().toString())+1));
                                klassisch.setVisibility(View.INVISIBLE);
 
                             }
@@ -325,12 +343,21 @@ public class FragmentTPUebung extends Fragment {
                         builder.setNeutralButton("Save", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                SatzZeit klassischSatz= new SatzZeit();
-                                klassischSatz.setWiederholungen(wdh_picker.getValue());
-                                klassischSatz.setPause(klassischSatz.getPause()+minute_pause.getValue()+(second_pause.getValue()*60));
-                                neu.getSatzZeitList().add(klassischSatz);
+                               // SatzZeit klassischSatz= new SatzZeit();
+                                int belastungsintervall= wdh_picker.getValue();
+                                int pause = minute_pause.getValue()+(second_pause.getValue()*60);
+                                try {
+                                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                                    trainingsplaner.execSQL("INSERT INTO satzklassisch(wiederholung, pause, TrainingUebungID) VALUES('"+belastungsintervall+"', '"+pause+"', '"+trainingsplanUebungID+"')");
 
-                                satzzahl.setText(""+(neu.getSatzList().size()+neu.getSatzZeitList().size()));
+                                }catch (Exception e){
+                                    Log.v("Neuer Satz", e.getMessage());
+                                }
+                                //TODO hier geht es weiter
+                                //neu.getSatzList().add(intervallSatz);
+                                satzzahl.setText(""+(Integer.parseInt(satzzahl.getText().toString())+1));
+
+                               // satzzahl.setText(""+(neu.getSatzList().size()+neu.getSatzZeitList().size()));
                                 intervall.setVisibility(View.INVISIBLE);
 
                             }

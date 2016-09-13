@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:text="Neuer Satz"
         android:id="@+id/btnNeuerSatz"
-        android:layout_below="@+id/txtSatzZiffer"
+        android:layout_below="@+id/txtSatzZiffer_"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="23dp"
         android:layout_alignParentStart="true" />
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="0"
-        android:id="@+id/txtSatzZiffer"
+        android:id="@+id/txtSatzZiffer_"
         android:layout_below="@+id/editTPbeschreibung"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

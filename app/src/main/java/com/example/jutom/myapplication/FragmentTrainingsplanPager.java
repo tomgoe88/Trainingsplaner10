@@ -131,17 +131,40 @@ public class FragmentTrainingsplanPager extends Fragment {
 
                         try {
                             SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                            trainingsplaner.execSQL("INSERT INTO uebung(uebungsname, uebungsbeschreibung, uebungsbild) VALUES('neu', 'neu', 'neu')");
-                            Cursor cursor= trainingsplaner.rawQuery("SELECT Uebung_id AS _id FROM uebung WHERE Uebung_id =(SELECT MAX(Uebung_id) FROM uebung)", null);
+                            trainingsplaner.execSQL("INSERT INTO Uebung(uebungsname, uebungsbeschreibung, uebungsbild) VALUES('neu', 'neu', 'neu')");
+                        } catch(Exception e){
+                            Log.v("NeueUebung", e.getMessage());
+                        }
+                        try {
+                            SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                            Cursor cursor= trainingsplaner.rawQuery("SELECT Uebung_id AS _id FROM Uebung WHERE Uebung_id =(SELECT MAX(Uebung_id) FROM Uebung)", null);
+                            cursor.moveToFirst();
                             do{
                                 tempId= cursor.getInt(cursor.getColumnIndex("_id"));
+                                Log.v("get Uebung_id", ""+tempId);
                             }while (cursor.moveToNext());
-                            trainingsplaner.execSQL("INSERT INTO trainingsplanuebung(Uebungs_id, TrainingsplanID) VALUES ('"+tempId+"','"+tpPosition+"'");
+                            cursor.close();
+                        } catch(Exception e){
+                            Log.v("NeueUebung", e.getMessage());
+                        }
+                        try {
+                            SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                            trainingsplaner.execSQL("INSERT INTO trainingsplanuebung(Uebungs_id, TrainingsplanID) VALUES ('" + tempId + "','" + tpPosition + "')");
+
                             //es muss noch die letzte Übung abgefragt werden
-                            Cursor cursor2= trainingsplaner.rawQuery("SELECT  _id FROM trainingsplanuebung WHERE Uebung_id =(SELECT MAX(_id) FROM trainingsplanuebung", null);
+                        } catch(Exception e){
+                        Log.v("NeueUebung", e.getMessage());
+                        }
+                        try {
+                            SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                            Cursor cursor2= trainingsplaner.rawQuery("SELECT  _id FROM trainingsplanuebung WHERE _id =(SELECT MAX(_id) FROM trainingsplanuebung)", null);
+                            cursor2.moveToFirst();
                             do{
-                                tempTraining= cursor2.getInt(cursor.getColumnIndex("_id"));
+                                tempTraining= cursor2.getInt(cursor2.getColumnIndex("_id"));
+                                Log.v("get Uebung_id", ""+tempTraining);
                             }while (cursor2.moveToNext());
+                            cursor2.close();
+
                         } catch(Exception e){
                             Log.v("NeueUebung", e.getMessage());
                         }
