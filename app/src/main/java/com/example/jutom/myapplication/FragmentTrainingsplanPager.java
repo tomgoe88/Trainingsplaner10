@@ -83,7 +83,11 @@ public class FragmentTrainingsplanPager extends Fragment {
             do{
                 Uebung uebung= new Uebung();
                 uebung.setTpUebungId(cursor.getInt(cursor.getColumnIndex("_id")));
-                // add more
+                uebung.setName(cursor.getString(cursor.getColumnIndex("Uebung.uebungsname")));
+                uebung.setImg(cursor.getString(cursor.getColumnIndex("Uebung.uebungsbild")));
+                uebung.setBeschreibung(cursor.getString(cursor.getColumnIndex("Uebung.uebungsbeschreibung")));
+
+
                 tpFragments.add(new FragmentUebungInPager(uebung));
                 titles.add(uebung.getName());
 
@@ -93,6 +97,7 @@ public class FragmentTrainingsplanPager extends Fragment {
         }catch (Exception e){
             Log.v("PagerTrainingsplan", e.getMessage());
         }
+
 
  /*       for(Uebung u:FragmentTrainingsplanerList.getTrainingsplaners().get(tpPosition).getTpUebungen()){
             tpFragments.add(new FragmentUebungInPager(u));//in diesem Fragment werden nur die Übungsdatenangezeigt

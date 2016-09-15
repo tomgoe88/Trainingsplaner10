@@ -133,24 +133,7 @@ public class FragmentTPUebung extends Fragment {
             @Override
             public void onClick(View v) {
 
- /*               if(uebung.getImg()!= mCurrentPhotoPath&& mCurrentPhotoPath!=null){
-                    neu.setImg(mCurrentPhotoPath);
-                }
-                else{
-                    neu.setImg(uebung.getImg());
-                }
-                if(uebung.getBeschreibung()==null){
-                    neu.setBeschreibung(editBeschreibung.getText().toString());
-                }
-                else {
-                    neu.setBeschreibung(uebung.getBeschreibung());
-                }
-                if(uebung.getName()==null){
-                    neu.setName(editTPuebungsname.getText().toString());
-                }
-                else{
-                    neu.setName(uebung.getName());
-                }*/
+
                 try {
                     SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
                     trainingsplaner.execSQL("UPDATE Uebung SET uebungsname = '"+editTPuebungsname.getText().toString()+"', " +
@@ -164,7 +147,7 @@ public class FragmentTPUebung extends Fragment {
 
                 //FragmentTrainingsplanerList.getTrainingsplaners().get(tpPositon).getTpUebungen().add(neu);
                 FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(tpPositon));
+                ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(trainingsplanID));
                 ft.commit();
             }
         });

@@ -51,7 +51,6 @@ public class FragmentUebungInPager extends Fragment {
         try {
             SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
             Cursor cursor= trainingsplaner.rawQuery("SELECT _id, intevall, pause FROM satzintervall WHERE TrainingUebungID='"+uebung.getTpUebungId()+"'", null);
-            Cursor cursor1= trainingsplaner.rawQuery("SELECT _id, wiederholung, pause FROM satzklassisch WHERE TrainingUebungID='"+uebung.getTpUebungId()+"'", null);
             cursor.moveToFirst();
             do{
                 Satz satz = new Satz();

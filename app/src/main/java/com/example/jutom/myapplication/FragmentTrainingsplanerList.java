@@ -108,9 +108,14 @@ public class FragmentTrainingsplanerList extends Fragment {
                 Log.v("Fragment", "TP Fragment ist erstellt");
                 trainingsplaners.add(tp);*/
                 try {
-                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                   SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
                     trainingsplaner.execSQL("INSERT INTO trainingsplan(trainingsplanname) VALUES('Neuer Plan')");
                     trainerList.setAdapter(null);
+                } catch (Exception e){
+                    Log.v("NeuerPlanZuFügen", e.getMessage());
+                }
+                try{
+                    SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
                     Cursor newCursor= trainingsplaner.rawQuery("SELECT _id, trainingsplanname FROM trainingsplan", null);
                     cursor.moveToFirst();
                     listAdapterTrainingsplaner.changeCursor(newCursor);
@@ -129,7 +134,9 @@ public class FragmentTrainingsplanerList extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
+              //TODO  Log.(Integer.parseInt(listAdapterTrainingsplaner.tpIDString.get(position))
         ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(Integer.parseInt(listAdapterTrainingsplaner.tpIDString.get(position))));
+
         ft.commit();
             }
         });
