@@ -32,6 +32,8 @@ public class FragmentTrainingsplanPager extends Fragment {
     private List<Fragment> tpFragments;
     private List<String> titles;
     AlertDialog.Builder builder;
+    int count;
+    Cursor cursor;
     AlertDialog.Builder auswahlUK;
     AlertDialog.Builder auswahlNeueUebung;
     AlertDialog.Builder auswahlNeueUebungUebungsart;
@@ -69,19 +71,26 @@ public class FragmentTrainingsplanPager extends Fragment {
         titles= new ArrayList<String>();
         try{
             SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-            Cursor cursor= trainingsplaner.rawQuery("SELECT trainingsplanuebung._id AS _id," +
+             cursor= trainingsplaner.rawQuery("SELECT trainingsplanuebung._id AS _id," +
                     "Uebung.Uebung_id," +
                     "Uebung.uebungsname," +
                     "Uebung.uebungsbeschreibung," +
                     "Uebung.uebungsbild " +
-                    "FROM trainingsplanuebung INNER JOIN trainingsplan ON " +
-                    "trainingsplanuebung.TrainingsplanID=trainingsplan._id " +
-                    "INNER JOIN Uebung ON " +
-                    "trainingsplanuebung.Uebungs_id= Uebung.Uebung_id " +
-                    "WHERE trainingsplan._id='"+tpPosition+"'", null);  //der Satz wird dann in dem FragmentUebungInPager gesucht Referen trainingsplanuebung._id
+                    "FROM Uebung " +
+                    "INNER JOIN trainingsplanuebung ON " +
+                    "trainingsplanuebung.Uebungs_id = Uebung.Uebung_id " +
+                    "WHERE trainingsplanuebung.TrainingsplanID = '"+tpPosition+"'"
+                   , null);  //der Satz wird dann in dem FragmentUebungInPager gesucht Referen trainingsplanuebung._id
+        }catch (Exception e){
+            Log.v("PagerTrainingsplan", e.getMessage());
+        }
+            //10-04 19:02:45.967 5472-5472/? V/PagerTrainingsplan: Couldn't read row 0, col -1 from CursorWindow.  Make sure the Cursor is initialized correctly before accessing data from it.
+        try {
             cursor.moveToFirst();
-            do{
-                Uebung uebung= new Uebung();
+
+            do {
+                count++;
+                Uebung uebung = new Uebung();
                 uebung.setTpUebungId(cursor.getInt(cursor.getColumnIndex("_id")));
                 uebung.setName(cursor.getString(cursor.getColumnIndex("Uebung.uebungsname")));
                 uebung.setImg(cursor.getString(cursor.getColumnIndex("Uebung.uebungsbild")));
@@ -91,12 +100,13 @@ public class FragmentTrainingsplanPager extends Fragment {
                 tpFragments.add(new FragmentUebungInPager(uebung));
                 titles.add(uebung.getName());
 
-                Log.v("Test", cursor.getString(cursor.getColumnIndex("uebungsname"))+" ,"+ cursor.getInt(cursor.getColumnIndex("wiederholung"))+" "+cursor.getInt(cursor.getColumnIndex("intervall")));
-            } while(cursor.moveToNext());
-
+                // Log.v("Test", cursor.getString(cursor.getColumnIndex("Uebung.uebungsname"))+" ,"+ cursor.getInt(cursor.getColumnIndex("Uebung.wiederholung"))+" "+cursor.getInt(cursor.getColumnIndex("Uebung.intervall")));
+            } while (cursor.moveToNext());
+            Log.v("Test", "Count = " + count);
         }catch (Exception e){
             Log.v("PagerTrainingsplan", e.getMessage());
         }
+
 
 
  /*       for(Uebung u:FragmentTrainingsplanerList.getTrainingsplaners().get(tpPosition).getTpUebungen()){

@@ -49,7 +49,7 @@ public class MyCusrorAdapterTrainingsplan extends CursorAdapter {
         holder.tpID=cursor.getInt(cursor.getColumnIndex("_id"));
         try{
             SQLiteDatabase trainingsplaner= context.openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-            Cursor cursor1= trainingsplaner.rawQuery("SELECT Count(*) AS _id FROM trainingsplanuebung WHERE Uebungs_id='"+holder.tpID+"'", null);
+            Cursor cursor1= trainingsplaner.rawQuery("SELECT Count(*) AS _id FROM trainingsplanuebung WHERE TrainingsplanID='"+holder.tpID+"' GROUP BY TrainingsplanID ", null);
             cursor1.moveToFirst();
             do{
                 holder.uebungsAnzahl.setText(cursor1.getString(cursor1.getColumnIndex("_id")));

@@ -94,7 +94,10 @@ public class FragmentUebungInPager extends Fragment {
             klassischList.setAdapter(listAdapterSatzZeit);
         }
         ueBild= (ImageView)v.findViewById(R.id.imagePagerUebung);
-        setPic();
+        if( uebung.getImg()!="null"){
+            setPic();
+        }
+
         TextView beschreibung= (TextView) v.findViewById(R.id.beschreibungPager);
         beschreibung.setText(uebung.getBeschreibung());
 
@@ -107,16 +110,15 @@ public class FragmentUebungInPager extends Fragment {
 
 
         Bitmap bitmap = BitmapFactory.decodeFile(uebung.getImg());
-        Matrix matrix = new Matrix();
+        if(bitmap!=null){
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,600,600,true);
+            Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap .getWidth(), scaledBitmap .getHeight(), matrix, true);
+            //Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+            ueBild.setImageBitmap(rotatedBitmap);
+        }
 
-        matrix.postRotate(90);
-
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,600,600,true);
-
-        Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap .getWidth(), scaledBitmap .getHeight(), matrix, true);
-
-        //Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        ueBild.setImageBitmap(rotatedBitmap);
     }
 
 }

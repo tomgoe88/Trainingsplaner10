@@ -135,6 +135,7 @@ public class FragmentTrainingsplanerList extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
               //TODO  Log.(Integer.parseInt(listAdapterTrainingsplaner.tpIDString.get(position))
+                Log.v("TP ID Position", "Die ID = "+ Integer.parseInt(listAdapterTrainingsplaner.tpIDString.get(position)));
         ft.replace(R.id.traininsplanerlayout,new FragmentTrainingsplanPager(Integer.parseInt(listAdapterTrainingsplaner.tpIDString.get(position))));
 
         ft.commit();
