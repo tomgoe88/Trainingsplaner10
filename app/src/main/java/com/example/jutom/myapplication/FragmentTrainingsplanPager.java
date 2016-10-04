@@ -92,9 +92,9 @@ public class FragmentTrainingsplanPager extends Fragment {
                 count++;
                 Uebung uebung = new Uebung();
                 uebung.setTpUebungId(cursor.getInt(cursor.getColumnIndex("_id")));
-                uebung.setName(cursor.getString(cursor.getColumnIndex("Uebung.uebungsname")));
-                uebung.setImg(cursor.getString(cursor.getColumnIndex("Uebung.uebungsbild")));
-                uebung.setBeschreibung(cursor.getString(cursor.getColumnIndex("Uebung.uebungsbeschreibung")));
+                uebung.setName(cursor.getString(cursor.getColumnIndex("uebungsname")));
+                uebung.setImg(cursor.getString(cursor.getColumnIndex("uebungsbild")));
+                uebung.setBeschreibung(cursor.getString(cursor.getColumnIndex("uebungsbeschreibung")));
 
 
                 tpFragments.add(new FragmentUebungInPager(uebung));
