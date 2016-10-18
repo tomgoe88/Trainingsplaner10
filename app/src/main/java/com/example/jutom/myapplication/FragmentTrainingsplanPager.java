@@ -46,6 +46,8 @@ public class FragmentTrainingsplanPager extends Fragment {
     int tempId;
     int tpPosition;
     int tempTraining;
+    boolean neueUebungx;
+    boolean ausKatalogx;
     Button neueUebungErstellen;
     Button uebungAusKatalog;
 
@@ -139,131 +141,144 @@ public class FragmentTrainingsplanPager extends Fragment {
                 neueUebungErstellen= (Button) theView.findViewById(R.id.neueUebungErstellen);
                 uebungAusKatalog=(Button)theView.findViewById(R.id.uebungAusKatalog);
 
+
+
                 neueUebungErstellen.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                        // Uebung uebung= new Uebung();
+                        neueUebungx=true;
 
-                        try {
-                            SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                            trainingsplaner.execSQL("INSERT INTO Uebung(uebungsname, uebungsbeschreibung, uebungsbild) VALUES('neu', 'neu', 'neu')");
-                        } catch(Exception e){
-                            Log.v("NeueUebung", e.getMessage());
-                        }
-                        try {
-                            SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                            Cursor cursor= trainingsplaner.rawQuery("SELECT Uebung_id AS _id FROM Uebung WHERE Uebung_id =(SELECT MAX(Uebung_id) FROM Uebung)", null);
-                            cursor.moveToFirst();
-                            do{
-                                tempId= cursor.getInt(cursor.getColumnIndex("_id"));
-                                Log.v("get Uebung_id", ""+tempId);
-                            }while (cursor.moveToNext());
-                            cursor.close();
-                        } catch(Exception e){
-                            Log.v("NeueUebung", e.getMessage());
-                        }
-                        try {
-                            SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                            trainingsplaner.execSQL("INSERT INTO trainingsplanuebung(Uebungs_id, TrainingsplanID) VALUES ('" + tempId + "','" + tpPosition + "')");
-
-                            //es muss noch die letzte Übung abgefragt werden
-                        } catch(Exception e){
-                        Log.v("NeueUebung", e.getMessage());
-                        }
-                        try {
-                            SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                            Cursor cursor2= trainingsplaner.rawQuery("SELECT  _id FROM trainingsplanuebung WHERE _id =(SELECT MAX(_id) FROM trainingsplanuebung)", null);
-                            cursor2.moveToFirst();
-                            do{
-                                tempTraining= cursor2.getInt(cursor2.getColumnIndex("_id"));
-                                Log.v("get Uebung_id", ""+tempTraining);
-                            }while (cursor2.moveToNext());
-                            cursor2.close();
-
-                        } catch(Exception e){
-                            Log.v("NeueUebung", e.getMessage());
-                        }
-
-                        FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(tpPosition,tempId, tempTraining));
-                        ft.commit();
-                        neueUebungErstellen.setVisibility(View.INVISIBLE);
-                        uebungAusKatalog.setVisibility(View.INVISIBLE);
                     }
                 });
                 uebungAusKatalog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        auswahlUK = new AlertDialog.Builder(getActivity());
-                        LayoutInflater inflaters = getActivity().getLayoutInflater();
-                        final View theView = inflaters.inflate(R.layout.alert_uebung_aus_katalog, null);
-                       final Button eigen= (Button) theView.findViewById(R.id.uekatEigengewicht);
-                        final Button maschine= (Button) theView.findViewById(R.id.uekatMaschine);
-                        final Button funktionell= (Button) theView.findViewById(R.id.uekatFunktionelle);
-                        final Button freie= (Button) theView.findViewById(R.id.uekatFreieGewichte);
-                        neueUebungErstellen.setVisibility(View.INVISIBLE);
-                        uebungAusKatalog.setVisibility(View.INVISIBLE);
-
-                        eigen.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
-
-                                ft.replace(R.id.traininsplanerlayout,new FragmentEigengewicht(trainingsplaner,tpPosition));
-                                ft.commit();
-                                eigen.setVisibility(View.INVISIBLE);
-                                maschine.setVisibility(View.INVISIBLE);
-                                funktionell.setVisibility(View.INVISIBLE);
-                                freie.setVisibility(View.INVISIBLE);
-
-
+                        ausKatalogx=true;
+                    }
+                });
+                builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(neueUebungx==true){
+                            try {
+                                SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                                trainingsplaner.execSQL("INSERT INTO Uebung(uebungsname, uebungsbeschreibung, uebungsbild) VALUES('neu', 'neu', 'neu')");
+                            } catch(Exception e){
+                                Log.v("NeueUebung", e.getMessage());
                             }
-                        });
-
-                        maschine.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
-
-                                ft.replace(R.id.traininsplanerlayout,new FragmentMaschine(trainingsplaner,tpPosition));
-                                ft.commit();
-                                eigen.setVisibility(View.INVISIBLE);
-                                maschine.setVisibility(View.INVISIBLE);
-                                funktionell.setVisibility(View.INVISIBLE);
-                                freie.setVisibility(View.INVISIBLE);
+                            try {
+                                SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                                Cursor cursor= trainingsplaner.rawQuery("SELECT Uebung_id AS _id FROM Uebung WHERE Uebung_id =(SELECT MAX(Uebung_id) FROM Uebung)", null);
+                                cursor.moveToFirst();
+                                do{
+                                    tempId= cursor.getInt(cursor.getColumnIndex("_id"));
+                                    Log.v("get Uebung_id", ""+tempId);
+                                }while (cursor.moveToNext());
+                                cursor.close();
+                            } catch(Exception e){
+                                Log.v("NeueUebung", e.getMessage());
                             }
-                        });
+                            try {
+                                SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                                trainingsplaner.execSQL("INSERT INTO trainingsplanuebung(Uebungs_id, TrainingsplanID) VALUES ('" + tempId + "','" + tpPosition + "')");
 
-                        funktionell.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
-
-                                ft.replace(R.id.traininsplanerlayout,new FragmentFunktionell(trainingsplaner,tpPosition));
-                                ft.commit();
-                                eigen.setVisibility(View.INVISIBLE);
-                                maschine.setVisibility(View.INVISIBLE);
-                                funktionell.setVisibility(View.INVISIBLE);
-                                freie.setVisibility(View.INVISIBLE);
+                                //es muss noch die letzte Übung abgefragt werden
+                            } catch(Exception e){
+                                Log.v("NeueUebung", e.getMessage());
                             }
-                        });
+                            try {
+                                SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                                Cursor cursor2= trainingsplaner.rawQuery("SELECT  _id FROM trainingsplanuebung WHERE _id =(SELECT MAX(_id) FROM trainingsplanuebung)", null);
+                                cursor2.moveToFirst();
+                                do{
+                                    tempTraining= cursor2.getInt(cursor2.getColumnIndex("_id"));
+                                    Log.v("get Uebung_id", ""+tempTraining);
+                                }while (cursor2.moveToNext());
+                                cursor2.close();
 
-                        freie.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
-
-                                ft.replace(R.id.traininsplanerlayout,new FragmentFreieGewichte(trainingsplaner,tpPosition));
-                                ft.commit();
-                                eigen.setVisibility(View.INVISIBLE);
-                                maschine.setVisibility(View.INVISIBLE);
-                                funktionell.setVisibility(View.INVISIBLE);
-                                freie.setVisibility(View.INVISIBLE);
+                            } catch(Exception e){
+                                Log.v("NeueUebung", e.getMessage());
                             }
-                        });
-                        auswahlUK.create().cancel();
-                        auswahlUK.setView(theView);
-                        auswahlUK.show();
+
+                            FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.traininsplanerlayout,new FragmentTPUebung(tpPosition,tempId, tempTraining));
+                            ft.commit();
+                            neueUebungErstellen.setVisibility(View.INVISIBLE);
+                            uebungAusKatalog.setVisibility(View.INVISIBLE);
+                        }
+                        else if(ausKatalogx==true){
+                            auswahlUK = new AlertDialog.Builder(getActivity());
+                            LayoutInflater inflaters = getActivity().getLayoutInflater();
+                            final View theView = inflaters.inflate(R.layout.alert_uebung_aus_katalog, null);
+                            final Button eigen= (Button) theView.findViewById(R.id.uekatEigengewicht);
+                            final Button maschine= (Button) theView.findViewById(R.id.uekatMaschine);
+                            final Button funktionell= (Button) theView.findViewById(R.id.uekatFunktionelle);
+                            final Button freie= (Button) theView.findViewById(R.id.uekatFreieGewichte);
+                            neueUebungErstellen.setVisibility(View.INVISIBLE);
+                            uebungAusKatalog.setVisibility(View.INVISIBLE);
+
+                            eigen.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
+
+                                    ft.replace(R.id.traininsplanerlayout,new FragmentEigengewicht(trainingsplaner,tpPosition));
+                                    ft.commit();
+                                    eigen.setVisibility(View.INVISIBLE);
+                                    maschine.setVisibility(View.INVISIBLE);
+                                    funktionell.setVisibility(View.INVISIBLE);
+                                    freie.setVisibility(View.INVISIBLE);
+
+
+                                }
+                            });
+
+                            maschine.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
+
+                                    ft.replace(R.id.traininsplanerlayout,new FragmentMaschine(trainingsplaner,tpPosition));
+                                    ft.commit();
+                                    eigen.setVisibility(View.INVISIBLE);
+                                    maschine.setVisibility(View.INVISIBLE);
+                                    funktionell.setVisibility(View.INVISIBLE);
+                                    freie.setVisibility(View.INVISIBLE);
+                                }
+                            });
+
+                            funktionell.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
+
+                                    ft.replace(R.id.traininsplanerlayout,new FragmentFunktionell(trainingsplaner,tpPosition));
+                                    ft.commit();
+                                    eigen.setVisibility(View.INVISIBLE);
+                                    maschine.setVisibility(View.INVISIBLE);
+                                    funktionell.setVisibility(View.INVISIBLE);
+                                    freie.setVisibility(View.INVISIBLE);
+                                }
+                            });
+
+                            freie.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    FragmentTransaction ft= getActivity().getSupportFragmentManager().beginTransaction();
+
+                                    ft.replace(R.id.traininsplanerlayout,new FragmentFreieGewichte(trainingsplaner,tpPosition));
+                                    ft.commit();
+                                    eigen.setVisibility(View.INVISIBLE);
+                                    maschine.setVisibility(View.INVISIBLE);
+                                    funktionell.setVisibility(View.INVISIBLE);
+                                    freie.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                            auswahlUK.create().cancel();
+                            auswahlUK.setView(theView);
+                            auswahlUK.show();
+                        }
                     }
                 });
 
