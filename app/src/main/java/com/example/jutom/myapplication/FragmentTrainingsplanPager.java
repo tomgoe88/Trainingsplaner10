@@ -16,7 +16,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +53,11 @@ public class FragmentTrainingsplanPager extends Fragment {
     boolean ausKatalogx;
     Button neueUebungErstellen;
     Button uebungAusKatalog;
+    Spinner spinner2;
+    Spinner spinner;
+
+    int uebungID;
+    int muskelID;
 
 
     public FragmentTrainingsplanPager(int position) {
@@ -157,13 +165,88 @@ public class FragmentTrainingsplanPager extends Fragment {
                         ausKatalogx=true;
                     }
                 });
+                spinner = (Spinner) theView.findViewById(R.id.spinner);
+                List<String> list = new ArrayList<String>();
+                list.add("Maschine");
+                list.add("Funktionell");
+                list.add("FreieGewichte");
+                list.add("Eigengewicht");
+
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_spinner_item, list);
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(dataAdapter);
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String uebung= parent.getSelectedItem().toString();
+                        try {
+                            //TODO hier muss noch die übungsid eingefügt werden bzw gesucht werden
+                            SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                            Cursor cursor3= trainingsplaner.rawQuery("SELECT uebungsart_id AS _id FROM Uebungsart WHERE uebungsartname = '"+uebung+"'",null);
+                            cursor3.moveToFirst();
+                            do{
+                                uebungID= cursor3.getInt(cursor3.getColumnIndex("_id"));
+                                Log.v("get Uebung_id", ""+uebungID);
+                            }while (cursor3.moveToNext());
+                            cursor3.close();
+                        } catch(Exception e){
+                            Log.v("NeueUebung", e.getMessage());
+                        }
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                spinner2 = (Spinner) theView.findViewById(R.id.spinner2);
+                List<String> list1 = new ArrayList<String>();
+                list1.add("Brust");
+                list1.add("UntererRuecken");
+                list1.add("ObererRuecken");
+                list1.add("Beine");
+                list1.add("Bicep");
+                list1.add("Tricep");
+                list1.add("Bauch");
+                list1.add("Schulter");
+                ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_spinner_item, list1);
+                dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner2.setAdapter(dataAdapter2);
+                spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String muskel= parent.getSelectedItem().toString();
+                        try {
+                            //TODO hier muss noch die übungsid eingefügt werden bzw gesucht werden
+                            SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
+                            Cursor cursor4= trainingsplaner.rawQuery("SELECT muskelgruppe_id AS _id FROM Muskelgruppe WHERE muskegruppenname = '"+muskel+"'",null);
+                            cursor4.moveToFirst();
+                            do{
+                                muskelID= cursor4.getInt(cursor4.getColumnIndex("_id"));
+                                Log.v("get Uebung_id", ""+muskelID);
+                            }while (cursor4.moveToNext());
+                            cursor4.close();
+                        } catch(Exception e){
+                            Log.v("NeueUebung", e.getMessage());
+                        }
+
+
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
                 builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(neueUebungx==true){
                             try {
+                                //TODO hier muss noch die übungsid eingefügt werden bzw gesucht werden
                                 SQLiteDatabase trainingsplaner= getActivity().openOrCreateDatabase("Trainingsplaner", Activity.MODE_PRIVATE, null);
-                                trainingsplaner.execSQL("INSERT INTO Uebung(uebungsname, uebungsbeschreibung, uebungsbild) VALUES('neu', 'neu', 'neu')");
+                                trainingsplaner.execSQL("INSERT INTO Uebung(uebungsname, uebungsbeschreibung, uebungsbild, muskelgruppe_id, uebungsart_id) VALUES('neu', 'neu', 'neu','"+muskelID+"', '"+uebungID+"')");
                             } catch(Exception e){
                                 Log.v("NeueUebung", e.getMessage());
                             }
@@ -359,6 +442,7 @@ public class FragmentTrainingsplanPager extends Fragment {
 
             }
         });
+        //TODO prepare Spinner for your own requires
 
 
 

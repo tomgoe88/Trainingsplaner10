@@ -40,25 +40,7 @@ public class UebungFragment extends Fragment {
      Trainingsplaner tp;
      String adapterName;
 
-    UebungListAdapter uebungListAdapter;
-    ListAdapterBauch listAdapterBauch;
-    ListAdapterBeine listAdapterBeine;
-    ListAdapterBicep listAdapterBicep;
-    ListAdapterBrust listAdapterBrust;
-    ListAdapterObererRuecken listAdapterObererRuecken;
-    ListAdapterRuecken listAdapterRuecken;
-    ListAdapterSchulter listAdapterSchulter;
-    ListAdapterTricep listAdapterTricep;
 
-    List<UntererRuecken>untererRueckenList;
-    List<Bauch> bauchList;
-    List<Beine>beineList;
-    List<Bicep>bicepList;
-    List<Brust>brusts;
-    List<ObererRuecken>obererRueckens;
-    List<Ruecken>rueckens;
-    List<Schulter>schulters;
-    List<Tricep>triceps;
     Cursor cursor;
 
     int tpPosition;
