@@ -90,6 +90,28 @@ public class MainActivity extends AppCompatActivity
                     "TrainingUebungID INTEGER, " +
                     "FOREIGN KEY(TrainingUebungID) REFERENCES trainingsplanuebung(_id)" +
                     ")");
+            trainingsplaner.execSQL(("CREATE TABLE IF NOT EXISTS trainingsplan_durchgefuehrt(" +
+                    "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "durchfuehrungsdatum DATETIME," +
+                    "TrainingsplanID INTEGER," +
+                    "FOREIGN KEY(TrainingsplanID) REFERENCES trainingsplan(_id)" +
+                    ")"));
+            trainingsplaner.execSQL(("CREATE TABLE IF NOT EXISTS satzintervall_durchgefuehrt(" +
+                    "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "satzintervall_ist INTEGER," +
+                    "TrainingsplanID INTEGER," +
+                    "satzintervallID INTEGER" +
+                    "FOREIGN KEY(TrainingsplanID) REFERENCES trainingsplan(_id)" +
+                    "FOREIGN KEY(satzintervallID) REFERENCES satzintervall(_id)" +
+                    ")"));
+            trainingsplaner.execSQL(("CREATE TABLE IF NOT EXISTS satzklassisch_durchgefuehrt(" +
+                    "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "satzklassisch_ist INTEGER," +
+                    "TrainingsplanID INTEGER," +
+                    "satzklassischID INTEGER" +
+                    "FOREIGN KEY(TrainingsplanID) REFERENCES trainingsplan(_id)" +
+                    "FOREIGN KEY(satzklassischID) REFERENCES satzklassisch(_id)" +
+                    ")"));
 
 
             trainingsplaner.execSQL("CREATE TABLE IF NOT EXISTS Uebung(" +
